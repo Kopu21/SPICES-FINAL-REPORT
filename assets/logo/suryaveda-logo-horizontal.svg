@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 70" width="340" height="70">
+  <defs>
+    <radialGradient id="h-sun-glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#FBBF24" />
+      <stop offset="60%" stop-color="#D97706" />
+      <stop offset="100%" stop-color="#7C2D12" />
+    </radialGradient>
+    <linearGradient id="h-gold-text" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F59E0B" />
+      <stop offset="50%" stop-color="#D97706" />
+      <stop offset="100%" stop-color="#9A3412" />
+    </linearGradient>
+  </defs>
+
+  <!-- Circular Emblem on Left -->
+  <g transform="translate(10, 8) scale(0.27)">
+    <circle cx="100" cy="100" r="94" fill="none" stroke="#F59E0B" stroke-width="4" opacity="0.6" />
+    <circle cx="100" cy="100" r="88" fill="url(#h-sun-glow)" stroke="#FEF3C7" stroke-width="5" />
+    <!-- Mortar Shape -->
+    <ellipse cx="100" cy="88" rx="55" ry="18" fill="#FEF3C7" stroke="#78350F" stroke-width="3" />
+    <ellipse cx="100" cy="88" rx="46" ry="14" fill="#451A03" />
+    <path d="M45 88 C45 150, 155 150, 155 88 L142 140 C142 150, 58 150, 58 140 Z" fill="#FCD34D" stroke="#78350F" stroke-width="3" />
+    <rect x="65" y="142" width="70" height="12" rx="4" fill="#D97706" />
+    <path d="M125 40 L142 80 C144 85, 138 90, 132 87 L115 47 C112 42, 120 36, 125 40 Z" fill="#FFFBEB" stroke="#78350F" stroke-width="3" />
+  </g>
+
+  <!-- Typography on Right -->
+  <text x="75" y="38" font-family="'Cinzel Decorative', Georgia, serif" font-weight="900" font-size="24" fill="url(#h-gold-text)" letter-spacing="2">SURYAVEDA</text>
+  
+  <!-- 1924 Badge -->
+  <g transform="translate(245, 23)">
+    <rect x="0" y="0" width="38" height="16" rx="4" fill="#FEF3C7" stroke="#D97706" stroke-width="1" />
+    <text x="19" y="12" text-anchor="middle" font-family="'Plus Jakarta Sans', sans-serif" font-weight="800" font-size="9" fill="#9A3412" letter-spacing="1">1924</text>
+  </g>
+
+  <!-- Subtitle Tagline -->
+  <text x="76" y="54" font-family="'Plus Jakarta Sans', sans-serif" font-weight="700" font-size="9" fill="#C2410C" letter-spacing="2.5">RARE TERROIR &amp; MASALAS</text>
+</svg>

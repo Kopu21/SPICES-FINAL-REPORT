@@ -1,0 +1,1706 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SuryaVeda Spices & Condiments | Single-Estate Heritage Spices</title>
+  <link rel="icon" type="image/svg+xml" href="assets/logo/favicon.svg">
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            saffron: { 50: '#FFFBEB', 100: '#FEF3C7', 200: '#FDE68A', 500: '#F59E0B', 600: '#D97706', 700: '#B45309', 800: '#92400E', 900: '#78350F' },
+            terracotta: { 500: '#EA580C', 600: '#C2410C', 700: '#9A3412', 800: '#7C2D12' },
+            cardamom: { 100: '#DCFCE7', 600: '#16A34A', 700: '#15803D', 800: '#166534', 900: '#064E3B' },
+            parchment: { 50: '#FDFBF7', 100: '#FAF4E8', 200: '#F5EADB', 300: '#E8D7BF', 400: '#D8C09E' },
+            clove: { 900: '#1A120B', 800: '#2A1B0E', 700: '#3D2817' }
+          },
+          fontFamily: {
+            serif: ['Playfair Display', 'Georgia', 'serif'],
+            display: ['Cinzel Decorative', 'Georgia', 'serif'],
+            sans: ['Plus Jakarta Sans', 'system-ui', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="min-h-screen text-clove-800 flex flex-col antialiased selection:bg-saffron-200 selection:text-saffron-900 transition-colors duration-300">
+
+  <!-- TOP ANNOUNCEMENT BAR (HIDDEN ON LOGIN) -->
+  <div id="top-announcement-bar" class="bg-clove-900 text-saffron-200 text-xs py-2 px-4 border-b border-saffron-700/30">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center text-center gap-2">
+      <div class="flex items-center gap-2">
+        <span class="inline-block w-2 h-2 rounded-full bg-saffron-500 animate-ping"></span>
+        <span class="font-medium tracking-wide">✨ 2025 Fresh Winter Harvest Released • Direct from Kerala & Meghalaya Estates</span>
+      </div>
+      <div class="flex items-center gap-6 text-xs text-saffron-200/80">
+        <span><i class="fa-solid fa-truck-fast text-saffron-500 mr-1.5"></i> Complimentary Heritage Brass Tin with orders over ₹1,499</span>
+        <span class="hidden md:inline"><i class="fa-solid fa-certificate text-saffron-500 mr-1.5"></i> NABL Certified Lab Purity Reports</span>
+        <a href="#contact" onclick="navigateTo('contact')" class="text-saffron-400 hover:text-saffron-300 underline underline-offset-2">Concierge Desk</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAIN SITE HEADER (EXACT REQUESTED NAVBAR ORDER) -->
+  <!-- Left Logo -> Nav Links: Home (dropdown Home 1, Home 2) -> Products -> Recipes -> Bulk Orders -> Contact with enquiry form -> Right: Login Portal -> Toggle Theme -> RTL/LTR -> Cart -->
+  <header id="main-site-header" class="sticky top-0 z-40 bg-parchment-50/95 backdrop-blur-md border-b border-parchment-300 shadow-sm transition-all duration-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-20 gap-4">
+        
+        <!-- LEFT: BRAND LOGO -->
+        <a href="#home" onclick="navigateTo('home')" class="flex items-center gap-3 group shrink-0 focus:outline-none">
+          <div class="w-11 h-11 rounded-full bg-gradient-to-tr from-saffron-700 via-saffron-600 to-terracotta-600 flex items-center justify-center text-white shadow-md group-hover:scale-105 transition-transform duration-300 border border-saffron-300 shrink-0">
+            <i class="fa-solid fa-mortar-pestle text-lg text-saffron-100"></i>
+          </div>
+          <div>
+            <span class="brand-name-suryaveda">SURYAVEDA</span>
+            <p class="brand-tagline-sub hidden sm:block">Rare Terroir & Masalas</p>
+          </div>
+        </a>
+
+        <!-- CENTER NAVIGATION LINKS IN EXACT REQUESTED SEQUENCE -->
+        <nav class="hidden lg:flex items-center gap-6 xl:gap-8">
+          
+          <!-- Home Section Dropdown (showing Home 1 and Home 2 below it) -->
+          <div class="relative group">
+            <button class="nav-link active text-xs font-bold text-clove-800 hover:text-saffron-700 py-1 transition-colors flex items-center gap-1.5 focus:outline-none" id="nav-home">
+              <span>Home</span>
+              <i class="fa-solid fa-chevron-down text-[9px] group-hover:rotate-180 transition-transform duration-200 text-saffron-700"></i>
+            </button>
+            <div class="absolute left-0 top-full mt-2 w-72 bg-parchment-50 rounded-2xl shadow-xl border border-parchment-300 p-2 hidden group-hover:block transition-all z-50">
+              <a href="#home" onclick="navigateTo('home')" class="block p-3 rounded-xl hover:bg-saffron-50 transition">
+                <div class="flex items-center gap-2 font-bold text-xs text-clove-900">
+                  <i class="fa-solid fa-store text-saffron-700"></i>
+                  <span>Home 1: Imperial Terroir</span>
+                </div>
+                <p class="text-[11px] text-clove-800/60 mt-0.5">Classic single-origin pantry, signature blends & harvest origins</p>
+              </a>
+              <a href="#home-2" onclick="navigateTo('home-2')" class="block p-3 rounded-xl hover:bg-cardamom-50 transition border-t border-parchment-200">
+                <div class="flex items-center gap-2 font-bold text-xs text-cardamom-900">
+                  <i class="fa-solid fa-crown text-amber-600"></i>
+                  <span>Home 2: Estate Cellar & Sommelier</span>
+                </div>
+                <p class="text-[11px] text-clove-800/60 mt-0.5">Single-barrel reserves, 6-taste aroma balancer & pairing sets</p>
+              </a>
+            </div>
+          </div>
+
+          <!-- Products -->
+          <a href="#products" id="nav-products" onclick="navigateTo('products')" class="nav-link text-xs font-bold text-clove-800 hover:text-saffron-700 py-1 transition-colors flex items-center gap-1">
+            Products
+            <span class="text-[9px] bg-cardamom-100 text-cardamom-800 font-bold px-1.5 py-0.2 rounded-full">20</span>
+          </a>
+
+          <!-- Recipes -->
+          <a href="#recipes" id="nav-recipes" onclick="navigateTo('recipes')" class="nav-link text-xs font-bold text-clove-800 hover:text-saffron-700 py-1 transition-colors">Recipes</a>
+
+          <!-- Bulk Orders -->
+          <a href="#bulk-orders" id="nav-bulk-orders" onclick="navigateTo('bulk-orders')" class="nav-link text-xs font-bold text-clove-800 hover:text-saffron-700 py-1 transition-colors flex items-center gap-1">
+            <i class="fa-solid fa-boxes-stacked text-[11px] text-saffron-600"></i> Bulk Orders
+          </a>
+
+          <!-- Contact (with enquiry form) -->
+          <a href="#contact" id="nav-contact" onclick="navigateTo('contact')" class="nav-link text-xs font-bold text-clove-800 hover:text-saffron-700 py-1 transition-colors flex items-center gap-1">
+            Contact & Enquiry Form
+          </a>
+        </nav>
+
+        <!-- RIGHT CONTROLS: Login Portal -> Toggle Theme -> RTL/LTR -> Cart -->
+        <div class="flex items-center gap-2 sm:gap-3">
+          
+          <!-- 1. LOGIN PORTAL BUTTON -->
+          <button onclick="navigateTo('login')" title="Guild Member Portal" id="nav-login" class="px-3 py-1.5 rounded-full bg-parchment-200 hover:bg-saffron-100 text-clove-900 border border-parchment-300 transition-all flex items-center gap-1.5 text-xs font-bold">
+            <i class="fa-regular fa-user text-xs text-saffron-700"></i>
+            <span class="hidden sm:inline">Sign In</span>
+          </button>
+
+          <!-- 2. TOGGLE THEME BUTTON -->
+          <button onclick="toggleTheme()" id="theme-toggle-btn" title="Toggle Theme (Light / Dark Velvet)" class="p-2 rounded-full bg-parchment-200 hover:bg-saffron-100 text-clove-900 border border-parchment-300 transition-all flex items-center justify-center text-xs">
+            <i class="fa-solid fa-moon text-saffron-700" id="theme-icon"></i>
+          </button>
+
+          <!-- 3. RTL / LTR SWITCHER BUTTON -->
+          <button onclick="toggleRtlMode()" id="rtl-toggle-btn" title="Toggle RTL / LTR Direction" class="px-2.5 py-1.5 rounded-full bg-parchment-200 hover:bg-saffron-100 text-clove-900 border border-parchment-300 transition-all flex items-center gap-1 text-xs font-extrabold">
+            <i class="fa-solid fa-globe text-xs text-saffron-700"></i>
+            <span id="rtl-label">RTL</span>
+          </button>
+
+          <!-- 4. CART SECTION -->
+          <button onclick="toggleCartDrawer(true)" title="View Spice Basket" class="relative p-2.5 rounded-full bg-clove-900 hover:bg-saffron-700 text-saffron-200 border border-saffron-700 transition-all flex items-center justify-center">
+            <i class="fa-solid fa-bag-shopping text-sm text-saffron-300"></i>
+            <span id="cart-badge" class="hidden absolute -top-1 -right-1 bg-terracotta-600 text-white text-[10px] font-bold w-4.5 h-4.5 rounded-full flex items-center justify-center shadow">0</span>
+          </button>
+
+          <!-- Mobile Menu Toggle -->
+          <button onclick="toggleMobileNav()" class="lg:hidden p-2 text-clove-900 focus:outline-none">
+            <i class="fa-solid fa-bars text-lg"></i>
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- MOBILE MENU DROPDOWN -->
+    <div id="mobile-nav" class="hidden lg:hidden bg-parchment-100 border-b border-parchment-300 px-6 py-4 space-y-3">
+      <div class="grid grid-cols-2 gap-2 pb-2 border-b border-parchment-300">
+        <a href="#home" onclick="navigateTo('home'); toggleMobileNav();" class="p-2 bg-white rounded-lg text-xs font-bold text-clove-900 text-center border border-parchment-300">Home 1: Terroir</a>
+        <a href="#home-2" onclick="navigateTo('home-2'); toggleMobileNav();" class="p-2 bg-saffron-100 rounded-lg text-xs font-bold text-saffron-900 text-center border border-saffron-300">Home 2: Cellar</a>
+      </div>
+      <a href="#products" onclick="navigateTo('products'); toggleMobileNav();" class="block text-sm font-semibold text-clove-900 py-1">Products Catalog</a>
+      <a href="#recipes" onclick="navigateTo('recipes'); toggleMobileNav();" class="block text-sm font-semibold text-clove-900 py-1">Culinary Recipes</a>
+      <a href="#gifting" onclick="navigateTo('gifting'); toggleMobileNav();" class="block text-sm font-semibold text-saffron-800 py-1">Bespoke Gift Crate Studio</a>
+      <a href="#purity" onclick="navigateTo('purity'); toggleMobileNav();" class="block text-sm font-semibold text-cardamom-800 py-1">NABL Lab Purity Verification</a>
+      <a href="#bulk-orders" onclick="navigateTo('bulk-orders'); toggleMobileNav();" class="block text-sm font-semibold text-clove-900 py-1">Bulk & B2B Orders</a>
+      <a href="#contact" onclick="navigateTo('contact'); toggleMobileNav();" class="block text-sm font-semibold text-clove-900 py-1">Contact & Enquiry Form</a>
+    </div>
+  </header>
+
+  <!-- ========================================================================= -->
+  <!-- MAIN CONTENT CONTAINER WITH SPA VIEW SWITCHING -->
+  <!-- ========================================================================= -->
+  <main class="flex-grow">
+
+    <!-- ==================== 1. HOME 1 VIEW (WITH HOME 2 EMBEDDED INSIDE) ==================== -->
+    <section id="view-home" class="spa-view">
+      
+      <!-- HERO BANNER -->
+      <div class="relative overflow-hidden bg-clove-900 text-white py-16 lg:py-24 border-b border-saffron-800/40">
+        <div class="absolute inset-0 opacity-20 heritage-pattern-overlay"></div>
+        <div class="absolute -right-24 -bottom-24 w-96 h-96 rounded-full bg-saffron-600/20 blur-3xl pointer-events-none"></div>
+        <div class="absolute -left-24 -top-24 w-96 h-96 rounded-full bg-terracotta-600/20 blur-3xl pointer-events-none"></div>
+
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+          
+          <div class="lg:col-span-7 space-y-6">
+            <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-saffron-900/60 border border-saffron-500/40 text-saffron-300 text-xs font-semibold tracking-wider uppercase">
+              <i class="fa-solid fa-award text-saffron-400"></i> 100 Years of Aromatic Purity
+            </div>
+            
+            <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight tracking-tight text-parchment-50">
+              Awaken Your Senses with <span class="gold-text-shimmer">Imperial Terroir Spices</span>
+            </h1>
+            
+            <p class="text-parchment-200 text-base sm:text-lg leading-relaxed max-w-2xl font-light">
+              Sun-cured on single-estate slopes, stone-pounded at low RPMs to lock in rare volatile oils, and aged in ceramic barnis. Experience pure, unadulterated flavors straight from the growers of India.
+            </p>
+
+            <div class="flex flex-wrap gap-4 pt-4">
+              <button onclick="navigateTo('products')" class="px-8 py-4 rounded-xl gold-gradient-bg text-white font-bold text-sm shadow-lg hover:shadow-saffron-600/40 hover:scale-105 transition-all duration-300 flex items-center gap-2">
+                <span>Explore Signature Harvest</span>
+                <i class="fa-solid fa-arrow-right text-xs"></i>
+              </button>
+              <a href="#home2-embedded-section" onclick="document.getElementById('home2-embedded-section').scrollIntoView({behavior:'smooth'})" class="px-7 py-4 rounded-xl bg-parchment-100/10 hover:bg-parchment-100/20 text-parchment-100 font-semibold text-sm border border-parchment-200/30 backdrop-blur-sm transition-all duration-300 flex items-center gap-2">
+                <i class="fa-solid fa-crown text-saffron-400"></i>
+                <span>Jump to Home 2: Estate Cellar</span>
+              </a>
+            </div>
+
+            <!-- Trust Highlights -->
+            <div class="pt-6 border-t border-saffron-800/40 grid grid-cols-3 gap-4 text-center sm:text-left">
+              <div>
+                <p class="text-2xl font-display font-bold text-saffron-400">100%</p>
+                <p class="text-xs text-parchment-300">Single-Origin Terroir</p>
+              </div>
+              <div>
+                <p class="text-2xl font-display font-bold text-saffron-400">8.2%+</p>
+                <p class="text-xs text-parchment-300">High Curcumin Turmeric</p>
+              </div>
+              <div>
+                <p class="text-2xl font-display font-bold text-saffron-400">Zero</p>
+                <p class="text-xs text-parchment-300">Artificial Additives or Oils</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Hero Image Showcase with Ultra-HD Natural Visuals -->
+          <div class="lg:col-span-5 relative">
+            <div class="relative mx-auto max-w-md lg:max-w-none">
+              <div class="relative rounded-2xl overflow-hidden shadow-2xl border-4 border-saffron-700/50 group">
+                <img src="https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&w=1200&q=90" alt="Royal Spices and Aromatic Powders" class="w-full h-96 sm:h-[450px] object-cover group-hover:scale-105 transition-transform duration-700">
+                <div class="absolute inset-0 bg-gradient-to-t from-clove-900 via-transparent to-transparent opacity-80"></div>
+                
+                <div class="absolute bottom-4 left-4 right-4 p-4 rounded-xl bg-clove-900/90 backdrop-blur-md border border-saffron-500/30 text-white flex items-center justify-between">
+                  <div>
+                    <span class="text-[10px] text-saffron-400 uppercase font-bold tracking-wider">Flagship Blend</span>
+                    <h4 class="font-heading font-bold text-sm text-parchment-50">21-Spice Shahi Garam Masala</h4>
+                    <p class="text-xs text-parchment-300">With Dagad Phool, Green Cardamom & Saffron</p>
+                  </div>
+                  <button onclick="quickAddToCart('ms-01')" class="px-3 py-2 rounded-lg bg-saffron-600 hover:bg-saffron-500 text-white font-bold text-xs shadow">
+                    ₹490
+                  </button>
+                </div>
+              </div>
+
+              <div class="absolute -top-6 -left-6 bg-parchment-50 text-clove-900 p-4 rounded-full shadow-2xl border-2 border-saffron-500 w-24 h-24 flex flex-col items-center justify-center text-center aroma-glow">
+                <i class="fa-solid fa-award text-saffron-600 text-base"></i>
+                <span class="text-[10px] font-black uppercase tracking-tighter leading-tight mt-0.5">Heritage Grade</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- VALUE PILLARS BAR -->
+      <section class="bg-parchment-100 py-8 border-b border-parchment-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-2 md:grid-cols-4 gap-6">
+          <div class="flex items-center gap-3.5">
+            <div class="w-12 h-12 rounded-xl bg-saffron-100 border border-saffron-300 text-saffron-800 flex items-center justify-center shrink-0">
+              <i class="fa-solid fa-leaf text-xl"></i>
+            </div>
+            <div>
+              <h4 class="font-bold text-sm text-clove-900">Single Estate Harvest</h4>
+              <p class="text-xs text-clove-800/70">Traceable to farm coordinates</p>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-3.5">
+            <div class="w-12 h-12 rounded-xl bg-cardamom-100 border border-cardamom-600/30 text-cardamom-800 flex items-center justify-center shrink-0">
+              <i class="fa-solid fa-hand-holding-droplet text-xl"></i>
+            </div>
+            <div>
+              <h4 class="font-bold text-sm text-clove-900">Slow Stone-Pounded</h4>
+              <p class="text-xs text-clove-800/70">Maintains cold volatile oils</p>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-3.5">
+            <div class="w-12 h-12 rounded-xl bg-terracotta-500/10 border border-terracotta-500/30 text-terracotta-700 flex items-center justify-center shrink-0">
+              <i class="fa-solid fa-jar-wheat text-xl"></i>
+            </div>
+            <div>
+              <h4 class="font-bold text-sm text-clove-900">Clay Barni Curing</h4>
+              <p class="text-xs text-clove-800/70">Traditional sun-matured pickles</p>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-3.5">
+            <div class="w-12 h-12 rounded-xl bg-saffron-100 border border-saffron-300 text-saffron-800 flex items-center justify-center shrink-0">
+              <i class="fa-solid fa-shield-halved text-xl"></i>
+            </div>
+            <div>
+              <h4 class="font-bold text-sm text-clove-900">100% Lab Verified</h4>
+              <p class="text-xs text-clove-800/70">Zero pesticide or artificial color</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SIGNATURE SPICE BLENDS SHOWCASE -->
+      <section class="py-16 bg-parchment-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          
+          <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-10 gap-4">
+            <div>
+              <div class="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-saffron-700 mb-1">
+                <i class="fa-solid fa-sparkles"></i> Master Craftsman Blends
+              </div>
+              <h2 class="text-3xl sm:text-4xl font-bold text-clove-900">Signature Spice Selection</h2>
+              <p class="text-sm text-clove-800/70 max-w-xl mt-1">Our most celebrated royal formulations and high-potency single origin whole spices.</p>
+            </div>
+            <button onclick="navigateTo('products')" class="text-sm font-bold text-saffron-700 hover:text-saffron-800 flex items-center gap-1.5 underline underline-offset-4">
+              <span>View All 20 Heritage Products</span>
+              <i class="fa-solid fa-arrow-right text-xs"></i>
+            </button>
+          </div>
+
+          <div id="home-signature-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <!-- Rendered by JS -->
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ========================================================== -->
+      <!-- HOME 2: EMBEDDED INSIDE HOME VIEW (ESTATE CELLAR EDITION) -->
+      <!-- ========================================================== -->
+      <section id="home2-embedded-section" class="py-20 bg-gradient-to-b from-cardamom-900 via-clove-900 to-clove-900 text-white border-y border-amber-600/40">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
+          
+          <div class="text-center max-w-3xl mx-auto space-y-3">
+            <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/20 border border-amber-400 text-amber-300 text-xs font-bold uppercase tracking-widest">
+              <i class="fa-solid fa-crown text-amber-400"></i> Home 2 • Estate Cellar & Sommelier Edition
+            </span>
+            <h2 class="text-3xl sm:text-5xl font-bold font-heading text-parchment-50">
+              Single-Barrel Aged & <span class="gold-text-shimmer">Grand Cru Reserve Spices</span>
+            </h2>
+            <p class="text-parchment-200 text-sm sm:text-base font-light leading-relaxed">
+              Harvested strictly from 100-year mountain vines, aged in seasoned rosewood barrels, and compounded in micro-batches for executive chefs and culinary connoisseurs.
+            </p>
+          </div>
+
+          <!-- Home 2 Grand Cru Vault Grid -->
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch" id="embedded-home2-reserves-grid">
+            <!-- Rendered via JS -->
+          </div>
+
+          <!-- Home 2 Shad Rasa Flavor Balancer & Sommelier Recommender -->
+          <div class="bg-white/5 rounded-3xl p-8 border border-amber-500/30 backdrop-blur-md grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+            
+            <div class="lg:col-span-5 space-y-4">
+              <span class="text-xs font-bold uppercase tracking-widest text-amber-400">Ayurvedic Science of Flavor</span>
+              <h3 class="text-2xl sm:text-3xl font-bold font-heading text-white">The 6 Tastes (Shad Rasa) Flavor Balance</h3>
+              <p class="text-xs text-parchment-300 font-light leading-relaxed">
+                Ancient Ayurvedic treaties state that every complete meal must balance Sweet (*Madhura*), Sour (*Amla*), Salty (*Lavana*), Pungent (*Katu*), Bitter (*Tikta*), and Astringent (*Kashaya*).
+              </p>
+
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-2 text-xs">
+                <div class="p-3 rounded-xl bg-clove-900/90 border border-amber-500/30">
+                  <div class="flex items-center justify-between text-amber-300 font-bold mb-0.5">
+                    <span>🍯 Sweet (Madhura)</span>
+                    <span class="text-[10px] text-amber-400/80 uppercase">Nourishing</span>
+                  </div>
+                  <p class="text-[11px] text-parchment-300 font-light">Ceylon Cinnamon, Green Cardamom & Star Anise</p>
+                </div>
+
+                <div class="p-3 rounded-xl bg-clove-900/90 border border-amber-500/30">
+                  <div class="flex items-center justify-between text-amber-300 font-bold mb-0.5">
+                    <span>🍋 Sour (Amla)</span>
+                    <span class="text-[10px] text-amber-400/80 uppercase">Digestive Agni</span>
+                  </div>
+                  <p class="text-[11px] text-parchment-300 font-light">Sun-Cured Amba Raw Mango & Aged Lime Achar</p>
+                </div>
+
+                <div class="p-3 rounded-xl bg-clove-900/90 border border-amber-500/30">
+                  <div class="flex items-center justify-between text-amber-300 font-bold mb-0.5">
+                    <span>🧂 Salty (Lavana)</span>
+                    <span class="text-[10px] text-amber-400/80 uppercase">Flavor Conductor</span>
+                  </div>
+                  <p class="text-[11px] text-parchment-300 font-light">Himalayan Pink Rock Salt & Volcanic Kala Namak</p>
+                </div>
+
+                <div class="p-3 rounded-xl bg-clove-900/90 border border-amber-500/30">
+                  <div class="flex items-center justify-between text-amber-300 font-bold mb-0.5">
+                    <span>🔥 Pungent (Katu)</span>
+                    <span class="text-[10px] text-amber-400/80 uppercase">Metabolism</span>
+                  </div>
+                  <p class="text-[11px] text-parchment-300 font-light">Tellicherry Pepper, Guntur Chilli & Sonth Ginger</p>
+                </div>
+
+                <div class="p-3 rounded-xl bg-clove-900/90 border border-amber-500/30">
+                  <div class="flex items-center justify-between text-amber-300 font-bold mb-0.5">
+                    <span>🌿 Bitter (Tikta)</span>
+                    <span class="text-[10px] text-amber-400/80 uppercase">Detoxification</span>
+                  </div>
+                  <p class="text-[11px] text-parchment-300 font-light">Lakadong Turmeric, Wild Fenugreek & Kalonji</p>
+                </div>
+
+                <div class="p-3 rounded-xl bg-clove-900/90 border border-amber-500/30">
+                  <div class="flex items-center justify-between text-amber-300 font-bold mb-0.5">
+                    <span>🌰 Astringent (Kashaya)</span>
+                    <span class="text-[10px] text-amber-400/80 uppercase">Cooling & Tone</span>
+                  </div>
+                  <p class="text-[11px] text-parchment-300 font-light">Tuticorin Whole Cloves, Nutmeg & Bay Leaf</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="lg:col-span-7">
+              <div class="bg-parchment-50 text-clove-900 rounded-2xl p-6 sm:p-8 border border-parchment-300 shadow-xl">
+                <h4 class="font-heading font-bold text-lg text-clove-900 mb-1">Master Blender's Pairing Recommender</h4>
+                <p class="text-xs text-clove-800/70 mb-4">Select a dish to reveal the sommelier spice pairing:</p>
+                
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 mb-6" id="embedded-dish-selectors">
+                  <button onclick="setDishPairing('biryani')" class="dish-btn p-3 rounded-xl border border-saffron-600 bg-saffron-50 text-xs font-bold text-clove-900 text-center">
+                    🍚 Royal Biryani
+                  </button>
+                  <button onclick="setDishPairing('curry')" class="dish-btn p-3 rounded-xl border border-parchment-300 bg-white text-xs font-bold text-clove-900 text-center">
+                    🍲 Rich Curry
+                  </button>
+                  <button onclick="setDishPairing('grill')" class="dish-btn p-3 rounded-xl border border-parchment-300 bg-white text-xs font-bold text-clove-900 text-center">
+                    🍢 Char Tandoor
+                  </button>
+                  <button onclick="setDishPairing('chai')" class="dish-btn p-3 rounded-xl border border-parchment-300 bg-white text-xs font-bold text-clove-900 text-center">
+                    ☕ Spiced Chai
+                  </button>
+                </div>
+
+                <div id="dish-pairing-result" class="p-5 rounded-xl bg-white border border-parchment-300 space-y-3">
+                  <!-- Injected via JS -->
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </section>
+
+      <!-- TERROIR & ORIGIN MAP SECTION -->
+      <section class="py-16 bg-clove-900 text-white relative overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="text-center max-w-3xl mx-auto mb-12">
+            <span class="text-xs font-bold uppercase tracking-widest text-saffron-400">Geography of Flavor</span>
+            <h2 class="text-3xl sm:text-4xl font-bold font-heading text-parchment-50 mt-1">The Great Indian Spice Terroir</h2>
+            <p class="text-parchment-300 text-sm mt-2">Just as wine inherits its soul from soil and microclimate, every SuryaVeda spice is harvested exclusively from its geographic motherland.</p>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 items-stretch" id="terroir-cards-container">
+            <!-- Rendered via JS -->
+          </div>
+        </div>
+      </section>
+
+      <!-- RECIPES TEASER -->
+      <section class="py-16 bg-parchment-100 dark:bg-[#1A1108] border-b border-parchment-300 dark:border-saffron-900/40">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-10 gap-4">
+            <div>
+              <span class="text-xs font-bold uppercase tracking-widest text-terracotta-600 dark:text-terracotta-400">Culinary Inspirations</span>
+              <h2 class="text-3xl sm:text-4xl font-bold font-heading text-clove-900 dark:text-parchment-50">Craft Royal Dishes at Home</h2>
+              <p class="text-sm text-clove-800/70 dark:text-parchment-300 max-w-xl mt-1">Explore authentic royal methods and pairing secrets formulated by our spice masters.</p>
+            </div>
+            <button onclick="navigateTo('recipes')" class="px-5 py-2.5 rounded-xl bg-clove-900 hover:bg-saffron-700 text-saffron-200 hover:text-white text-xs font-bold transition flex items-center gap-2 shadow-sm">
+              <span>Explore All Kitchen Guides</span>
+              <i class="fa-solid fa-arrow-right text-[10px]"></i>
+            </button>
+          </div>
+
+          <div id="home-recipe-teaser" class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch">
+            <!-- Rendered by JS -->
+          </div>
+        </div>
+      </section>
+
+      <!-- TESTIMONIALS SECTION -->
+      <section class="py-16 bg-parchment-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="text-center max-w-2xl mx-auto mb-12">
+            <span class="text-xs font-bold uppercase tracking-widest text-saffron-700">Praise From The Kitchens</span>
+            <h2 class="text-3xl sm:text-4xl font-bold text-clove-900">Cherished by Chefs & Food Lovers</h2>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6" id="testimonials-grid">
+            <!-- Rendered by JS -->
+          </div>
+        </div>
+      </section>
+
+    </section>
+
+    <!-- ==================== 1B. HOME 2 DEDICATED VIEW (STANDALONE ACCESS VIA DROPDOWN) ==================== -->
+    <section id="view-home-2" class="spa-view hidden">
+      
+      <!-- HOME 2 HERO -->
+      <div class="relative bg-gradient-to-b from-cardamom-900 via-clove-900 to-clove-900 text-white py-20 border-b border-amber-600/30 overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+          
+          <div class="lg:col-span-7 space-y-6">
+            <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-500/20 border border-amber-400 text-amber-300 text-xs font-bold uppercase tracking-widest shadow">
+              <i class="fa-solid fa-crown text-amber-400"></i> Home 2 • Estate Cellar & Sommelier Edition
+            </div>
+            <h1 class="text-4xl sm:text-6xl font-bold font-heading text-parchment-50 leading-tight">
+              Single-Barrel Aged & <span class="gold-text-shimmer">Grand Cru Reserve Spices</span>
+            </h1>
+            <p class="text-parchment-200 text-base sm:text-lg font-light leading-relaxed max-w-2xl">
+              Step beyond everyday kitchen seasonings into our private reserve vault. Sourced from ancient mountain vines exceeding 100 years, cured in seasoned rosewood barrels, and compounded strictly in micro-batches for connoisseurs and master chefs.
+            </p>
+
+            <div class="flex flex-wrap gap-4 pt-2">
+              <button onclick="navigateTo('products')" class="px-8 py-4 rounded-xl gold-gradient-bg text-white font-bold text-sm shadow-xl hover:scale-105 transition flex items-center gap-2">
+                <span>View Full Pantry Catalog</span>
+                <i class="fa-solid fa-arrow-right text-xs"></i>
+              </button>
+              <button onclick="navigateTo('home')" class="px-6 py-4 rounded-xl bg-white/10 hover:bg-white/20 text-parchment-100 font-semibold text-sm border border-white/20 transition flex items-center gap-2">
+                <i class="fa-solid fa-arrow-left text-xs"></i>
+                <span>Switch to Home 1: Terroir Pantry</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="lg:col-span-5">
+            <div class="relative rounded-2xl overflow-hidden border-2 border-amber-500/40 shadow-2xl group">
+              <img src="https://images.unsplash.com/photo-1509358271058-acd22cc93898?auto=format&fit=crop&w=1200&q=90" alt="Estate Reserve Cask Spices" class="w-full h-96 object-cover group-hover:scale-105 transition-transform duration-700">
+              <div class="absolute inset-0 bg-gradient-to-t from-clove-900 via-clove-900/30 to-transparent"></div>
+              <div class="absolute bottom-6 left-6 right-6 p-5 rounded-xl bg-clove-900/90 backdrop-blur-md border border-amber-500/30 text-white">
+                <span class="text-[10px] text-amber-400 font-black uppercase tracking-wider">Vault Batch #04</span>
+                <h4 class="font-heading font-bold text-base text-parchment-50">100-Year Ancient Vine Peppercorn</h4>
+                <p class="text-xs text-parchment-300 mt-1">Cured in seasoned Kerala Rosewood casks.</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- HOME 2 CURATOR BRIEF SECTION (BRIEF OF HOME 2) -->
+      <section class="py-14 bg-parchment-50 border-b border-parchment-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="bg-white rounded-3xl p-8 sm:p-10 border border-parchment-300 shadow-md">
+            <div class="max-w-3xl mb-8">
+              <span class="text-xs font-bold uppercase tracking-widest text-cardamom-800">Curator Briefing</span>
+              <h2 class="text-2xl sm:text-3xl font-bold font-heading text-clove-900 mt-1">Inside Home 2: The Connoisseur’s Cellar Guide</h2>
+              <p class="text-xs sm:text-sm text-clove-800/70 mt-2 leading-relaxed">
+                While <strong>Home 1</strong> celebrates our core single-estate daily pantry and heritage origins, <strong>Home 2</strong> is dedicated to ultra-rare, high-altitude micro-harvests, single-barrel wood aging, and sensory culinary intelligence.
+              </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div class="p-6 rounded-2xl bg-parchment-100 border border-parchment-300 space-y-3">
+                <div class="w-12 h-12 rounded-xl bg-amber-600 text-white flex items-center justify-center text-xl shadow">
+                  <i class="fa-solid fa-vault"></i>
+                </div>
+                <h3 class="font-heading font-bold text-base text-clove-900">1. Grand Cru Reserve Vault</h3>
+                <p class="text-xs text-clove-800/70 font-light leading-relaxed">
+                  Numbered micro-lots such as 100-year vine Tellicherry peppercorns aged in Kerala rosewood casks and dawn-picked Kashmiri saffron ingots (Crocin 265+).
+                </p>
+              </div>
+
+              <div class="p-6 rounded-2xl bg-parchment-100 border border-parchment-300 space-y-3">
+                <div class="w-12 h-12 rounded-xl bg-cardamom-800 text-white flex items-center justify-center text-xl shadow">
+                  <i class="fa-solid fa-scale-balanced"></i>
+                </div>
+                <h3 class="font-heading font-bold text-base text-clove-900">2. Shad Rasa (6 Tastes) Matrix</h3>
+                <p class="text-xs text-clove-800/70 font-light leading-relaxed">
+                  The ancient Ayurvedic science of balancing Sweet, Sour, Salty, Pungent, Bitter, and Astringent flavors to stimulate digestive fire (*Agni*) and mental vitality.
+                </p>
+              </div>
+
+              <div class="p-6 rounded-2xl bg-parchment-100 border border-parchment-300 space-y-3">
+                <div class="w-12 h-12 rounded-xl bg-terracotta-600 text-white flex items-center justify-center text-xl shadow">
+                  <i class="fa-solid fa-wine-glass-empty"></i>
+                </div>
+                <h3 class="font-heading font-bold text-base text-clove-900">3. Sommelier Pairing Engine</h3>
+                <p class="text-xs text-clove-800/70 font-light leading-relaxed">
+                  Algorithmic spice compounding recommendation system for royal dum biryanis, slow-cooked Awadhi curries, charcoal tandoor grills, and restorative Vedic chai.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- GRAND CRU RESERVES GRID -->
+      <section class="py-16 bg-parchment-100 border-b border-parchment-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="text-center max-w-3xl mx-auto mb-12">
+            <span class="text-xs font-bold uppercase tracking-widest text-cardamom-800">Private Cellar Allotment</span>
+            <h2 class="text-3xl sm:text-4xl font-bold font-heading text-clove-900 mt-1">The Grand Cru Reserve Series</h2>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch" id="estate-reserves-grid">
+            <!-- Rendered via JS -->
+          </div>
+        </div>
+      </section>
+    </section>
+
+    <!-- ==================== 2. PRODUCTS CATALOG VIEW ==================== -->
+    <section id="view-products" class="spa-view hidden py-10">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="bg-clove-900 text-parchment-50 rounded-2xl p-8 mb-8 border border-saffron-800/40 relative overflow-hidden">
+          <div class="relative z-10 max-w-2xl">
+            <span class="text-xs font-bold uppercase tracking-widest text-saffron-400">Our Complete Pantry</span>
+            <h1 class="text-3xl sm:text-4xl font-bold font-heading mt-1">Artisanal Spices by Category</h1>
+            <p class="text-parchment-200 text-sm mt-2 font-light">
+              Explore whole unadulterated spices, cold stone-ground pure powders, aged sun-matured pickles, and handcrafted royal masalas.
+            </p>
+          </div>
+          <div class="absolute right-0 top-0 bottom-0 w-1/3 opacity-20 hidden md:block">
+            <img src="https://images.unsplash.com/photo-1532336414038-cf19250c5757?auto=format&fit=crop&w=800&q=85" class="h-full w-full object-cover">
+          </div>
+        </div>
+
+        <!-- CATEGORY PILLS BAR -->
+        <div class="flex items-center gap-2 overflow-x-auto pb-4 mb-6 scrollbar-none" id="category-pills">
+          <!-- Rendered via JS -->
+        </div>
+
+        <!-- FILTER & SEARCH CONTROLS -->
+        <div class="bg-parchment-100 border border-parchment-300 rounded-xl p-4 mb-8 flex flex-col md:flex-row items-center justify-between gap-4">
+          <div class="relative w-full md:w-80">
+            <input type="text" id="catalog-search" placeholder="Search by name, spice, notes or origin..." oninput="filterProducts()" class="w-full pl-9 pr-4 py-2.5 text-xs bg-white border border-parchment-300 rounded-lg focus:outline-none focus:border-saffron-600">
+            <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-xs text-clove-800/50"></i>
+          </div>
+
+          <div class="flex flex-wrap items-center gap-3 w-full md:w-auto justify-end">
+            <div class="flex items-center gap-2 text-xs font-semibold text-clove-900">
+              <label for="filter-heat" class="shrink-0"><i class="fa-solid fa-fire text-terracotta-600 mr-1"></i>Heat:</label>
+              <select id="filter-heat" onchange="filterProducts()" class="bg-white border border-parchment-300 text-xs rounded-lg px-3 py-2 focus:outline-none focus:border-saffron-600">
+                <option value="all">All Spice Levels</option>
+                <option value="mild">Mild (1-3/10)</option>
+                <option value="medium">Medium (4-6/10)</option>
+                <option value="hot">Fiery Hot (7-10/10)</option>
+              </select>
+            </div>
+
+            <div class="flex items-center gap-2 text-xs font-semibold text-clove-900">
+              <label for="sort-by" class="shrink-0"><i class="fa-solid fa-arrow-down-wide-short text-saffron-700 mr-1"></i>Sort:</label>
+              <select id="sort-by" onchange="filterProducts()" class="bg-white border border-parchment-300 text-xs rounded-lg px-3 py-2 focus:outline-none focus:border-saffron-600">
+                <option value="featured">Featured / Flagship</option>
+                <option value="rating">Highest Rated</option>
+                <option value="price-asc">Price: Low to High</option>
+                <option value="price-desc">Price: High to Low</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- PRODUCTS GRID -->
+        <div id="products-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          <!-- Rendered via JS -->
+        </div>
+
+        <div id="no-products-msg" class="hidden text-center py-16 bg-parchment-100 rounded-2xl border border-dashed border-parchment-300">
+          <i class="fa-solid fa-mortar-pestle text-4xl text-saffron-700 mb-3"></i>
+          <h3 class="text-lg font-bold text-clove-900">No matching spices found</h3>
+          <p class="text-xs text-clove-800/70 mt-1">Try relaxing your search terms or resetting filters.</p>
+          <button onclick="resetFilters()" class="mt-4 px-4 py-2 bg-saffron-600 text-white rounded-lg text-xs font-bold">Reset Filters</button>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==================== 3. RECIPES VIEW ==================== -->
+    <section id="view-recipes" class="spa-view hidden py-10">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center max-w-3xl mx-auto mb-10">
+          <span class="text-xs font-bold uppercase tracking-widest text-saffron-700">Palace & Heritage Kitchens</span>
+          <h1 class="text-3xl sm:text-5xl font-bold font-heading text-clove-900 mt-1">Heritage Culinary Guides & Techniques</h1>
+          <p class="text-sm text-clove-800/70 mt-2 font-light">
+            Timeless regional recipes formulated specifically around our single-estate spices. Each guide includes clear HD step-by-step visual explanations and direct 1-click spice compounding into your cart.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8" id="recipes-catalog-grid">
+          <!-- Rendered via JS -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== 4. BULK ORDERS & B2B VIEW ==================== -->
+    <section id="view-bulk-orders" class="spa-view hidden py-10">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="bg-gradient-to-br from-clove-900 via-clove-800 to-terracotta-900 text-parchment-50 rounded-2xl p-8 sm:p-12 mb-10 border border-saffron-800/40 relative overflow-hidden">
+          <div class="max-w-3xl relative z-10 space-y-4">
+            <span class="inline-block px-3 py-1 bg-saffron-500/20 border border-saffron-400 text-saffron-300 text-xs font-bold rounded-full uppercase tracking-wider">
+              B2B • Fine Dining • Corporate Gifting • Exports
+            </span>
+            <h1 class="text-3xl sm:text-5xl font-bold font-heading">Wholesale Terroir Spices & Bespoke Compounding</h1>
+            <p class="text-parchment-200 text-sm sm:text-base font-light leading-relaxed">
+              We supply Michelin-starred restaurants, boutique heritage hotels, artisanal food manufacturers, and luxury wedding hampers with bulk single-estate spices, custom grinding granulometry, and certified lab analysis.
+            </p>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+          
+          <!-- LEFT: LIVE TIERED PRICING ESTIMATOR -->
+          <div class="lg:col-span-7 space-y-6">
+            <div class="bg-parchment-50 rounded-2xl p-6 sm:p-8 border border-parchment-300 shadow-sm space-y-6">
+              <div class="flex items-center justify-between border-b border-parchment-300 pb-4">
+                <div>
+                  <h3 class="font-heading font-bold text-xl text-clove-900">Interactive Bulk Quote Estimator</h3>
+                  <p class="text-xs text-clove-800/70">Select your spice and move the slider to see automatic wholesale discounts.</p>
+                </div>
+                <span class="text-xs font-bold bg-cardamom-100 text-cardamom-800 px-3 py-1 rounded-full border border-cardamom-600/30">MOQ: 5 KG</span>
+              </div>
+
+              <div>
+                <label class="block text-xs font-bold uppercase tracking-wider text-clove-900 mb-2">Select Target Spice / Blend:</label>
+                <select id="bulk-spice-select" onchange="calculateBulkQuote()" class="w-full p-3 bg-white border border-parchment-300 rounded-xl text-sm font-semibold text-clove-900 focus:outline-none focus:border-saffron-600">
+                  <!-- Populated by JS -->
+                </select>
+              </div>
+
+              <div class="space-y-3">
+                <div class="flex justify-between items-center">
+                  <label class="text-xs font-bold uppercase tracking-wider text-clove-900">Desired Quantity (Kilograms):</label>
+                  <span id="bulk-kg-display" class="font-display font-bold text-xl text-saffron-700 bg-saffron-50 px-3 py-1 rounded-lg border border-saffron-300">25 KG</span>
+                </div>
+                <input type="range" id="bulk-kg-slider" min="5" max="250" step="5" value="25" oninput="calculateBulkQuote()" class="w-full h-2 bg-parchment-300 rounded-lg cursor-pointer">
+                <div class="flex justify-between text-[11px] text-clove-800/60">
+                  <span>5 KG (Artisanal Kitchen)</span>
+                  <span>50 KG (Hotel Group)</span>
+                  <span>100 KG (Food Brand)</span>
+                  <span>250+ KG (Export Container)</span>
+                </div>
+              </div>
+
+              <div>
+                <label class="block text-xs font-bold uppercase tracking-wider text-clove-900 mb-2">Packaging Format:</label>
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-3" id="packaging-options">
+                  <label class="flex items-center gap-3 p-3 bg-white border border-saffron-600 rounded-xl cursor-pointer">
+                    <input type="radio" name="packaging" value="jute" checked onchange="calculateBulkQuote()" class="accent-saffron-700">
+                    <div>
+                      <p class="font-bold text-xs text-clove-900">Embossed Jute Bags</p>
+                      <p class="text-[10px] text-clove-800/70">Eco breathable 5kg/10kg</p>
+                    </div>
+                  </label>
+                  <label class="flex items-center gap-3 p-3 bg-white border border-parchment-300 rounded-xl cursor-pointer">
+                    <input type="radio" name="packaging" value="vacuum" onchange="calculateBulkQuote()" class="accent-saffron-700">
+                    <div>
+                      <p class="font-bold text-xs text-clove-900">Nitrogen Vacuum Foil</p>
+                      <p class="text-[10px] text-clove-800/70">24-month aroma barrier</p>
+                    </div>
+                  </label>
+                  <label class="flex items-center gap-3 p-3 bg-white border border-parchment-300 rounded-xl cursor-pointer">
+                    <input type="radio" name="packaging" value="brass" onchange="calculateBulkQuote()" class="accent-saffron-700">
+                    <div>
+                      <p class="font-bold text-xs text-clove-900">Heritage Brass Tins</p>
+                      <p class="text-[10px] text-clove-800/70">Luxury corporate gifting</p>
+                    </div>
+                  </label>
+                </div>
+              </div>
+
+              <div class="p-6 rounded-xl bg-parchment-200 border border-parchment-300 space-y-3">
+                <div class="flex justify-between items-center text-xs text-clove-800">
+                  <span>Standard Retail Baseline:</span>
+                  <span id="bulk-retail-total" class="font-semibold line-through text-clove-800/60">₹37,500</span>
+                </div>
+                <div class="flex justify-between items-center text-xs text-cardamom-800 font-bold">
+                  <span>Wholesale Tier Discount (<span id="bulk-discount-pct">25%</span>):</span>
+                  <span id="bulk-discount-val">- ₹9,375</span>
+                </div>
+                <div class="flex justify-between items-center text-xs text-clove-800">
+                  <span>Export Packing & Nitrogen Sealing:</span>
+                  <span id="bulk-packaging-val" class="font-semibold">Included Free</span>
+                </div>
+                <div class="border-t border-parchment-300 pt-3 flex justify-between items-center">
+                  <div>
+                    <span class="text-xs text-clove-800 font-semibold block">Estimated Wholesale Price:</span>
+                    <span class="text-[11px] text-clove-800/60">Excl. applicable GST & Freight</span>
+                  </div>
+                  <span id="bulk-final-quote" class="font-display text-2xl font-bold text-saffron-800">₹28,125</span>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- RIGHT: B2B INQUIRY FORM -->
+          <div class="lg:col-span-5">
+            <div class="bg-white rounded-2xl p-6 sm:p-8 border border-parchment-300 shadow-sm space-y-4">
+              <div class="border-b border-parchment-300 pb-3">
+                <h3 class="font-heading font-bold text-lg text-clove-900">Request Wholesale Samples & Invoice</h3>
+                <p class="text-xs text-clove-800/70">Get a formal proforma quote within 4 business hours.</p>
+              </div>
+
+              <form onsubmit="handleBulkInquirySubmit(event)" class="space-y-4">
+                <div>
+                  <label class="block text-xs font-bold text-clove-900 mb-1">Company / Organization Name *</label>
+                  <input type="text" required placeholder="e.g. Taj Heritage Hospitality Group" class="w-full p-2.5 bg-parchment-50 border border-parchment-300 rounded-lg text-xs focus:outline-none focus:border-saffron-600">
+                </div>
+
+                <div class="grid grid-cols-2 gap-3">
+                  <div>
+                    <label class="block text-xs font-bold text-clove-900 mb-1">Contact Person *</label>
+                    <input type="text" required placeholder="Executive Chef / Buyer" class="w-full p-2.5 bg-parchment-50 border border-parchment-300 rounded-lg text-xs focus:outline-none focus:border-saffron-600">
+                  </div>
+                  <div>
+                    <label class="block text-xs font-bold text-clove-900 mb-1">GST / Business Tax ID</label>
+                    <input type="text" placeholder="e.g. 29AAAAA0000A1Z5" class="w-full p-2.5 bg-parchment-50 border border-parchment-300 rounded-lg text-xs focus:outline-none focus:border-saffron-600">
+                  </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-3">
+                  <div>
+                    <label class="block text-xs font-bold text-clove-900 mb-1">Official Email *</label>
+                    <input type="email" required placeholder="purchasing@company.com" class="w-full p-2.5 bg-parchment-50 border border-parchment-300 rounded-lg text-xs focus:outline-none focus:border-saffron-600">
+                  </div>
+                  <div>
+                    <label class="block text-xs font-bold text-clove-900 mb-1">Phone / WhatsApp *</label>
+                    <input type="tel" required placeholder="+91 98765 43210" class="w-full p-2.5 bg-parchment-50 border border-parchment-300 rounded-lg text-xs focus:outline-none focus:border-saffron-600">
+                  </div>
+                </div>
+
+                <div>
+                  <label class="block text-xs font-bold text-clove-900 mb-1">Business Nature</label>
+                  <select class="w-full p-2.5 bg-parchment-50 border border-parchment-300 rounded-lg text-xs focus:outline-none focus:border-saffron-600">
+                    <option>Fine Dining Restaurant / Chain</option>
+                    <option>5-Star Hotel & Resort</option>
+                    <option>Corporate Gift & Festive Hampers</option>
+                    <option>Spice Exporter / International Distributor</option>
+                    <option>Artisanal Food / Sauce Manufacturer</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label class="block text-xs font-bold text-clove-900 mb-1">Specific Spices & Grinding Specifications</label>
+                  <textarea rows="3" placeholder="Tell us if you require whole unpolished pods, specific mesh coarseness, or sample tasting box..." class="w-full p-2.5 bg-parchment-50 border border-parchment-300 rounded-lg text-xs focus:outline-none focus:border-saffron-600"></textarea>
+                </div>
+
+                <button type="submit" class="w-full py-3.5 rounded-xl gold-gradient-bg text-white font-bold text-sm shadow hover:scale-[1.01] transition-all">
+                  Submit Wholesale Request
+                </button>
+              </form>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==================== 5. CONTACT & BOUTIQUES VIEW (WITH ENQUIRY FORM) ==================== -->
+    <section id="view-contact" class="spa-view hidden py-10">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="text-center max-w-2xl mx-auto mb-12">
+          <span class="text-xs font-bold uppercase tracking-widest text-saffron-700">The Sensory Concierge</span>
+          <h1 class="text-3xl sm:text-5xl font-bold font-heading text-clove-900 mt-1">Contact & Boutique Enquiry Form</h1>
+          <p class="text-sm text-clove-800/70 mt-2">
+            Whether you seek custom masala compounding, harvest inquiries, wedding hamper curations, or a visit to our heritage spice cellar.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
+          
+          <div class="lg:col-span-5 space-y-6">
+            <div class="bg-parchment-50 p-6 sm:p-8 rounded-2xl border border-parchment-300 space-y-6">
+              <h3 class="font-heading font-bold text-xl text-clove-900">Heritage Spice Boutiques</h3>
+              
+              <div class="space-y-4" id="contact-locations-list">
+                <!-- Rendered dynamically -->
+              </div>
+
+              <div class="border-t border-parchment-300 pt-4 space-y-3">
+                <div class="flex items-center gap-3 text-xs text-clove-900">
+                  <i class="fa-solid fa-phone text-saffron-700 w-5"></i>
+                  <span class="font-semibold">+91 (800) 555-SPICE / +91 (484) 222-1924</span>
+                </div>
+                <div class="flex items-center gap-3 text-xs text-clove-900">
+                  <i class="fa-brands fa-whatsapp text-cardamom-700 w-5 text-sm"></i>
+                  <span class="font-semibold">WhatsApp Concierge: +91 98470 19240</span>
+                </div>
+                <div class="flex items-center gap-3 text-xs text-clove-900">
+                  <i class="fa-solid fa-envelope text-saffron-700 w-5"></i>
+                  <span>concierge@suryavedaspices.com</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Contact / Enquiry Form -->
+          <div class="lg:col-span-7">
+            <div class="bg-white rounded-2xl p-6 sm:p-10 border border-parchment-300 shadow-sm space-y-6">
+              
+              <div>
+                <h3 class="font-heading font-bold text-2xl text-clove-900">Send an Enquiry or Complete Checkout</h3>
+                <p class="text-xs text-clove-800/70 mt-1">Our culinary sommeliers process all retail reservations and custom blend requests within 24 hours.</p>
+              </div>
+
+              <form onsubmit="handleContactSubmit(event)" class="space-y-4" id="main-contact-form" novalidate>
+                
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label class="block text-xs font-bold text-clove-900 mb-1">Your Full Name *</label>
+                    <input type="text" id="contact-name" required placeholder="e.g. Ananya Sharma" class="w-full p-3 bg-parchment-50 border border-parchment-300 rounded-xl text-xs focus:outline-none focus:border-saffron-600 transition-colors">
+                    <span id="contact-name-error" class="hidden text-[11px] text-red-600 font-semibold mt-1.5 flex items-center gap-1.5">
+                      <i class="fa-solid fa-circle-exclamation text-xs text-red-600 shrink-0"></i>
+                      <span>Only alphabets and spaces are allowed. Numbers are not applicable.</span>
+                    </span>
+                  </div>
+                  <div>
+                    <label class="block text-xs font-bold text-clove-900 mb-1">Email Address *</label>
+                    <input type="email" id="contact-email" required placeholder="ananya@domain.com" class="w-full p-3 bg-parchment-50 border border-parchment-300 rounded-xl text-xs focus:outline-none focus:border-saffron-600 transition-colors">
+                  </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label class="block text-xs font-bold text-clove-900 mb-1">Mobile / Phone Number</label>
+                    <input type="tel" id="contact-phone" placeholder="+91 98765 00000" class="w-full p-3 bg-parchment-50 border border-parchment-300 rounded-xl text-xs focus:outline-none focus:border-saffron-600 transition-colors">
+                    <span id="contact-phone-error" class="hidden text-[11px] text-red-600 font-semibold mt-1.5 flex items-center gap-1.5">
+                      <i class="fa-solid fa-circle-exclamation text-xs text-red-600 shrink-0"></i>
+                      <span>Only numbers are allowed. Alphabets are not applicable.</span>
+                    </span>
+                  </div>
+                  <div>
+                    <label class="block text-xs font-bold text-clove-900 mb-1">Nature of Enquiry *</label>
+                    <select id="contact-purpose" class="w-full p-3 bg-parchment-50 border border-parchment-300 rounded-xl text-xs focus:outline-none focus:border-saffron-600 transition-colors">
+                      <option value="checkout">Concierge Checkout & Order Delivery</option>
+                      <option value="retail">Retail Order / Tracking Assistance</option>
+                      <option value="blend">Bespoke Masala Compounding Consultation</option>
+                      <option value="wedding">Wedding & Festive Gift Curation</option>
+                      <option value="tasting">Boutique Cellar Tasting Visit</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div>
+                  <label class="block text-xs font-bold text-clove-900 mb-1">Your Message or Checkout Notes *</label>
+                  <textarea id="contact-message" rows="6" required placeholder="Detail your delivery address, culinary notes, or specific spice inquiries..." class="w-full p-3 bg-parchment-50 border border-parchment-300 rounded-xl text-xs focus:outline-none focus:border-saffron-600 transition-colors"></textarea>
+                </div>
+
+                <button type="submit" class="w-full py-4 rounded-xl gold-gradient-bg text-white font-bold text-sm shadow-md hover:shadow-saffron-600/30 transition">
+                  Dispatch Message to Concierge Desk
+                </button>
+              </form>
+
+            </div>
+          </div>
+
+        </div>
+
+        <!-- INTERACTIVE APPROXIMATED GOOGLE MAP & CELLAR VISITS -->
+        <div class="mt-12 bg-white dark:bg-[#1A1108] p-6 sm:p-8 rounded-3xl border border-parchment-300 dark:border-saffron-900/40 shadow-sm space-y-6">
+          <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+            <div>
+              <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-saffron-100 dark:bg-saffron-900/40 text-saffron-900 dark:text-saffron-300 text-xs font-bold uppercase tracking-wider mb-1">
+                <i class="fa-solid fa-map-location-dot text-saffron-600"></i> Terroir & Flagship Cellar Map
+              </div>
+              <h3 class="font-heading font-bold text-xl sm:text-2xl text-clove-900 dark:text-parchment-50">Mattancherry Flagship Cellar & Cupping Room</h3>
+              <p class="text-xs text-clove-800/70 dark:text-parchment-300 mt-0.5">48 Heritage Spice Row, Jew Town, Mattancherry, Kochi, Kerala 682002 • Lat: 9.9572° N, Long: 76.2577° E</p>
+            </div>
+            
+            <a href="https://maps.google.com/?q=Jew+Town+Mattancherry+Kochi+Kerala+682002" target="_blank" rel="noopener noreferrer" class="px-5 py-2.5 rounded-xl bg-clove-900 hover:bg-saffron-700 text-white font-bold text-xs shadow transition flex items-center gap-2 shrink-0">
+              <i class="fa-solid fa-diamond-turn-right text-saffron-400"></i>
+              <span>Get Directions on Google Maps</span>
+            </a>
+          </div>
+
+          <!-- Responsive Google Maps Embed -->
+          <div class="relative w-full h-80 sm:h-96 rounded-2xl overflow-hidden border border-parchment-300 dark:border-saffron-900/30 shadow-inner">
+            <iframe 
+              title="SuryaVeda Flagship Spice Cellar Location"
+              src="https://maps.google.com/maps?q=Jew%20Town,%20Mattancherry,%20Kochi,%20Kerala%20682002&t=&z=15&ie=UTF8&iwloc=&output=embed" 
+              class="w-full h-full border-0" 
+              allowfullscreen="" 
+              loading="lazy" 
+              referrerpolicy="no-referrer-when-downgrade">
+            </iframe>
+            
+            <!-- Overlay Cellar Quick Card -->
+            <div class="absolute bottom-4 left-4 bg-clove-900/95 backdrop-blur-md text-white p-4 rounded-xl border border-saffron-500/40 shadow-xl max-w-xs hidden sm:block">
+              <div class="flex items-center gap-2 text-xs font-bold text-saffron-300 mb-1">
+                <i class="fa-solid fa-building-columns text-saffron-400"></i>
+                <span>Mattancherry Cellar Pavilion</span>
+              </div>
+              <p class="text-[11px] text-parchment-200 font-light leading-snug">
+                Live aroma cupping sessions daily from 11:00 AM – 7:00 PM. Private sommelier tastings by reservation.
+              </p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==================== 7. BESPOKE ROYAL SPICE CRATE STUDIO (GIFTING) ==================== -->
+    <section id="view-gifting" class="spa-view hidden py-12 md:py-20">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+        
+        <!-- Header Banner -->
+        <div class="text-center space-y-4 max-w-3xl mx-auto">
+          <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-saffron-100 dark:bg-saffron-900/40 text-saffron-900 dark:text-saffron-300 text-xs font-black uppercase tracking-widest border border-saffron-300">
+            <i class="fa-solid fa-gift text-saffron-600"></i> Royal Artisan Customizer
+          </div>
+          <h1 class="font-display font-black text-3xl sm:text-5xl text-clove-900 dark:text-parchment-50">
+            Bespoke Spice Crate Studio
+          </h1>
+          <p class="text-sm text-clove-800/80 dark:text-parchment-300 font-light leading-relaxed">
+            Curate an extraordinary heirloom gift chest. Select an artisan hand-crafted casket, choose 3 single-estate harvests, and engrave a personalized royal brass plaque with your recipient's name or custom crest.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
+          
+          <!-- LEFT: CUSTOMIZATION CONTROLS (8 Cols) -->
+          <div class="lg:col-span-8 space-y-10">
+            
+            <!-- STEP 1: SELECT LUXURY CASKET -->
+            <div class="bg-white dark:bg-[#1A1108] p-6 sm:p-8 rounded-3xl border border-parchment-300 dark:border-saffron-900/40 shadow-sm space-y-5">
+              <div class="flex items-center justify-between">
+                <h3 class="font-heading font-black text-lg text-clove-900 dark:text-parchment-50 flex items-center gap-2.5">
+                  <span class="w-7 h-7 rounded-full bg-saffron-600 text-white flex items-center justify-center text-xs font-bold">1</span>
+                  Select Crate Style & Handcrafted Casket
+                </h3>
+                <span class="text-xs font-bold text-saffron-700 dark:text-saffron-400">Step 1 of 3</span>
+              </div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-4" id="gifting-box-options">
+                <!-- Option 1: Teakwood -->
+                <div onclick="selectCrateBox('teakwood', 1850, 'Malabar Teakwood Chest with Brass Latches')" id="crate-opt-teakwood" class="crate-box-card cursor-pointer p-4 rounded-2xl border-2 border-saffron-600 bg-saffron-50/50 dark:bg-saffron-950/40 transition-all text-center space-y-3 relative">
+                  <div class="absolute -top-2.5 right-3 bg-saffron-600 text-white text-[9px] font-black px-2 py-0.5 rounded-full uppercase tracking-wider">Most Popular</div>
+                  <div class="w-14 h-14 mx-auto rounded-2xl bg-amber-900/20 flex items-center justify-center text-amber-800 dark:text-amber-300 text-2xl">
+                    <i class="fa-solid fa-box-open"></i>
+                  </div>
+                  <div>
+                    <h4 class="font-bold text-xs text-clove-900 dark:text-parchment-50">Malabar Teakwood</h4>
+                    <p class="text-[10px] text-clove-800/60 dark:text-parchment-400 mt-0.5">Hand-rubbed linseed oil & antique brass latch</p>
+                  </div>
+                  <div class="text-sm font-black text-saffron-800 dark:text-saffron-400">₹1,850</div>
+                </div>
+
+                <!-- Option 2: Velvet -->
+                <div onclick="selectCrateBox('velvet', 2450, 'Maharaja Crimson Velvet Casket')" id="crate-opt-velvet" class="crate-box-card cursor-pointer p-4 rounded-2xl border border-parchment-300 dark:border-parchment-700 bg-white dark:bg-[#150D06] hover:border-saffron-400 transition-all text-center space-y-3">
+                  <div class="w-14 h-14 mx-auto rounded-2xl bg-rose-900/20 flex items-center justify-center text-rose-700 dark:text-rose-300 text-2xl">
+                    <i class="fa-solid fa-gem"></i>
+                  </div>
+                  <div>
+                    <h4 class="font-bold text-xs text-clove-900 dark:text-parchment-50">Maharaja Velvet</h4>
+                    <p class="text-[10px] text-clove-800/60 dark:text-parchment-400 mt-0.5">Royal crimson lining & gold-gilt filigree borders</p>
+                  </div>
+                  <div class="text-sm font-black text-saffron-800 dark:text-saffron-400">₹2,450</div>
+                </div>
+
+                <!-- Option 3: Brass Vault -->
+                <div onclick="selectCrateBox('brass', 3200, 'Imperial Hand-Hammered Brass Vault')" id="crate-opt-brass" class="crate-box-card cursor-pointer p-4 rounded-2xl border border-parchment-300 dark:border-parchment-700 bg-white dark:bg-[#150D06] hover:border-saffron-400 transition-all text-center space-y-3">
+                  <div class="w-14 h-14 mx-auto rounded-2xl bg-yellow-600/20 flex items-center justify-center text-yellow-700 dark:text-yellow-400 text-2xl">
+                    <i class="fa-solid fa-shield-halved"></i>
+                  </div>
+                  <div>
+                    <h4 class="font-bold text-xs text-clove-900 dark:text-parchment-50">Hammered Brass Vault</h4>
+                    <p class="text-[10px] text-clove-800/60 dark:text-parchment-400 mt-0.5">Pure cast brass canisters with sealable airtight lid</p>
+                  </div>
+                  <div class="text-sm font-black text-saffron-800 dark:text-saffron-400">₹3,200</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- STEP 2: CHOOSE 3 HARVEST SPICE JARS -->
+            <div class="bg-white dark:bg-[#1A1108] p-6 sm:p-8 rounded-3xl border border-parchment-300 dark:border-saffron-900/40 shadow-sm space-y-5">
+              <div class="flex items-center justify-between">
+                <h3 class="font-heading font-black text-lg text-clove-900 dark:text-parchment-50 flex items-center gap-2.5">
+                  <span class="w-7 h-7 rounded-full bg-saffron-600 text-white flex items-center justify-center text-xs font-bold">2</span>
+                  Select 3 Single-Estate Spices
+                </h3>
+                <span class="text-xs font-bold text-saffron-700 dark:text-saffron-400">Step 2 of 3</span>
+              </div>
+
+              <div class="grid grid-cols-1 md:grid-cols-3 gap-4" id="gifting-slots-container">
+                <!-- Slot 1 -->
+                <div class="p-4 rounded-2xl border border-parchment-300 dark:border-parchment-700 bg-parchment-50 dark:bg-[#150D06] space-y-3">
+                  <div class="flex items-center justify-between text-xs font-bold text-clove-900 dark:text-parchment-50">
+                    <span>Jar 1 (Whole Pod / Bark)</span>
+                    <span class="text-saffron-700 dark:text-saffron-400 font-bold" id="slot-1-price">₹450</span>
+                  </div>
+                  <select id="crate-spice-1" onchange="updateCrateCalculation()" class="w-full p-2.5 bg-white dark:bg-[#20150B] border border-parchment-300 dark:border-parchment-700 rounded-xl text-xs font-medium text-clove-900 dark:text-parchment-100 focus:outline-none focus:border-saffron-600">
+                    <option value="ws-01|Tellicherry Garbled Extra Bold Black Pepper|450">Tellicherry TGSEB Black Pepper</option>
+                    <option value="ws-02|Wayanad High-Elevation Green Cardamom|650">Wayanad Green Cardamom</option>
+                    <option value="ws-03|Ceylon True Alba Cinnamon Quills|580">Ceylon True Alba Cinnamon</option>
+                    <option value="ws-04|Tuticorin Fragrant Whole Cloves|420">Tuticorin Whole Cloves</option>
+                    <option value="res-02|Grand Imperial Kashmiri Mongra Saffron|1850">Imperial Kashmiri Saffron (+₹1,850)</option>
+                  </select>
+                </div>
+
+                <!-- Slot 2 -->
+                <div class="p-4 rounded-2xl border border-parchment-300 dark:border-parchment-700 bg-parchment-50 dark:bg-[#150D06] space-y-3">
+                  <div class="flex items-center justify-between text-xs font-bold text-clove-900 dark:text-parchment-50">
+                    <span>Jar 2 (Cold-Ground Powder)</span>
+                    <span class="text-saffron-700 dark:text-saffron-400 font-bold" id="slot-2-price">₹380</span>
+                  </div>
+                  <select id="crate-spice-2" onchange="updateCrateCalculation()" class="w-full p-2.5 bg-white dark:bg-[#20150B] border border-parchment-300 dark:border-parchment-700 rounded-xl text-xs font-medium text-clove-900 dark:text-parchment-100 focus:outline-none focus:border-saffron-600">
+                    <option value="pw-01|Lakadong Ultra-High Curcumin Turmeric|380">Lakadong High-Curcumin Turmeric</option>
+                    <option value="pw-02|Guntur Stemless Sannam Mirchi|290">Guntur Sannam Chilli Powder</option>
+                    <option value="pw-03|Alleppey High-Aroma Green Cardamom Powder|520">Alleppey Cardamom Powder</option>
+                    <option value="pw-04|Himalayan Mountain Ginger Powder (Sonth)|340">Himalayan Mountain Ginger</option>
+                    <option value="pw-05|Slow-Roasted Shahi Jeera Powder|320">Slow-Roasted Shahi Jeera</option>
+                  </select>
+                </div>
+
+                <!-- Slot 3 -->
+                <div class="p-4 rounded-2xl border border-parchment-300 dark:border-parchment-700 bg-parchment-50 dark:bg-[#150D06] space-y-3">
+                  <div class="flex items-center justify-between text-xs font-bold text-clove-900 dark:text-parchment-50">
+                    <span>Jar 3 (Masala / Sun Condiment)</span>
+                    <span class="text-saffron-700 dark:text-saffron-400 font-bold" id="slot-3-price">₹480</span>
+                  </div>
+                  <select id="crate-spice-3" onchange="updateCrateCalculation()" class="w-full p-2.5 bg-white dark:bg-[#20150B] border border-parchment-300 dark:border-parchment-700 rounded-xl text-xs font-medium text-clove-900 dark:text-parchment-100 focus:outline-none focus:border-saffron-600">
+                    <option value="ms-01|Imperial Lucknowi Shahi Garam Masala|480">Imperial Lucknowi Garam Masala</option>
+                    <option value="ms-02|Old Delhi Royal Biryani Potli Masala|520">Old Delhi Royal Biryani Masala</option>
+                    <option value="ms-03|Chettinad 18-Spice Roasted Gravy Blend|440">Chettinad 18-Spice Blend</option>
+                    <option value="pk-01|Varanasi Stuffed Red Chilli Pickle|360">Varanasi Stuffed Red Chilli Pickle</option>
+                    <option value="pk-03|Kathiawadi Sun-Baked Sweet & Sour Lime|320">Kathiawadi Sun-Baked Lime</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <!-- STEP 3: CUSTOM BRASS PLAQUE & CALLIGRAPHY NOTE -->
+            <div class="bg-white dark:bg-[#1A1108] p-6 sm:p-8 rounded-3xl border border-parchment-300 dark:border-saffron-900/40 shadow-sm space-y-6">
+              <div class="flex items-center justify-between">
+                <h3 class="font-heading font-black text-lg text-clove-900 dark:text-parchment-50 flex items-center gap-2.5">
+                  <span class="w-7 h-7 rounded-full bg-saffron-600 text-white flex items-center justify-center text-xs font-bold">3</span>
+                  Custom Engraved Brass Plaque & Gift Note
+                </h3>
+                <span class="text-xs font-bold text-saffron-700 dark:text-saffron-400">Step 3 of 3</span>
+              </div>
+
+              <div class="space-y-4">
+                <div>
+                  <label class="block text-xs font-bold text-clove-900 dark:text-parchment-100 mb-1">
+                    Brass Plaque Engraving Text (Max 36 characters)
+                  </label>
+                  <input type="text" id="engraving-text-input" maxlength="36" oninput="updateEngravingPreview(this.value)" placeholder="e.g., Curated for Chef Vikram Singhania" class="w-full p-3.5 bg-parchment-50 dark:bg-[#150D06] border border-parchment-300 dark:border-parchment-700 rounded-xl text-xs text-clove-900 dark:text-parchment-100 focus:outline-none focus:border-saffron-600">
+                </div>
+
+                <!-- LIVE BRASS PLAQUE PREVIEW -->
+                <div class="p-6 rounded-2xl bg-gradient-to-r from-amber-700 via-yellow-500 to-amber-700 text-clove-950 text-center shadow-lg border-2 border-amber-300 space-y-1 transform transition-all duration-300">
+                  <div class="text-[9px] uppercase tracking-widest font-black opacity-80 flex items-center justify-center gap-2">
+                    <span>✦</span> SURYAVEDA BESPOKE PATRON SEAL <span>✦</span>
+                  </div>
+                  <div id="live-engraving-preview" class="font-display font-black text-base sm:text-lg tracking-wider text-clove-950 uppercase py-1">
+                    CURATED FOR CHEF VIKRAM SINGHANIA
+                  </div>
+                  <div class="text-[9px] tracking-widest font-bold opacity-75">
+                    EST. 1924 • MATTANCHERRY, MALABAR COAST
+                  </div>
+                </div>
+
+                <div>
+                  <label class="block text-xs font-bold text-clove-900 dark:text-parchment-100 mb-1">
+                    Calligraphy Gift Parchment Note (Complimentary)
+                  </label>
+                  <textarea id="gift-card-message" rows="3" placeholder="Write your heartfelt note for the recipient. We write this on cold-pressed handmade cotton rag paper..." class="w-full p-3 bg-parchment-50 dark:bg-[#150D06] border border-parchment-300 dark:border-parchment-700 rounded-xl text-xs text-clove-900 dark:text-parchment-100 focus:outline-none focus:border-saffron-600"></textarea>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- RIGHT: LIVE ORDER SUMMARY & ADD TO BASKET (4 Cols) -->
+          <div class="lg:col-span-4 sticky top-28 space-y-6">
+            <div class="bg-parchment-50 dark:bg-[#1A1108] p-6 rounded-3xl border border-saffron-300 dark:border-saffron-800 shadow-xl space-y-6">
+              
+              <div class="border-b border-parchment-300 dark:border-saffron-900/40 pb-4">
+                <span class="text-[10px] font-black uppercase tracking-widest text-saffron-700 dark:text-saffron-400">Heirloom Curation</span>
+                <h4 class="font-display font-black text-xl text-clove-900 dark:text-parchment-50 mt-1">Crate Breakdown</h4>
+              </div>
+
+              <div class="space-y-3 text-xs">
+                <div class="flex justify-between text-clove-800 dark:text-parchment-300">
+                  <span id="summary-crate-name">Malabar Teakwood Chest</span>
+                  <span class="font-bold text-clove-900 dark:text-parchment-100" id="summary-crate-price">₹1,850</span>
+                </div>
+                <div class="flex justify-between text-clove-800 dark:text-parchment-300">
+                  <span id="summary-spice-1-name">Tellicherry TGSEB Black Pepper</span>
+                  <span class="font-bold text-clove-900 dark:text-parchment-100" id="summary-spice-1-price">₹450</span>
+                </div>
+                <div class="flex justify-between text-clove-800 dark:text-parchment-300">
+                  <span id="summary-spice-2-name">Lakadong High-Curcumin Turmeric</span>
+                  <span class="font-bold text-clove-900 dark:text-parchment-100" id="summary-spice-2-price">₹380</span>
+                </div>
+                <div class="flex justify-between text-clove-800 dark:text-parchment-300">
+                  <span id="summary-spice-3-name">Imperial Lucknowi Garam Masala</span>
+                  <span class="font-bold text-clove-900 dark:text-parchment-100" id="summary-spice-3-price">₹480</span>
+                </div>
+                <div class="flex justify-between text-cardamom-700 dark:text-cardamom-400 font-semibold pt-1 border-t border-parchment-200 dark:border-saffron-900/30">
+                  <span>Custom Brass Plaque & Parchment</span>
+                  <span>FREE</span>
+                </div>
+                <div class="flex justify-between text-cardamom-700 dark:text-cardamom-400 font-semibold">
+                  <span>Silk Ribbon & Wax Seal Packaging</span>
+                  <span>FREE</span>
+                </div>
+              </div>
+
+              <div class="border-t border-saffron-400 dark:border-saffron-800 pt-4 flex justify-between items-center">
+                <div>
+                  <span class="text-xs text-clove-800/60 dark:text-parchment-400 block">Total Bespoke Price</span>
+                  <span class="text-2xl font-display font-black text-saffron-800 dark:text-saffron-400" id="summary-crate-total">₹3,160</span>
+                </div>
+                <span class="text-[10px] text-cardamom-700 dark:text-cardamom-400 font-bold bg-cardamom-100 dark:bg-cardamom-950/60 px-2.5 py-1 rounded-full border border-cardamom-300">Complimentary Courier</span>
+              </div>
+
+              <button onclick="addCustomCrateToCart()" class="w-full py-4 rounded-2xl gold-gradient-bg text-white font-bold text-sm shadow-xl hover:shadow-saffron-600/40 transition flex items-center justify-center gap-2">
+                <i class="fa-solid fa-cart-plus"></i>
+                <span>Add Bespoke Crate to Basket</span>
+              </button>
+
+              <p class="text-[11px] text-center text-clove-800/60 dark:text-parchment-400">
+                Ships in heavy-duty velvet transit packaging with insured logistics within 24 hours.
+              </p>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==================== 8. NABL LAB PURITY & CRYPTOGRAPHIC TRACEABILITY PORTAL ==================== -->
+    <section id="view-purity" class="spa-view hidden py-12 md:py-20">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+        
+        <!-- Header -->
+        <div class="text-center space-y-4 max-w-3xl mx-auto">
+          <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-cardamom-100 dark:bg-cardamom-900/40 text-cardamom-900 dark:text-cardamom-300 text-xs font-black uppercase tracking-widest border border-cardamom-300">
+            <i class="fa-solid fa-shield-check text-cardamom-600"></i> NABL Certified Lab Portal
+          </div>
+          <h1 class="font-display font-black text-3xl sm:text-5xl text-clove-900 dark:text-parchment-50">
+            Zero-Adulteration Cryptographic Verification
+          </h1>
+          <p class="text-sm text-clove-800/80 dark:text-parchment-300 font-light leading-relaxed">
+            Every harvest batch at SuryaVeda is subjected to rigorous Gas Chromatography-Mass Spectrometry (GC-MS) testing in government-accredited NABL laboratories. Verify your batch's active curcuminoid %, essential oil density, and chemical purity below.
+          </p>
+        </div>
+
+        <!-- SEARCH / DEMO SELECTOR -->
+        <div class="max-w-2xl mx-auto bg-white dark:bg-[#1A1108] p-6 sm:p-8 rounded-3xl border border-parchment-300 dark:border-saffron-900/40 shadow-xl space-y-4">
+          <label class="block text-xs font-bold text-clove-900 dark:text-parchment-100 uppercase tracking-wider">
+            Enter Harvest Batch Lot Code (Printed on Rear of Tin):
+          </label>
+          <div class="flex gap-2">
+            <div class="relative flex-grow">
+              <i class="fa-solid fa-qrcode absolute left-4 top-1/2 -translate-y-1/2 text-saffron-600"></i>
+              <input type="text" id="purity-batch-input" value="SV-2025-LK08" placeholder="e.g. SV-2025-LK08" class="w-full pl-11 pr-4 py-3.5 bg-parchment-50 dark:bg-[#150D06] border border-parchment-300 dark:border-parchment-700 rounded-xl text-sm font-mono font-bold text-clove-900 dark:text-parchment-100 uppercase focus:outline-none focus:border-saffron-600">
+            </div>
+            <button onclick="verifyBatchLot(document.getElementById('purity-batch-input').value)" class="px-6 py-3.5 gold-gradient-bg text-white font-bold text-xs rounded-xl shadow-md hover:shadow-saffron-600/30 transition">
+              Verify Lot
+            </button>
+          </div>
+
+          <div class="flex flex-wrap items-center gap-2 pt-2">
+            <span class="text-[11px] font-bold text-clove-800/70 dark:text-parchment-400">Quick Test Batches:</span>
+            <button onclick="quickTestBatch('SV-2025-LK08')" class="text-[10px] font-bold bg-saffron-100 dark:bg-saffron-900/60 text-saffron-900 dark:text-saffron-200 px-2.5 py-1 rounded-full border border-saffron-300 hover:bg-saffron-200">Lakadong Turmeric (SV-2025-LK08)</button>
+            <button onclick="quickTestBatch('SV-2025-KP01')" class="text-[10px] font-bold bg-parchment-200 dark:bg-parchment-800 text-clove-900 dark:text-parchment-200 px-2.5 py-1 rounded-full border border-parchment-300 hover:bg-saffron-100">Tellicherry Pepper (SV-2025-KP01)</button>
+            <button onclick="quickTestBatch('SV-2025-WP04')" class="text-[10px] font-bold bg-cardamom-100 dark:bg-cardamom-900/60 text-cardamom-900 dark:text-cardamom-200 px-2.5 py-1 rounded-full border border-cardamom-300 hover:bg-cardamom-200">Wayanad Cardamom (SV-2025-WP04)</button>
+            <button onclick="quickTestBatch('SV-2025-KS02')" class="text-[10px] font-bold bg-rose-100 dark:bg-rose-900/60 text-rose-900 dark:text-rose-200 px-2.5 py-1 rounded-full border border-rose-300 hover:bg-rose-200">Kashmiri Saffron (SV-2025-KS02)</button>
+          </div>
+        </div>
+
+        <!-- DYNAMIC LAB CERTIFICATE CARD -->
+        <div id="purity-result-card" class="bg-white dark:bg-[#1A1108] rounded-3xl border-2 border-cardamom-500/40 shadow-2xl p-6 sm:p-10 space-y-8">
+          <!-- Rendered dynamically via JS -->
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==================== 6. DEDICATED CLEAN LOGIN & REGISTER VIEW (NO MAIN HEADER/FOOTER) ==================== -->
+    <section id="view-login" class="spa-view hidden min-h-screen flex flex-col justify-between bg-parchment-100 dark:bg-[#120C07]">
+      
+      <!-- TOP AUTH BAR (LOGO ON LEFT, RTL/LTR & THEME TOGGLE ON RIGHT) -->
+      <div class="w-full px-6 py-5 flex items-center justify-between border-b border-parchment-300 bg-parchment-50 dark:bg-[#1A1108]">
+        
+        <!-- LEFT: LOGO ONLY -->
+        <a href="#home" onclick="navigateTo('home')" class="flex items-center gap-3 group shrink-0 focus:outline-none">
+          <div class="w-11 h-11 rounded-full bg-gradient-to-tr from-saffron-700 via-saffron-600 to-terracotta-600 flex items-center justify-center text-white shadow-md group-hover:scale-105 transition-transform duration-300 border border-saffron-300 shrink-0">
+            <i class="fa-solid fa-mortar-pestle text-lg text-saffron-100"></i>
+          </div>
+          <div>
+            <span class="brand-name-suryaveda">SURYAVEDA</span>
+            <p class="brand-tagline-sub hidden sm:block">Rare Terroir & Masalas</p>
+          </div>
+        </a>
+
+        <!-- RIGHT: RTL/LTR & TOGGLE THEME ONLY -->
+        <div class="flex items-center gap-3">
+          <button onclick="toggleRtlMode()" title="Toggle RTL / LTR Direction" class="px-3 py-1.5 rounded-full bg-parchment-200 hover:bg-saffron-100 text-clove-900 border border-parchment-300 transition-all flex items-center gap-1 text-xs font-extrabold">
+            <i class="fa-solid fa-globe text-xs text-saffron-700"></i>
+            <span class="rtl-label-btn">RTL</span>
+          </button>
+
+          <button onclick="toggleTheme()" title="Toggle Theme" class="p-2 rounded-full bg-parchment-200 hover:bg-saffron-100 text-clove-900 border border-parchment-300 transition-all flex items-center justify-center text-xs">
+            <i class="fa-solid fa-moon text-saffron-700 theme-icon-btn"></i>
+          </button>
+
+          <button onclick="navigateTo('home')" class="text-xs font-bold text-saffron-800 hover:text-saffron-900 ml-2">
+            <i class="fa-solid fa-xmark text-sm"></i>
+          </button>
+        </div>
+
+      </div>
+
+      <!-- CENTERED LOGIN FORM (NO OTHER DISTRACTIONS) -->
+      <div class="flex-grow flex items-center justify-center p-4 sm:p-8">
+        <div class="bg-white rounded-3xl border border-parchment-300 shadow-2xl overflow-hidden max-w-md w-full p-8 sm:p-10 space-y-6">
+          
+          <div class="text-center space-y-1">
+            <span class="text-[10px] font-black uppercase tracking-widest text-saffron-700">Guild Member Portal</span>
+            <h2 class="font-heading font-bold text-2xl text-clove-900">Sign In to SuryaVeda</h2>
+            <p class="text-xs text-clove-800/70 font-light">Access your private harvest reserves & aroma points.</p>
+          </div>
+
+          <!-- Tab Switcher -->
+          <div class="flex border-b border-parchment-200">
+            <button onclick="switchAuthTab('login')" id="auth-tab-login" class="pb-3 text-xs font-bold text-saffron-800 border-b-2 border-saffron-800 flex-1 text-center">
+              Member Sign In
+            </button>
+            <button onclick="switchAuthTab('register')" id="auth-tab-register" class="pb-3 text-xs font-semibold text-clove-800/50 hover:text-clove-900 flex-1 text-center">
+              New Registration
+            </button>
+          </div>
+
+          <!-- LOGIN FORM -->
+          <form id="form-login" onsubmit="handleAuthLogin(event)" class="space-y-4">
+            <div>
+              <label class="block text-xs font-bold text-clove-900 mb-1">Email or Phone Number</label>
+              <input type="text" required placeholder="chef@culinary.com or +91..." class="w-full p-3 bg-parchment-50 border border-parchment-300 rounded-xl text-xs focus:outline-none focus:border-saffron-600">
+            </div>
+
+            <div>
+              <div class="flex justify-between items-center mb-1">
+                <label class="text-xs font-bold text-clove-900">Password</label>
+                <a href="#" onclick="showToast('Password reset link sent to your email.', 'info'); return false;" class="text-[11px] text-saffron-700 hover:underline">Forgot?</a>
+              </div>
+              <input type="password" required placeholder="••••••••" class="w-full p-3 bg-parchment-50 border border-parchment-300 rounded-xl text-xs focus:outline-none focus:border-saffron-600">
+            </div>
+
+            <div class="flex items-center gap-2">
+              <input type="checkbox" id="remember-me" class="accent-saffron-700">
+              <label for="remember-me" class="text-xs text-clove-800">Keep me logged in</label>
+            </div>
+
+            <button type="submit" class="w-full py-3.5 rounded-xl gold-gradient-bg text-white font-bold text-sm shadow hover:scale-[1.01] transition">
+              Sign In to Vault
+            </button>
+
+            <!-- SOCIAL SIGN IN WITH GOOGLE & APPLE -->
+            <div class="relative flex items-center justify-center my-3">
+              <div class="border-t border-parchment-300 w-full"></div>
+              <span class="bg-white px-3 text-[10px] text-clove-800/50 uppercase font-black tracking-wider shrink-0">Or continue with</span>
+              <div class="border-t border-parchment-300 w-full"></div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-3">
+              <button type="button" onclick="handleSocialAuth('Google')" class="py-2.5 px-3 rounded-xl border border-parchment-300 bg-white hover:bg-parchment-50 text-clove-900 font-bold text-xs flex items-center justify-center gap-2 shadow-sm transition">
+                <i class="fa-brands fa-google text-red-500 text-sm"></i>
+                <span>Google</span>
+              </button>
+              <button type="button" onclick="handleSocialAuth('Apple')" class="py-2.5 px-3 rounded-xl bg-black hover:bg-neutral-800 text-white font-bold text-xs flex items-center justify-center gap-2 shadow-sm transition">
+                <i class="fa-brands fa-apple text-sm"></i>
+                <span>Apple</span>
+              </button>
+            </div>
+          </form>
+
+          <!-- REGISTER FORM -->
+          <form id="form-register" onsubmit="handleAuthRegister(event)" class="space-y-4 hidden">
+            <div>
+              <label class="block text-xs font-bold text-clove-900 mb-1">Full Legal Name *</label>
+              <input type="text" required placeholder="e.g. Master Chef Aryan Varma" class="w-full p-3 bg-parchment-50 border border-parchment-300 rounded-xl text-xs focus:outline-none focus:border-saffron-600">
+            </div>
+
+            <div>
+              <label class="block text-xs font-bold text-clove-900 mb-1">Email Address *</label>
+              <input type="email" required placeholder="aryan@domain.com" class="w-full p-3 bg-parchment-50 border border-parchment-300 rounded-xl text-xs focus:outline-none focus:border-saffron-600">
+            </div>
+
+            <div>
+              <label class="block text-xs font-bold text-clove-900 mb-1">Mobile Phone Number *</label>
+              <div class="flex">
+                <span class="inline-flex items-center px-3 rounded-l-xl border border-r-0 border-parchment-300 bg-parchment-200 text-clove-900 text-xs font-bold">+91</span>
+                <input type="tel" required pattern="[0-9]{10}" placeholder="98765 43210" class="w-full p-3 bg-parchment-50 border border-parchment-300 rounded-r-xl text-xs focus:outline-none focus:border-saffron-600">
+              </div>
+            </div>
+
+            <div>
+              <label class="block text-xs font-bold text-clove-900 mb-1">Password *</label>
+              <input type="password" required minlength="8" placeholder="••••••••" class="w-full p-3 bg-parchment-50 border border-parchment-300 rounded-xl text-xs focus:outline-none focus:border-saffron-600">
+            </div>
+
+            <button type="submit" class="w-full py-3.5 rounded-xl gold-gradient-bg text-white font-bold text-sm shadow hover:scale-[1.01] transition">
+              Create Guild Account
+            </button>
+
+            <!-- SOCIAL REGISTER WITH GOOGLE & APPLE -->
+            <div class="relative flex items-center justify-center my-3">
+              <div class="border-t border-parchment-300 w-full"></div>
+              <span class="bg-white px-3 text-[10px] text-clove-800/50 uppercase font-black tracking-wider shrink-0">Or register with</span>
+              <div class="border-t border-parchment-300 w-full"></div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-3">
+              <button type="button" onclick="handleSocialAuth('Google')" class="py-2.5 px-3 rounded-xl border border-parchment-300 bg-white hover:bg-parchment-50 text-clove-900 font-bold text-xs flex items-center justify-center gap-2 shadow-sm transition">
+                <i class="fa-brands fa-google text-red-500 text-sm"></i>
+                <span>Google</span>
+              </button>
+              <button type="button" onclick="handleSocialAuth('Apple')" class="py-2.5 px-3 rounded-xl bg-black hover:bg-neutral-800 text-white font-bold text-xs flex items-center justify-center gap-2 shadow-sm transition">
+                <i class="fa-brands fa-apple text-sm"></i>
+                <span>Apple</span>
+              </button>
+            </div>
+          </form>
+
+          <div class="text-center pt-2">
+            <button onclick="navigateTo('home')" class="text-xs text-clove-800/70 hover:text-saffron-800 font-medium">
+              ← Return to Main Spice Boutique
+            </button>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="py-4 text-center text-xs text-clove-800/50">
+        © 1924-2026 SuryaVeda Heritage Spices & Condiments Ltd.
+      </div>
+    </section>
+
+    <!-- ==================== 7. ERROR 404 PAGE VIEW ==================== -->
+    <section id="view-error" class="spa-view hidden py-20 bg-parchment-100">
+      <div class="max-w-3xl mx-auto px-4 text-center space-y-6">
+        <div class="relative w-36 h-36 mx-auto rounded-full bg-saffron-100 border-2 border-saffron-300 flex items-center justify-center shadow-lg aroma-glow">
+          <i class="fa-solid fa-compass-drafting text-5xl text-saffron-700"></i>
+          <span class="absolute -bottom-2 px-3 py-1 bg-terracotta-600 text-white font-black text-xs rounded-full">404</span>
+        </div>
+
+        <div class="space-y-2">
+          <span class="text-xs font-bold uppercase tracking-widest text-terracotta-600">Caravan Dispatched Off Route</span>
+          <h1 class="font-heading font-bold text-3xl sm:text-5xl text-clove-900">Terroir Coordinates Not Found</h1>
+          <p class="text-sm text-clove-800/70 max-w-lg mx-auto font-light leading-relaxed">
+            The vintage blend, recipe guide, or cellar page you are attempting to reach has traveled into uncharted territory or has been archived into our private library.
+          </p>
+        </div>
+
+        <div class="pt-4 flex flex-wrap justify-center gap-4">
+          <button onclick="navigateTo('home')" class="px-6 py-3.5 rounded-xl gold-gradient-bg text-white font-bold text-xs shadow hover:scale-105 transition flex items-center gap-2">
+            <i class="fa-solid fa-house"></i>
+            <span>Return to Home 1</span>
+          </button>
+          <button onclick="navigateTo('products')" class="px-6 py-3.5 rounded-xl bg-white border border-parchment-300 text-clove-900 font-bold text-xs hover:bg-parchment-50 transition flex items-center gap-2">
+            <i class="fa-solid fa-mortar-pestle text-saffron-700"></i>
+            <span>Browse Complete Pantry</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ========================================================================= -->
+  <!-- MAIN FOOTER (WITH PHYSICAL BOUTIQUES & DIRECT CONTACT DETAILS - HIDDEN ON LOGIN) -->
+  <!-- ========================================================================= -->
+  <footer id="main-site-footer" class="bg-clove-900 text-parchment-100 border-t border-saffron-800/40 pt-16 pb-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+      
+      <!-- TOP ROW: PHYSICAL BOUTIQUES -->
+      <!-- TOP ROW: PHYSICAL BOUTIQUES (ALIGNED EQUAL-HEIGHT CARDS) -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 pb-10 border-b border-saffron-800/40 items-stretch">
+        <div class="p-5 rounded-2xl bg-clove-800/60 border border-saffron-700/30 space-y-3 h-full flex flex-col justify-between">
+          <div class="space-y-2">
+            <div class="flex items-center gap-2 text-saffron-400 font-bold text-sm min-h-[1.5rem]">
+              <i class="fa-solid fa-location-dot"></i>
+              <span>Kochi Flagship Cellar (Kerala)</span>
+            </div>
+            <p class="text-xs text-parchment-300 font-light leading-relaxed min-h-[2.5rem]">48 Heritage Spice Row, Jew Town, Mattancherry, Kochi, Kerala 682002</p>
+          </div>
+          <div class="text-[11px] text-saffron-200/80 pt-3 space-y-1 border-t border-saffron-700/30 mt-auto min-h-[3.25rem]">
+            <p><i class="fa-solid fa-phone mr-1.5 text-saffron-400"></i>+91 (484) 222-1924</p>
+            <p><i class="fa-regular fa-clock mr-1.5 text-saffron-400"></i>Mon – Sun: 9:30 AM – 8:00 PM IST</p>
+          </div>
+        </div>
+
+        <div class="p-5 rounded-2xl bg-clove-800/60 border border-saffron-700/30 space-y-3 h-full flex flex-col justify-between">
+          <div class="space-y-2">
+            <div class="flex items-center gap-2 text-saffron-400 font-bold text-sm min-h-[1.5rem]">
+              <i class="fa-solid fa-location-dot"></i>
+              <span>Old Delhi Heritage House (Khari Baoli)</span>
+            </div>
+            <p class="text-xs text-parchment-300 font-light leading-relaxed min-h-[2.5rem]">12 Khari Baoli Spice Bazaar, Chandni Chowk, Old Delhi 110006</p>
+          </div>
+          <div class="text-[11px] text-saffron-200/80 pt-3 space-y-1 border-t border-saffron-700/30 mt-auto min-h-[3.25rem]">
+            <p><i class="fa-solid fa-phone mr-1.5 text-saffron-400"></i>+91 (11) 2394-5500</p>
+            <p><i class="fa-regular fa-clock mr-1.5 text-saffron-400"></i>Mon – Sat: 10:00 AM – 8:30 PM (Sun Closed)</p>
+          </div>
+        </div>
+
+        <div class="p-5 rounded-2xl bg-clove-800/60 border border-saffron-700/30 space-y-3 h-full flex flex-col justify-between">
+          <div class="space-y-2">
+            <div class="flex items-center gap-2 text-saffron-400 font-bold text-sm min-h-[1.5rem]">
+              <i class="fa-solid fa-location-dot"></i>
+              <span>Mumbai Sensory Boutique (Fort)</span>
+            </div>
+            <p class="text-xs text-parchment-300 font-light leading-relaxed min-h-[2.5rem]">Ground Floor, Heritage Villa, Kala Ghoda Arts District, Fort, Mumbai 400001</p>
+          </div>
+          <div class="text-[11px] text-saffron-200/80 pt-3 space-y-1 border-t border-saffron-700/30 mt-auto min-h-[3.25rem]">
+            <p><i class="fa-solid fa-phone mr-1.5 text-saffron-400"></i>+91 (22) 6745-8820</p>
+            <p><i class="fa-regular fa-clock mr-1.5 text-saffron-400"></i>Tue – Sun: 11:00 AM – 9:00 PM IST</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- MIDDLE ROW: SITE LINKS & DIRECT CONCIERGE -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10">
+        <div class="lg:col-span-2 space-y-4">
+          <div class="flex items-center gap-3">
+            <div class="w-11 h-11 rounded-full bg-gradient-to-tr from-saffron-700 via-saffron-600 to-terracotta-600 flex items-center justify-center text-white shadow-md border border-saffron-300 shrink-0">
+              <i class="fa-solid fa-mortar-pestle text-lg text-saffron-100"></i>
+            </div>
+            <div>
+              <span class="brand-name-suryaveda">SURYAVEDA</span>
+              <p class="brand-tagline-sub">Rare Terroir & Masalas</p>
+            </div>
+          </div>
+          <p class="text-xs text-parchment-300 font-light leading-relaxed max-w-sm">
+            Purveyors of rare, single-estate Indian spices and slow-aged condiments since 1924. Dedicated to reviving ancient Ayurvedic flavor balancings and honoring heritage agrarian communities.
+          </p>
+          <div class="p-4 rounded-xl bg-saffron-950/60 border border-saffron-700/40 text-xs space-y-1.5 text-saffron-200">
+            <p><strong class="text-saffron-400">Toll-Free Helpline:</strong> +91 (800) 555-SPICE (1800-555-7742)</p>
+            <p><strong class="text-saffron-400">WhatsApp Concierge:</strong> +91 98470 19240</p>
+            <p><strong class="text-saffron-400">Email:</strong> concierge@suryavedaspices.com</p>
+          </div>
+        </div>
+
+        <div class="space-y-3">
+          <h4 class="font-heading font-bold text-sm text-saffron-400 uppercase tracking-wider">Navigation</h4>
+          <ul class="space-y-2 text-xs text-parchment-300 font-light">
+            <li><a href="#home" onclick="navigateTo('home')" class="hover:text-saffron-300">Home 1: Terroir Harvest</a></li>
+            <li><a href="#home-2" onclick="navigateTo('home-2')" class="hover:text-saffron-300">Home 2: Estate Cellar</a></li>
+            <li><a href="#products" onclick="navigateTo('products')" class="hover:text-saffron-300">Products Catalog</a></li>
+            <li><a href="#recipes" onclick="navigateTo('recipes')" class="hover:text-saffron-300">Culinary Recipes</a></li>
+            <li><a href="#gifting" onclick="navigateTo('gifting')" class="hover:text-saffron-300 text-saffron-400 font-medium">Bespoke Gift Studio</a></li>
+            <li><a href="#purity" onclick="navigateTo('purity')" class="hover:text-saffron-300 text-saffron-400 font-medium">NABL Purity Verification</a></li>
+            <li><a href="#bulk-orders" onclick="navigateTo('bulk-orders')" class="hover:text-saffron-300">Bulk & B2B Orders</a></li>
+            <li><a href="#contact" onclick="navigateTo('contact')" class="hover:text-saffron-300">Contact & Enquiry Form</a></li>
+          </ul>
+        </div>
+
+        <div class="space-y-3">
+          <h4 class="font-heading font-bold text-sm text-saffron-400 uppercase tracking-wider">Pantry</h4>
+          <ul class="space-y-2 text-xs text-parchment-300 font-light">
+            <li><a href="#products" onclick="setCategoryAndNavigate('whole')" class="hover:text-saffron-300">Whole Pods & Bark</a></li>
+            <li><a href="#products" onclick="setCategoryAndNavigate('powders')" class="hover:text-saffron-300">Stone-Pounded Powders</a></li>
+            <li><a href="#products" onclick="setCategoryAndNavigate('pickles')" class="hover:text-saffron-300">Barni Sun Pickles</a></li>
+            <li><a href="#products" onclick="setCategoryAndNavigate('masalas')" class="hover:text-saffron-300">Royal Shahi Masalas</a></li>
+          </ul>
+        </div>
+
+        <div class="space-y-3">
+          <h4 class="font-heading font-bold text-sm text-saffron-400 uppercase tracking-wider">Purity</h4>
+          <div class="space-y-2 text-xs text-parchment-300 font-light">
+            <p><i class="fa-solid fa-check text-saffron-400 mr-1.5"></i> FSSAI Lic. #1001924001</p>
+            <p><i class="fa-solid fa-check text-saffron-400 mr-1.5"></i> Spices Board #SB-892</p>
+            <p><i class="fa-solid fa-check text-saffron-400 mr-1.5"></i> NABL Certified Pure</p>
+            <p><i class="fa-solid fa-check text-saffron-400 mr-1.5"></i> US FDA Registered</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="border-t border-saffron-800/40 pt-6 flex flex-col sm:flex-row justify-between items-center text-xs text-parchment-300/60 gap-4">
+        <p>© 1924-2026 SuryaVeda Heritage Spices & Condiments Ltd. All Rights Reserved.</p>
+        <div class="flex gap-6">
+          <a href="#contact" onclick="navigateTo('contact')" class="hover:text-saffron-300">Privacy Policy</a>
+          <a href="#contact" onclick="navigateTo('contact')" class="hover:text-saffron-300">Terms of Terroir</a>
+          <a href="#bulk-orders" onclick="navigateTo('bulk-orders')" class="hover:text-saffron-300">B2B Portal</a>
+        </div>
+      </div>
+
+    </div>
+  </footer>
+
+  <!-- ========================================================================= -->
+  <!-- MODALS -->
+  <!-- ========================================================================= -->
+  <div id="quick-view-modal" class="fixed inset-0 z-50 hidden modal-backdrop flex items-center justify-center p-4">
+    <div class="bg-parchment-50 rounded-2xl max-w-3xl w-full overflow-hidden shadow-2xl border border-parchment-300 relative animate-scaleUp">
+      <button onclick="closeQuickView()" class="absolute top-4 right-4 z-10 w-8 h-8 rounded-full bg-parchment-200 hover:bg-parchment-300 text-clove-900 flex items-center justify-center text-sm transition">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+      <div class="grid grid-cols-1 md:grid-cols-2" id="quick-view-content"></div>
+    </div>
+  </div>
+
+  <div id="recipe-modal" class="fixed inset-0 z-50 hidden modal-backdrop flex items-center justify-center p-4">
+    <div class="bg-parchment-50 rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto shadow-2xl border border-parchment-300 relative">
+      <button onclick="closeRecipeModal()" class="sticky top-4 right-4 float-right z-10 w-9 h-9 rounded-full bg-clove-900 text-white flex items-center justify-center text-sm transition shadow-lg">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+      <div class="p-6 sm:p-10" id="recipe-modal-content"></div>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- SLIDE-OVER CART DRAWER -->
+  <!-- ========================================================================= -->
+  <div id="cart-drawer-backdrop" onclick="toggleCartDrawer(false)" class="fixed inset-0 z-50 hidden bg-clove-900/60 backdrop-blur-sm transition-opacity"></div>
+  
+  <div id="cart-drawer" class="fixed inset-y-0 right-0 z-50 w-full max-w-md bg-parchment-50 shadow-2xl border-l border-parchment-300 flex flex-col transform translate-x-full transition-transform duration-300 ease-in-out">
+    
+    <div class="p-5 bg-parchment-100 border-b border-parchment-300 flex items-center justify-between">
+      <div class="flex items-center gap-2">
+        <i class="fa-solid fa-bag-shopping text-saffron-700 text-lg"></i>
+        <h3 class="font-heading font-bold text-lg text-clove-900">Your Spice Basket</h3>
+      </div>
+      <button onclick="toggleCartDrawer(false)" class="p-2 text-clove-800 hover:text-clove-900">
+        <i class="fa-solid fa-xmark text-lg"></i>
+      </button>
+    </div>
+
+    <!-- Free Shipping Progress -->
+    <div class="bg-saffron-50 px-5 py-3 border-b border-saffron-200">
+      <div class="flex justify-between text-xs text-saffron-900 font-semibold mb-1">
+        <span id="shipping-progress-text">Add ₹999 for Complimentary Express Dispatch</span>
+        <span id="shipping-progress-pct">0%</span>
+      </div>
+      <div class="w-full bg-saffron-200 h-1.5 rounded-full overflow-hidden">
+        <div id="shipping-progress-bar" class="bg-saffron-600 h-full rounded-full transition-all duration-300" style="width: 0%"></div>
+      </div>
+    </div>
+
+    <!-- EXCLUSIVE OFFERS SECTION INSIDE CART -->
+    <div class="p-4 bg-saffron-100/60 border-b border-saffron-200/80 space-y-2">
+      <div class="flex items-center justify-between">
+        <span class="text-[11px] font-extrabold uppercase tracking-wider text-saffron-900 flex items-center gap-1.5">
+          <i class="fa-solid fa-tags text-saffron-700"></i> Available Harvest Offers
+        </span>
+        <span class="text-[10px] text-saffron-800 font-medium">Click offer to apply</span>
+      </div>
+      
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-2" id="cart-offers-container">
+        <!-- Rendered via JS -->
+      </div>
+    </div>
+
+    <!-- Cart Items List -->
+    <div id="cart-items-list" class="flex-grow overflow-y-auto p-5 space-y-4"></div>
+
+    <!-- Empty Cart Placeholder -->
+    <div id="empty-cart-view" class="hidden flex-col items-center justify-center p-8 text-center flex-grow">
+      <i class="fa-solid fa-mortar-pestle text-4xl text-parchment-300 mb-3"></i>
+      <h4 class="font-bold text-clove-900 text-sm">Your spice basket is currently empty</h4>
+      <p class="text-xs text-clove-800/60 mt-1">Explore our single-estate whole spices, stone powders, and royal blends.</p>
+      <button onclick="toggleCartDrawer(false); navigateTo('products');" class="mt-4 px-5 py-2.5 bg-saffron-600 text-white rounded-xl text-xs font-bold shadow hover:bg-saffron-700 transition">
+        Browse Heritage Spices
+      </button>
+    </div>
+
+    <!-- Cart Footer & Checkout -->
+    <div id="cart-footer" class="p-5 bg-parchment-100 border-t border-parchment-300 space-y-3">
+      
+      <div class="flex gap-2">
+        <input type="text" id="coupon-input" placeholder="Promo code (e.g. HERITAGE10)" class="uppercase text-xs px-3 py-2 bg-white border border-parchment-300 rounded-lg flex-grow focus:outline-none focus:border-saffron-600">
+        <button onclick="applyCoupon()" class="px-3 py-2 bg-clove-900 text-saffron-200 rounded-lg text-xs font-bold hover:bg-clove-800">Apply</button>
+      </div>
+
+      <div class="space-y-1.5 text-xs text-clove-800">
+        <div class="flex justify-between">
+          <span>Subtotal:</span>
+          <span id="cart-subtotal" class="font-bold text-clove-900">₹0</span>
+        </div>
+        <div id="coupon-row" class="hidden justify-between text-cardamom-800 font-bold">
+          <span>Discount Applied:</span>
+          <span id="cart-discount">- ₹0</span>
+        </div>
+        <div class="flex justify-between">
+          <span>Insured Heritage Packaging & Delivery:</span>
+          <span id="cart-shipping" class="font-semibold text-cardamom-800">FREE</span>
+        </div>
+        <div class="border-t border-parchment-300 pt-2 flex justify-between text-sm font-bold text-clove-900">
+          <span>Grand Total:</span>
+          <span id="cart-grand-total" class="text-lg font-display text-saffron-800">₹0</span>
+        </div>
+      </div>
+
+      <!-- CHECKOUT BUTTON: FORWARDS TO CONTACT ENQUIRY FORM -->
+      <button onclick="triggerCheckoutRedirect()" class="w-full py-3.5 rounded-xl gold-gradient-bg text-white font-bold text-sm shadow hover:scale-[1.01] transition flex items-center justify-center gap-2">
+        <i class="fa-solid fa-lock text-xs"></i>
+        <span>Proceed to Heritage Checkout</span>
+      </button>
+    </div>
+
+  </div>
+
+  <!-- TOAST NOTIFICATION CONTAINER -->
+  <div id="toast-container"></div>
+
+  <!-- Load Scripts -->
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

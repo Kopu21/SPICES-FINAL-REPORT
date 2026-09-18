@@ -1,0 +1,418 @@
+/* SuryaVeda Spices & Condiments - Master Heritage Stylesheet */
+@import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
+
+:root {
+  --font-heading: 'Playfair Display', Georgia, serif;
+  --font-display: 'Cinzel Decorative', Georgia, serif;
+  --font-body: 'Plus Jakarta Sans', system-ui, sans-serif;
+
+  --color-saffron: #D97706;
+  --color-terracotta: #C2410C;
+  --color-cardamom: #15803D;
+  --color-deep-forest: #064E3B;
+  --color-clove-dark: #2A1B0E;
+  --color-gold-antique: #D4AF37;
+  --color-gold-light: #FDE047;
+  
+  --bg-primary: #FDFBF7;
+  --bg-secondary: #FAF4E8;
+  --bg-card: #FFFFFF;
+  --text-main: #2D2319;
+  --text-muted: #5C4A38;
+  --border-color: #E8D7BF;
+}
+
+/* Master Brand Identity Typography */
+.brand-name-suryaveda {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: 1.25rem;
+  letter-spacing: 0.06em;
+  background: linear-gradient(135deg, #F59E0B 0%, #D97706 50%, #B45309 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: inline-block;
+}
+
+.brand-badge-year {
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  background: rgba(245, 158, 11, 0.15);
+  color: #B45309;
+  border: 1px solid #F59E0B;
+  padding: 1px 5px;
+  border-radius: 4px;
+}
+
+body.dark-mode .brand-badge-year {
+  background: rgba(245, 158, 11, 0.25);
+  color: #FCD34D;
+  border-color: #D97706;
+}
+
+.brand-tagline-sub {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #C2410C;
+}
+
+body.dark-mode .brand-tagline-sub {
+  color: #FB923C;
+}
+
+/* Dark Theme Variables */
+body.dark-mode {
+  --bg-primary: #120C07;
+  --bg-secondary: #1C130B;
+  --bg-card: #23180E;
+  --text-main: #FBF6EE;
+  --text-muted: #D1C0AA;
+  --border-color: #3D2817;
+  
+  background-color: var(--bg-primary) !important;
+  color: var(--text-main) !important;
+  background-image: radial-gradient(#3a2614 0.65px, transparent 0.65px), radial-gradient(#3a2614 0.65px, #120c07 0.65px) !important;
+}
+
+body.dark-mode .bg-white {
+  background-color: #23180E !important;
+  color: #FBF6EE !important;
+}
+
+body.dark-mode .bg-parchment-50 {
+  background-color: #1A1108 !important;
+}
+
+body.dark-mode .bg-parchment-100 {
+  background-color: #20150B !important;
+}
+
+body.dark-mode .bg-parchment-200 {
+  background-color: #2A1C0E !important;
+}
+
+body.dark-mode .border-parchment-200,
+body.dark-mode .border-parchment-300 {
+  border-color: #3D2817 !important;
+}
+
+body.dark-mode .text-clove-900 {
+  color: #FBF6EE !important;
+}
+
+body.dark-mode .text-clove-800 {
+  color: #E8D7BF !important;
+}
+
+body.dark-mode header {
+  background-color: rgba(18, 12, 7, 0.95) !important;
+  border-color: #3D2817 !important;
+}
+
+body.dark-mode #cart-drawer {
+  background-color: #1A1108 !important;
+  color: #FBF6EE !important;
+  border-color: #3D2817 !important;
+}
+
+/* RTL Layout Adjustments */
+[dir="rtl"] {
+  text-align: right;
+  direction: rtl;
+}
+
+[dir="rtl"] .font-heading,
+[dir="rtl"] h1, [dir="rtl"] h2, [dir="rtl"] h3 {
+  letter-spacing: normal;
+}
+
+[dir="rtl"] #cart-drawer {
+  right: auto;
+  left: 0;
+  border-left: none;
+  border-right: 1px solid var(--border-color);
+  transform: translateX(-100%);
+}
+
+[dir="rtl"] #cart-drawer.translate-x-0,
+[dir="rtl"] #cart-drawer:not(.translate-x-full) {
+  transform: translateX(0%);
+}
+
+[dir="rtl"] .fa-arrow-right {
+  transform: rotate(180deg);
+}
+
+/* Explicit LTR Layout Rules */
+[dir="ltr"] {
+  text-align: left;
+  direction: ltr;
+}
+
+[dir="ltr"] #cart-drawer {
+  right: 0;
+  left: auto;
+  border-left: 1px solid var(--border-color);
+  border-right: none;
+  transform: translateX(100%);
+}
+
+[dir="ltr"] #cart-drawer.translate-x-0,
+[dir="ltr"] #cart-drawer:not(.translate-x-full) {
+  transform: translateX(0%);
+}
+
+[dir="ltr"] .fa-arrow-right {
+  transform: none;
+}
+
+/* Global Mobile Viewport & Boundary Containment */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html, body {
+  width: 100%;
+  max-width: 100vw;
+  overflow-x: hidden !important;
+  margin: 0;
+  padding: 0;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--bg-primary);
+  color: var(--text-main);
+  background-image: radial-gradient(#d6c2a4 0.65px, transparent 0.65px), radial-gradient(#d6c2a4 0.65px, #fdfbf7 0.65px);
+  background-size: 26px 26px;
+  background-position: 0 0, 13px 13px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  word-break: break-word;
+  overflow-wrap: break-word;
+}
+
+h1, h2, h3, .font-heading {
+  font-family: var(--font-heading);
+}
+
+.font-display {
+  font-family: var(--font-display);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #F5EADB;
+}
+::-webkit-scrollbar-thumb {
+  background: #B45309;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #78350F;
+}
+
+/* Heritage Borders and Ornamental Ornaments */
+.heritage-border {
+  border: 1px solid var(--border-color);
+  box-shadow: 0 4px 20px -2px rgba(92, 51, 19, 0.06);
+}
+
+.gold-border-glow {
+  border: 1px solid rgba(212, 175, 55, 0.4);
+  box-shadow: 0 0 15px rgba(212, 175, 55, 0.15);
+}
+
+.gold-gradient-bg {
+  background: linear-gradient(135deg, #B45309 0%, #D97706 50%, #78350F 100%);
+}
+
+.gold-text-shimmer {
+  background: linear-gradient(90deg, #FDE68A 0%, #D97706 40%, #F59E0B 70%, #FDE68A 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Ornate Header Pattern */
+.heritage-pattern-overlay {
+  background-color: #1a120b;
+  background-image: radial-gradient(#d97706 0.75px, transparent 0.75px), radial-gradient(#d97706 0.75px, #1a120b 0.75px);
+  background-size: 30px 30px;
+  background-position: 0 0, 15px 15px;
+}
+
+/* Animated Spice Glow */
+@keyframes aromaDrift {
+  0% { transform: translateY(0) scale(1); opacity: 0.7; }
+  50% { transform: translateY(-8px) scale(1.04); opacity: 0.95; }
+  100% { transform: translateY(0) scale(1); opacity: 0.7; }
+}
+
+.aroma-glow {
+  animation: aromaDrift 4s ease-in-out infinite;
+}
+
+/* Card Hover Effects */
+.spice-card {
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.spice-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 30px -10px rgba(92, 51, 19, 0.15), 0 0 0 1px rgba(217, 119, 6, 0.3);
+}
+
+.spice-card-img {
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.spice-card:hover .spice-card-img {
+  transform: scale(1.08);
+}
+
+/* Aroma Note Badges */
+.aroma-pill {
+  background: rgba(245, 234, 219, 0.85);
+  border: 1px solid rgba(180, 83, 9, 0.2);
+  color: #78350F;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+body.dark-mode .aroma-pill {
+  background: rgba(45, 30, 18, 0.9);
+  color: #FDE68A;
+  border-color: rgba(217, 119, 6, 0.4);
+}
+
+/* Heat Gauge Flame meter */
+.heat-meter-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 9999px;
+  background: #E5E7EB;
+}
+.heat-meter-dot.active {
+  background: #DC2626;
+  box-shadow: 0 0 6px rgba(220, 38, 38, 0.6);
+}
+
+/* Modal and Drawer Transitions */
+.modal-backdrop {
+  backdrop-filter: blur(8px);
+  background: rgba(26, 18, 11, 0.65);
+}
+
+/* Interactive Sliders for Bulk Calculator */
+input[type=range] {
+  accent-color: #B45309;
+}
+
+/* Badges */
+.badge-signature {
+  background: linear-gradient(135deg, #78350F 0%, #B45309 100%);
+  color: #FDE68A;
+  border: 1px solid rgba(253, 230, 138, 0.3);
+}
+
+/* Floating Navigation Active States */
+.nav-link.active {
+  color: #B45309;
+  border-bottom: 2px solid #B45309;
+  font-weight: 700;
+}
+
+body.dark-mode .nav-link.active {
+  color: #F59E0B;
+  border-color: #F59E0B;
+}
+
+/* Toast Message */
+#toast-container {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  pointer-events: none;
+}
+
+[dir="rtl"] #toast-container {
+  right: auto;
+  left: 24px;
+}
+
+.toast-item {
+  pointer-events: auto;
+  min-width: 280px;
+  max-width: 380px;
+  animation: toastSlideIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes toastSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Home 2 Dish Pairing Selector Buttons */
+.dish-btn {
+  transition: all 0.2s ease-in-out;
+}
+.dish-btn:hover {
+  border-color: #D97706;
+  background-color: #FEF3C7;
+  transform: translateY(-2px);
+}
+
+body.dark-mode .dish-btn:hover {
+  background-color: #382414;
+}
+
+/* Smooth View Fade */
+.spa-view {
+  animation: fadeInView 0.35s ease-out forwards;
+}
+
+@keyframes fadeInView {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Offers in Cart Card Styles */
+.offer-coupon-card {
+  border: 1px dashed rgba(217, 119, 6, 0.6);
+  background: rgba(254, 243, 199, 0.5);
+  transition: all 0.2s ease;
+}
+
+.offer-coupon-card:hover {
+  background: rgba(254, 243, 199, 0.85);
+  transform: translateY(-1px);
+}
+
+body.dark-mode .offer-coupon-card {
+  background: rgba(45, 30, 18, 0.7);
+  border-color: rgba(245, 158, 11, 0.5);
+}

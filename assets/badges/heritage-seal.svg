@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120">
+  <defs>
+    <radialGradient id="heritage-gold" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#FBBF24" />
+      <stop offset="70%" stop-color="#B45309" />
+      <stop offset="100%" stop-color="#451A03" />
+    </radialGradient>
+  </defs>
+  <circle cx="60" cy="60" r="54" fill="url(#heritage-gold)" stroke="#FDE68A" stroke-width="2.5" />
+  <circle cx="60" cy="60" r="46" fill="none" stroke="#FEF3C7" stroke-width="1" stroke-dasharray="4 2" />
+  
+  <text x="60" y="44" text-anchor="middle" font-family="'Cinzel Decorative', Georgia, serif" font-weight="900" font-size="10" fill="#FEF3C7" letter-spacing="2">ESTD</text>
+  <text x="60" y="66" text-anchor="middle" font-family="'Plus Jakarta Sans', sans-serif" font-weight="900" font-size="20" fill="#FFFBEB" letter-spacing="1">1924</text>
+  <text x="60" y="80" text-anchor="middle" font-family="'Plus Jakarta Sans', sans-serif" font-weight="800" font-size="7" fill="#FDE68A" letter-spacing="1.5">MATTANCHERRY</text>
+  <text x="60" y="92" text-anchor="middle" font-family="'Plus Jakarta Sans', sans-serif" font-weight="600" font-size="6" fill="#FEF3C7" letter-spacing="2">MALABAR COAST</text>
+</svg>

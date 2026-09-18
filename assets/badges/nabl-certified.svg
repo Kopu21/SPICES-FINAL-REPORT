@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120">
+  <defs>
+    <linearGradient id="badge-green" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#15803D" />
+      <stop offset="100%" stop-color="#064E3B" />
+    </linearGradient>
+  </defs>
+  <!-- Scalloped Badge Border -->
+  <circle cx="60" cy="60" r="54" fill="url(#badge-green)" stroke="#86EFAC" stroke-width="2" />
+  <circle cx="60" cy="60" r="48" fill="none" stroke="#DCFCE7" stroke-width="1" stroke-dasharray="3 2" />
+  
+  <!-- Shield Icon -->
+  <path d="M60 26 L76 34 L76 56 C76 68, 60 76, 60 76 C60 76, 44 68, 44 56 L44 34 Z" fill="#22C55E" stroke="#DCFCE7" stroke-width="1.5" />
+  <!-- Checkmark -->
+  <path d="M52 50 L58 56 L69 44" fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+  
+  <!-- Text Ring -->
+  <text x="60" y="92" text-anchor="middle" font-family="'Plus Jakarta Sans', sans-serif" font-weight="900" font-size="9" fill="#DCFCE7" letter-spacing="1.5">NABL TESTED</text>
+  <text x="60" y="103" text-anchor="middle" font-family="'Plus Jakarta Sans', sans-serif" font-weight="700" font-size="7" fill="#86EFAC" letter-spacing="1">100% PURE</text>
+</svg>
