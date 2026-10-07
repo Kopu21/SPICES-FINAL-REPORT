@@ -18,6 +18,8 @@ document.addEventListener('DOMContentLoaded', () => {
   initNavigation();
   initContactValidation();
   renderCategoryPills();
+  renderHomeCategories();
+  renderBestSellers();
   renderSignatureHomeProducts();
   renderTerroirCards();
   renderHomeRecipesTeaser();
@@ -47,13 +49,18 @@ function toggleTheme() {
 
 function applyThemePreference() {
   const icons = document.querySelectorAll('#theme-icon, .theme-icon-btn');
+  const labels = document.querySelectorAll('#theme-label, .theme-label-btn');
+  const themeBtns = document.querySelectorAll('#theme-toggle-btn, .theme-toggle-btn');
+
   if (isDarkMode) {
     document.body.classList.add('dark-mode');
     document.documentElement.classList.add('dark');
     icons.forEach(icon => {
-      icon.classList.remove('fa-moon');
+      icon.classList.remove('fa-moon', 'text-saffron-700');
       icon.classList.add('fa-sun', 'text-amber-400');
     });
+    labels.forEach(l => { l.innerText = 'Light'; });
+    themeBtns.forEach(b => { b.setAttribute('title', 'Switch to Light Mode'); });
   } else {
     document.body.classList.remove('dark-mode');
     document.documentElement.classList.remove('dark');
@@ -61,6 +68,8 @@ function applyThemePreference() {
       icon.classList.remove('fa-sun', 'text-amber-400');
       icon.classList.add('fa-moon', 'text-saffron-700');
     });
+    labels.forEach(l => { l.innerText = 'Dark'; });
+    themeBtns.forEach(b => { b.setAttribute('title', 'Switch to Dark Mode'); });
   }
 }
 
@@ -73,21 +82,42 @@ function toggleRtlMode() {
 
 function applyRtlPreference() {
   const labels = document.querySelectorAll('#rtl-label, .rtl-label-btn');
+  const rtlBtns = document.querySelectorAll('#rtl-toggle-btn, .rtl-toggle-btn');
+  const rtlIcons = document.querySelectorAll('#rtl-icon, .rtl-icon-btn');
+
   if (isRtlMode) {
     document.documentElement.setAttribute('dir', 'rtl');
     document.body.setAttribute('dir', 'rtl');
     labels.forEach(label => { label.innerText = 'LTR'; });
+    rtlBtns.forEach(b => {
+      b.classList.add('rtl-active');
+      b.setAttribute('title', 'Switch to Left-to-Right (LTR) Layout');
+    });
   } else {
     document.documentElement.setAttribute('dir', 'ltr');
     document.body.setAttribute('dir', 'ltr');
     labels.forEach(label => { label.innerText = 'RTL'; });
+    rtlBtns.forEach(b => {
+      b.classList.remove('rtl-active');
+      b.setAttribute('title', 'Switch to Right-to-Left (RTL) Layout');
+    });
   }
 }
 
 // --- NAVIGATION CONTROLLER ---
+function filterBySearchOrNav(searchTerm, category = 'all') {
+  currentCategory = category;
+  currentSearch = searchTerm || '';
+  navigateTo('products');
+  const searchInput = document.getElementById('catalog-search');
+  if (searchInput) searchInput.value = searchTerm || '';
+  renderCategoryPills();
+  filterProducts();
+}
+
 function navigateTo(viewId) {
   if (!viewId) viewId = 'home';
-  const validViews = ['home', 'home-2', 'products', 'recipes', 'story', 'bulk-orders', 'contact', 'login', 'register', 'error', 'gifting', 'purity'];
+  const validViews = ['home', 'home-2', 'products', 'recipes', 'story', 'bulk-orders', 'contact', 'error', 'gifting', 'purity'];
   
   // If target is an in-page anchor ID, smoothly scroll to it without resetting SPA view
   if (!validViews.includes(viewId)) {
@@ -100,16 +130,6 @@ function navigateTo(viewId) {
   }
 
   const target = viewId;
-
-  // Toggle main site header and footer visibility (No header/footer on Login/Register page)
-  const isAuthView = (target === 'login' || target === 'register');
-  const mainHeader = document.getElementById('main-site-header');
-  const mainFooter = document.getElementById('main-site-footer');
-  const topBar = document.getElementById('top-announcement-bar');
-
-  if (mainHeader) mainHeader.classList.toggle('hidden', isAuthView);
-  if (mainFooter) mainFooter.classList.toggle('hidden', isAuthView);
-  if (topBar) topBar.classList.toggle('hidden', isAuthView);
 
   // Hide all views
   document.querySelectorAll('.spa-view').forEach(el => {
@@ -130,14 +150,17 @@ function navigateTo(viewId) {
   const activeLink = document.getElementById(`nav-${target}`);
   if (activeLink) {
     activeLink.classList.add('active');
-  } else if (target === 'home-2') {
+  } else if (target === 'home' || target === 'home-2') {
     const homeNav = document.getElementById('nav-home');
     if (homeNav) homeNav.classList.add('active');
   }
 
   // Update URL hash without page reload
   window.history.replaceState(null, null, `#${target}`);
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+  window.scrollTo(0, 0);
+
+  // Close mobile drawer on navigation
+  toggleMobileNav(true);
 }
 
 function initNavigation() {
@@ -147,9 +170,33 @@ function initNavigation() {
   });
 }
 
-function toggleMobileNav() {
+function toggleMobileNav(forceClose = false) {
   const nav = document.getElementById('mobile-nav');
-  if (nav) nav.classList.toggle('hidden');
+  const btn = document.getElementById('mobile-hamburger-btn');
+  const icon = btn ? btn.querySelector('i') : null;
+  if (!nav) return;
+
+  if (forceClose || !nav.classList.contains('hidden')) {
+    nav.classList.add('hidden');
+    if (btn) {
+      btn.setAttribute('aria-expanded', 'false');
+      btn.setAttribute('aria-label', 'Open navigation menu');
+    }
+    if (icon) {
+      icon.classList.remove('fa-xmark');
+      icon.classList.add('fa-bars');
+    }
+  } else {
+    nav.classList.remove('hidden');
+    if (btn) {
+      btn.setAttribute('aria-expanded', 'true');
+      btn.setAttribute('aria-label', 'Close navigation menu');
+    }
+    if (icon) {
+      icon.classList.remove('fa-bars');
+      icon.classList.add('fa-xmark');
+    }
+  }
 }
 
 function setCategoryAndNavigate(catId) {
@@ -244,63 +291,66 @@ function filterProducts() {
 }
 
 function renderSpiceCardHTML(p) {
-  const aromaPills = p.aromaNotes.map(n => `<span class="aroma-pill px-2 py-0.5 rounded-md">${n}</span>`).join('');
-  const tagBadge = p.tags && p.tags[0] ? `<span class="absolute top-3 left-3 px-2.5 py-1 rounded-full text-[10px] font-extrabold uppercase tracking-wider bg-clove-900/85 backdrop-blur-md text-saffron-300 border border-saffron-500/30">${p.tags[0]}</span>` : '';
+  const aromaPills = p.aromaNotes ? p.aromaNotes.slice(0, 3).map(n => `<span class="aroma-pill px-2 py-0.5 rounded-md text-[10px] font-semibold">${n}</span>`).join('') : '';
+  const tagBadge = p.tags && p.tags[0] ? `<span class="absolute top-3 left-3 px-2.5 py-1 rounded-full text-[10px] font-extrabold uppercase tracking-wider bg-clove-900/90 backdrop-blur-md text-saffron-300 border border-saffron-500/40 shadow-sm">${p.tags[0]}</span>` : '';
 
   return `
-    <div class="spice-card bg-white rounded-2xl border border-parchment-300 overflow-hidden shadow-sm flex flex-col justify-between group">
+    <div class="spice-card bg-white dark:bg-[#1E140C] rounded-2xl border border-parchment-300 dark:border-saffron-900/40 overflow-hidden shadow-sm hover:shadow-xl hover:border-saffron-500 transition-all duration-300 flex flex-col justify-between group">
       
       <!-- Image Container -->
-      <div class="relative h-56 overflow-hidden bg-parchment-200">
+      <div class="relative h-52 sm:h-56 overflow-hidden bg-parchment-200 dark:bg-parchment-900">
         <img src="${p.image}" alt="${p.name}" class="spice-card-img w-full h-full object-cover">
         ${tagBadge}
-        <button onclick="openQuickView('${p.id}')" class="absolute bottom-3 right-3 px-3 py-1.5 rounded-lg bg-parchment-50/90 hover:bg-white text-clove-900 text-xs font-bold shadow backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-all duration-200 flex items-center gap-1.5">
-          <i class="fa-regular fa-eye text-saffron-700"></i>
+        <button onclick="toggleWishlist('${p.id}', event)" class="wishlist-btn absolute top-3 right-3 w-8 h-8 rounded-full bg-parchment-50/90 dark:bg-clove-900/80 hover:bg-white dark:hover:bg-clove-800 text-clove-800 dark:text-parchment-200 hover:text-red-500 text-xs shadow flex items-center justify-center transition-colors">
+          <i class="fa-regular fa-heart"></i>
+        </button>
+        <button onclick="openQuickView('${p.id}')" class="absolute bottom-3 right-3 px-3 py-1.5 rounded-lg bg-parchment-50/95 dark:bg-clove-900/90 hover:bg-white dark:hover:bg-clove-800 text-clove-900 dark:text-parchment-50 text-xs font-bold shadow backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-all duration-200 flex items-center gap-1.5 border border-parchment-300 dark:border-saffron-800/40">
+          <i class="fa-regular fa-eye text-saffron-700 dark:text-saffron-400"></i>
           <span>Quick View</span>
         </button>
       </div>
 
       <!-- Content Details -->
-      <div class="p-5 flex flex-col flex-grow justify-between space-y-3">
+      <div class="p-4 sm:p-5 flex flex-col flex-grow justify-between space-y-3">
         
         <div>
-          <div class="flex items-center justify-between text-[11px] text-clove-800/70 mb-1">
-            <span class="flex items-center gap-1 font-semibold text-saffron-800">
+          <div class="flex items-center justify-between text-[11px] text-clove-800/70 dark:text-parchment-400 mb-1">
+            <span class="flex items-center gap-1 font-semibold text-saffron-800 dark:text-saffron-400">
               <i class="fa-solid fa-location-dot text-terracotta-600"></i> ${p.origin}
             </span>
-            <span class="flex items-center gap-1 text-saffron-700 font-bold">
+            <span class="flex items-center gap-1 text-saffron-700 dark:text-saffron-400 font-bold">
               <i class="fa-solid fa-star text-amber-500 text-[10px]"></i> ${p.rating.toFixed(1)} (${p.reviewsCount})
             </span>
           </div>
 
-          <h3 class="font-heading font-bold text-base text-clove-900 leading-snug line-clamp-2 hover:text-saffron-800 cursor-pointer" onclick="openQuickView('${p.id}')">
+          <h3 class="font-heading font-bold text-sm sm:text-base text-clove-900 dark:text-parchment-50 leading-snug line-clamp-2 hover:text-saffron-800 dark:hover:text-saffron-400 cursor-pointer transition-colors" onclick="openQuickView('${p.id}')">
             ${p.name}
           </h3>
 
-          <p class="text-xs text-clove-800/70 mt-1 line-clamp-2 font-light">
+          <p class="text-[11px] sm:text-xs text-clove-800/70 dark:text-parchment-300 mt-1 line-clamp-2 font-light leading-relaxed">
             ${p.description}
           </p>
         </div>
 
         <!-- Aroma Notes -->
         <div>
-          <div class="text-[10px] uppercase font-bold text-clove-800/50 mb-1.5">Fragrance Palette:</div>
-          <div class="flex flex-wrap gap-1.5">
+          <div class="text-[9px] uppercase font-bold text-clove-800/50 dark:text-parchment-400 mb-1 tracking-wider">Aroma Palette:</div>
+          <div class="flex flex-wrap gap-1">
             ${aromaPills}
           </div>
         </div>
 
         <!-- Weight and Price Section -->
-        <div class="border-t border-parchment-200 pt-3 flex items-center justify-between">
+        <div class="border-t border-parchment-200 dark:border-saffron-900/40 pt-3 flex items-center justify-between">
           <div>
-            <span class="text-[11px] text-clove-800/60 block font-medium">${p.weight}</span>
+            <span class="text-[10px] text-clove-800/60 dark:text-parchment-400 block font-medium">${p.weight}</span>
             <div class="flex items-baseline gap-1.5">
-              <span class="font-display font-bold text-lg text-saffron-800">₹${p.price}</span>
-              ${p.originalPrice ? `<span class="text-xs text-clove-800/40 line-through">₹${p.originalPrice}</span>` : ''}
+              <span class="font-display font-bold text-base sm:text-lg text-saffron-800 dark:text-saffron-400">₹${p.price}</span>
+              ${p.originalPrice ? `<span class="text-[11px] text-clove-800/40 dark:text-parchment-500 line-through">₹${p.originalPrice}</span>` : ''}
             </div>
           </div>
 
-          <button onclick="quickAddToCart('${p.id}')" class="px-4 py-2.5 rounded-xl bg-clove-900 hover:bg-saffron-700 text-white font-bold text-xs shadow transition-all duration-200 flex items-center gap-1.5 active:scale-95">
+          <button onclick="quickAddToCart('${p.id}')" class="px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-xl bg-clove-900 hover:bg-saffron-700 dark:bg-saffron-700 dark:hover:bg-saffron-600 text-white font-bold text-xs shadow transition-all duration-200 flex items-center gap-1.5 active:scale-95">
             <i class="fa-solid fa-plus text-xs"></i>
             <span>Add</span>
           </button>
@@ -310,6 +360,34 @@ function renderSpiceCardHTML(p) {
 
     </div>
   `;
+}
+
+function toggleWishlist(productId, event) {
+  if (event) event.stopPropagation();
+  const btn = event?.currentTarget;
+  const icon = btn?.querySelector('i');
+  if (icon) {
+    if (icon.classList.contains('fa-regular')) {
+      icon.classList.remove('fa-regular');
+      icon.classList.add('fa-solid', 'text-red-500');
+      showToast("Saved to your Spice Wishlist!", "success");
+    } else {
+      icon.classList.remove('fa-solid', 'text-red-500');
+      icon.classList.add('fa-regular');
+      showToast("Removed from Wishlist.", "info");
+    }
+  }
+}
+
+function handleNewsletterSubscribe() {
+  const input = document.getElementById('newsletter-email-input');
+  const val = input ? input.value.trim() : '';
+  if (!val || !val.includes('@')) {
+    showToast("Please enter a valid email address.", "error");
+    return;
+  }
+  showToast("Welcome to the Connoisseur Circle! 10% coupon HERITAGE10 is active.", "success");
+  if (input) input.value = '';
 }
 
 function resetFilters() {
@@ -337,7 +415,44 @@ function handleHeaderSearch(e) {
   }
 }
 
-// --- HOME 1 RENDERING ---
+// --- HOME RENDERING FUNCTIONS ---
+function renderHomeCategories() {
+  const container = document.getElementById('home-categories-grid');
+  if (!container) return;
+
+  const cats = SPICE_DATA.categories.filter(c => c.id !== 'all');
+  container.innerHTML = cats.map(cat => `
+    <div onclick="setCategoryAndNavigate('${cat.id}')" class="group cursor-pointer rounded-2xl overflow-hidden bg-white dark:bg-[#1E140C] border border-parchment-300 dark:border-saffron-900/40 shadow-sm hover:shadow-xl hover:border-saffron-500 hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between">
+      <div class="relative h-36 sm:h-44 overflow-hidden bg-parchment-200 dark:bg-parchment-900">
+        <img src="${cat.image}" alt="${cat.name}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+        <div class="absolute inset-0 bg-gradient-to-t from-clove-900/80 via-transparent to-transparent"></div>
+        <span class="absolute bottom-2.5 left-3 text-[10px] font-black uppercase tracking-wider bg-saffron-700/90 backdrop-blur-md text-white px-2 py-0.5 rounded shadow">
+          ${cat.count} Products
+        </span>
+      </div>
+      <div class="p-3.5 sm:p-4 flex flex-col justify-between flex-grow space-y-1.5">
+        <div class="flex items-center gap-1.5">
+          <i class="${cat.icon} text-saffron-600 dark:text-saffron-400 text-xs"></i>
+          <h3 class="font-heading font-bold text-xs sm:text-sm text-clove-900 dark:text-parchment-50 group-hover:text-saffron-700 dark:group-hover:text-saffron-400 transition-colors">${cat.name}</h3>
+        </div>
+        <p class="text-[11px] text-clove-800/70 dark:text-parchment-300 font-light line-clamp-2">${cat.desc}</p>
+        <div class="pt-2 text-[11px] font-bold text-saffron-700 dark:text-saffron-400 flex items-center gap-1 group-hover:translate-x-1 transition-transform">
+          <span>${cat.ctaText || 'Shop ' + cat.name}</span>
+          <i class="fa-solid fa-arrow-right text-[9px]"></i>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function renderBestSellers() {
+  const container = document.getElementById('home-bestsellers-grid');
+  if (!container) return;
+
+  const bestSellers = SPICE_DATA.products.slice(0, 8);
+  container.innerHTML = bestSellers.map(p => renderSpiceCardHTML(p)).join('');
+}
+
 function renderSignatureHomeProducts() {
   const container = document.getElementById('home-signature-grid');
   if (!container) return;
@@ -400,18 +515,18 @@ function renderTestimonials() {
   if (!container) return;
 
   container.innerHTML = SPICE_DATA.testimonials.map(t => `
-    <div class="p-6 rounded-2xl bg-white border border-parchment-300 shadow-sm flex flex-col justify-between space-y-4">
+    <div class="p-6 rounded-2xl bg-white dark:bg-[#1E140C] border border-parchment-300 dark:border-saffron-900/40 shadow-sm flex flex-col justify-between space-y-4">
       <div class="space-y-3">
-        <div class="flex text-amber-500 text-xs">
+        <div class="flex text-amber-500 dark:text-amber-400 text-xs">
           ${'<i class="fa-solid fa-star"></i>'.repeat(t.rating)}
         </div>
-        <p class="text-xs text-clove-800 leading-relaxed italic">"${t.comment}"</p>
+        <p class="text-xs text-clove-800 dark:text-parchment-200 leading-relaxed italic">"${t.comment}"</p>
       </div>
-      <div class="flex items-center gap-3 pt-3 border-t border-parchment-200">
-        <img src="${t.avatar}" alt="${t.name}" class="w-10 h-10 rounded-full object-cover border border-saffron-300">
+      <div class="flex items-center gap-3 pt-3 border-t border-parchment-200 dark:border-saffron-900/30">
+        <img src="${t.avatar}" alt="${t.name}" class="w-10 h-10 rounded-full object-cover border border-saffron-300 dark:border-saffron-700">
         <div>
-          <h4 class="font-bold text-xs text-clove-900">${t.name}</h4>
-          <p class="text-[10px] text-clove-800/60">${t.role}</p>
+          <h4 class="font-bold text-xs text-clove-900 dark:text-parchment-50">${t.name}</h4>
+          <p class="text-[10px] text-clove-800/60 dark:text-parchment-400">${t.role}</p>
         </div>
       </div>
     </div>
@@ -426,8 +541,8 @@ function renderHome2Reserves() {
   if (!SPICE_DATA.estateReserves) return;
 
   const html = SPICE_DATA.estateReserves.map(r => `
-    <div class="bg-white text-clove-900 rounded-2xl border-2 border-amber-600/30 overflow-hidden shadow-lg flex flex-col justify-between group hover:border-amber-500 transition-all duration-300 h-full">
-      <div class="relative h-60 bg-parchment-200 overflow-hidden shrink-0">
+    <div class="bg-white dark:bg-[#1E140C] text-clove-900 dark:text-parchment-50 rounded-2xl border-2 border-amber-600/30 dark:border-amber-500/40 overflow-hidden shadow-lg flex flex-col justify-between group hover:border-amber-500 transition-all duration-300 h-full">
+      <div class="relative h-60 bg-parchment-200 dark:bg-parchment-900 overflow-hidden shrink-0">
         <img src="${r.image}" alt="${r.name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
         <span class="absolute top-3 left-3 px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider bg-cardamom-900 text-amber-300 border border-amber-400 shadow">
           ${r.badge}
@@ -436,23 +551,23 @@ function renderHome2Reserves() {
 
       <div class="p-6 space-y-4 flex-grow flex flex-col justify-between">
         <div class="space-y-2">
-          <div class="text-[11px] text-cardamom-800 font-bold flex items-center gap-1">
+          <div class="text-[11px] text-cardamom-800 dark:text-cardamom-400 font-bold flex items-center gap-1">
             <i class="fa-solid fa-location-dot"></i> ${r.origin}
           </div>
-          <h3 class="font-heading font-bold text-lg text-clove-900 leading-snug min-h-[3.25rem] line-clamp-2">${r.name}</h3>
-          <p class="text-xs text-clove-800/70 font-light leading-relaxed min-h-[3.5rem] line-clamp-3">${r.curatorNote}</p>
+          <h3 class="font-heading font-bold text-lg text-clove-900 dark:text-parchment-50 leading-snug min-h-[3.25rem] line-clamp-2">${r.name}</h3>
+          <p class="text-xs text-clove-800/70 dark:text-parchment-300 font-light leading-relaxed min-h-[3.5rem] line-clamp-3">${r.curatorNote}</p>
         </div>
 
         <div class="mt-auto space-y-4 pt-2">
-          <div class="p-3.5 rounded-xl bg-parchment-100 border border-parchment-200 text-xs space-y-1.5 min-h-[4.5rem] flex flex-col justify-center">
-            <p class="truncate"><strong class="text-clove-900">Harvest & Aging:</strong> ${r.harvest}</p>
-            <p class="truncate"><strong class="text-clove-900">Presentation:</strong> ${r.weight}</p>
+          <div class="p-3.5 rounded-xl bg-parchment-100 dark:bg-parchment-900/60 border border-parchment-200 dark:border-saffron-900/40 text-xs space-y-1.5 min-h-[4.5rem] flex flex-col justify-center">
+            <p class="truncate"><strong class="text-clove-900 dark:text-parchment-100">Harvest & Aging:</strong> <span class="text-clove-800 dark:text-parchment-300">${r.harvest}</span></p>
+            <p class="truncate"><strong class="text-clove-900 dark:text-parchment-100">Presentation:</strong> <span class="text-clove-800 dark:text-parchment-300">${r.weight}</span></p>
           </div>
 
-          <div class="border-t border-parchment-200 pt-3 flex items-center justify-between">
+          <div class="border-t border-parchment-200 dark:border-saffron-900/40 pt-3 flex items-center justify-between">
             <div>
-              <span class="text-[10px] uppercase font-bold text-clove-800/60 block">Cellar Price:</span>
-              <span class="font-display font-bold text-xl text-saffron-800">₹${r.price.toLocaleString('en-IN')}</span>
+              <span class="text-[10px] uppercase font-bold text-clove-800/60 dark:text-parchment-400 block">Cellar Price:</span>
+              <span class="font-display font-bold text-xl text-saffron-800 dark:text-saffron-400">₹${r.price.toLocaleString('en-IN')}</span>
             </div>
 
             <button onclick="quickAddToCart('${r.id === 'res-01' ? 'ws-01' : (r.id === 'res-02' ? 'ws-03' : 'pw-02')}'); showToast('Added Rare Reserve allocation to basket!', 'success');" class="px-5 py-2.5 rounded-xl gold-gradient-bg text-white font-bold text-xs shadow hover:scale-105 transition flex items-center gap-2 shrink-0">
@@ -508,19 +623,19 @@ function setDishPairing(dishType) {
 
   container.innerHTML = `
     <div class="space-y-2">
-      <div class="flex items-center gap-2 text-saffron-800 font-bold text-xs">
+      <div class="flex items-center gap-2 text-saffron-800 dark:text-saffron-400 font-bold text-xs">
         <i class="fa-solid fa-wand-magic-sparkles"></i>
         <span>Sommelier Match: ${p.title}</span>
       </div>
-      <h4 class="font-heading font-bold text-sm text-clove-900">${p.blend}</h4>
-      <p class="text-xs text-clove-800/80 font-light leading-relaxed">${p.notes}</p>
+      <h4 class="font-heading font-bold text-sm text-clove-900 dark:text-parchment-50">${p.blend}</h4>
+      <p class="text-xs text-clove-800/80 dark:text-parchment-300 font-light leading-relaxed">${p.notes}</p>
       
-      <div class="p-3 rounded-lg bg-saffron-50 border border-saffron-200 text-xs text-saffron-900 font-medium">
-        <i class="fa-solid fa-lightbulb text-saffron-700 mr-1"></i> <strong>Pro Tip:</strong> ${p.sommelierTip}
+      <div class="p-3 rounded-lg bg-saffron-50 dark:bg-saffron-950/40 border border-saffron-200 dark:border-saffron-800 text-xs text-saffron-900 dark:text-saffron-200 font-medium">
+        <i class="fa-solid fa-lightbulb text-saffron-700 dark:text-saffron-400 mr-1"></i> <strong>Pro Tip:</strong> ${p.sommelierTip}
       </div>
 
       <div class="pt-2 flex justify-end gap-2">
-        <button onclick="quickAddToCart('${p.productIds[0]}'); quickAddToCart('${p.productIds[1]}');" class="px-4 py-2 rounded-lg bg-clove-900 hover:bg-saffron-700 text-white font-bold text-xs transition flex items-center gap-1.5">
+        <button onclick="quickAddToCart('${p.productIds[0]}'); quickAddToCart('${p.productIds[1]}');" class="px-4 py-2 rounded-lg bg-clove-900 hover:bg-saffron-700 dark:bg-saffron-700 dark:hover:bg-saffron-600 text-white font-bold text-xs transition flex items-center gap-1.5">
           <i class="fa-solid fa-plus text-xs"></i>
           <span>Add Pairing Set to Basket</span>
         </button>
@@ -593,29 +708,29 @@ function openRecipeModal(recipeId) {
   const container = document.getElementById('recipe-modal-content');
 
   const ingredientsListHTML = recipe.ingredients.map(ing => `
-    <li class="flex items-start gap-2 text-xs text-clove-900">
-      <i class="fa-solid fa-check text-cardamom-700 text-xs mt-0.5"></i>
+    <li class="flex items-start gap-2 text-xs text-clove-900 dark:text-parchment-100">
+      <i class="fa-solid fa-check text-cardamom-700 dark:text-cardamom-400 text-xs mt-0.5"></i>
       <span>${ing}</span>
     </li>
   `).join('');
 
   const stepsListHTML = recipe.steps.map(step => `
-    <div class="p-4 bg-white rounded-xl border border-parchment-300 space-y-3">
+    <div class="p-4 bg-white dark:bg-[#1E140C] rounded-xl border border-parchment-300 dark:border-saffron-900/40 space-y-3">
       <div class="flex items-center gap-3">
         <div class="w-8 h-8 rounded-full bg-saffron-700 text-white font-display font-bold text-xs flex items-center justify-center shrink-0">
           ${step.stepNumber}
         </div>
-        <h5 class="font-heading font-bold text-sm text-clove-900">${step.title}</h5>
+        <h5 class="font-heading font-bold text-sm text-clove-900 dark:text-parchment-50">${step.title}</h5>
       </div>
 
       <div class="grid grid-cols-1 sm:grid-cols-12 gap-4 items-center">
         <div class="sm:col-span-8">
-          <p class="text-xs text-clove-800 leading-relaxed font-light">${step.instruction}</p>
-          <div class="mt-2 text-[11px] text-cardamom-900 font-medium bg-cardamom-50 px-2.5 py-1 rounded border border-cardamom-200">
+          <p class="text-xs text-clove-800 dark:text-parchment-200 leading-relaxed font-light">${step.instruction}</p>
+          <div class="mt-2 text-[11px] text-cardamom-900 dark:text-cardamom-300 font-medium bg-cardamom-50 dark:bg-cardamom-950/60 px-2.5 py-1 rounded border border-cardamom-200 dark:border-cardamom-800">
             <i class="fa-regular fa-image mr-1"></i> ${step.stepCaption}
           </div>
         </div>
-        <div class="sm:col-span-4 h-28 rounded-lg overflow-hidden border border-parchment-300">
+        <div class="sm:col-span-4 h-28 rounded-lg overflow-hidden border border-parchment-300 dark:border-saffron-900/40">
           <img src="${step.stepImage}" alt="${step.title}" class="w-full h-full object-cover">
         </div>
       </div>
@@ -626,48 +741,48 @@ function openRecipeModal(recipeId) {
     <div class="space-y-6">
       
       <div class="flex flex-col md:flex-row gap-6 items-start">
-        <div class="w-full md:w-80 h-60 rounded-xl overflow-hidden border border-parchment-300 shrink-0">
+        <div class="w-full md:w-80 h-60 rounded-xl overflow-hidden border border-parchment-300 dark:border-saffron-900/40 shrink-0">
           <img src="${recipe.image}" alt="${recipe.title}" class="w-full h-full object-cover">
         </div>
         <div class="space-y-2 flex-grow">
-          <span class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-saffron-100 text-saffron-800 border border-saffron-300">${recipe.category}</span>
-          <h2 class="font-heading font-bold text-2xl text-clove-900">${recipe.title}</h2>
+          <span class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-saffron-100 dark:bg-saffron-950/60 text-saffron-800 dark:text-saffron-300 border border-saffron-300 dark:border-saffron-700">${recipe.category}</span>
+          <h2 class="font-heading font-bold text-2xl text-clove-900 dark:text-parchment-50">${recipe.title}</h2>
           
-          <div class="p-3 bg-parchment-100 rounded-lg border border-parchment-200 text-xs text-clove-800 space-y-0.5">
-            <span class="font-bold text-saffron-900">Image Description:</span>
-            <p class="text-[11px] text-clove-800/80 font-light">${recipe.imageExplanation}</p>
+          <div class="p-3 bg-parchment-100 dark:bg-parchment-900/60 rounded-lg border border-parchment-200 dark:border-saffron-900/40 text-xs text-clove-800 dark:text-parchment-200 space-y-0.5">
+            <span class="font-bold text-saffron-900 dark:text-saffron-400">Image Description:</span>
+            <p class="text-[11px] text-clove-800/80 dark:text-parchment-300 font-light">${recipe.imageExplanation}</p>
           </div>
 
-          <div class="flex flex-wrap gap-4 text-xs text-clove-800/70 pt-1">
-            <span><i class="fa-regular fa-clock text-saffron-700 mr-1"></i>Prep: ${recipe.prepTime}</span>
-            <span><i class="fa-solid fa-fire text-terracotta-600 mr-1"></i>Cook: ${recipe.cookTime}</span>
-            <span><i class="fa-solid fa-award text-cardamom-700 mr-1"></i>${recipe.difficulty}</span>
+          <div class="flex flex-wrap gap-4 text-xs text-clove-800/70 dark:text-parchment-400 pt-1">
+            <span><i class="fa-regular fa-clock text-saffron-700 dark:text-saffron-400 mr-1"></i>Prep: ${recipe.prepTime}</span>
+            <span><i class="fa-solid fa-fire text-terracotta-600 dark:text-terracotta-400 mr-1"></i>Cook: ${recipe.cookTime}</span>
+            <span><i class="fa-solid fa-award text-cardamom-700 dark:text-cardamom-400 mr-1"></i>${recipe.difficulty}</span>
           </div>
         </div>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-12 gap-6 bg-parchment-100 p-6 rounded-xl border border-parchment-300">
+      <div class="grid grid-cols-1 md:grid-cols-12 gap-6 bg-parchment-100 dark:bg-parchment-900/50 p-6 rounded-xl border border-parchment-300 dark:border-saffron-900/40">
         <div class="md:col-span-6 space-y-3">
-          <h4 class="font-heading font-bold text-sm text-clove-900 uppercase tracking-wider">Culinary Ingredients</h4>
+          <h4 class="font-heading font-bold text-sm text-clove-900 dark:text-parchment-50 uppercase tracking-wider">Culinary Ingredients</h4>
           <ul class="space-y-2">
             ${ingredientsListHTML}
           </ul>
         </div>
 
-        <div class="md:col-span-6 space-y-3 border-t md:border-t-0 md:border-l border-parchment-300 md:pl-6">
-          <h4 class="font-heading font-bold text-sm text-clove-900 uppercase tracking-wider">Required SuryaVeda Spices</h4>
-          <p class="text-xs text-clove-800/70">Add to basket to receive single-estate harvest batches:</p>
+        <div class="md:col-span-6 space-y-3 border-t md:border-t-0 md:border-l border-parchment-300 dark:border-saffron-900/40 md:pl-6">
+          <h4 class="font-heading font-bold text-sm text-clove-900 dark:text-parchment-50 uppercase tracking-wider">Required SuryaVeda Spices</h4>
+          <p class="text-xs text-clove-800/70 dark:text-parchment-400">Add to basket to receive single-estate harvest batches:</p>
           <div class="space-y-2">
             ${recipe.keySpices.map(id => {
               const sp = SPICE_DATA.products.find(p => p.id === id);
               if (!sp) return '';
               return `
-                <div class="flex items-center justify-between p-2.5 bg-white rounded-lg border border-parchment-300">
+                <div class="flex items-center justify-between p-2.5 bg-white dark:bg-[#1E140C] rounded-lg border border-parchment-300 dark:border-saffron-900/40">
                   <div class="flex items-center gap-2.5">
                     <img src="${sp.image}" class="w-9 h-9 rounded object-cover">
                     <div>
-                      <h5 class="font-bold text-xs text-clove-900">${sp.name.split('(')[0]}</h5>
-                      <span class="text-[10px] text-saffron-800 font-bold">₹${sp.price} (${sp.weight})</span>
+                      <h5 class="font-bold text-xs text-clove-900 dark:text-parchment-50">${sp.name.split('(')[0]}</h5>
+                      <span class="text-[10px] text-saffron-800 dark:text-saffron-400 font-bold">₹${sp.price} (${sp.weight})</span>
                     </div>
                   </div>
                   <button onclick="quickAddToCart('${sp.id}')" class="px-2.5 py-1 bg-saffron-600 hover:bg-saffron-500 text-white text-[11px] font-bold rounded">
@@ -681,14 +796,14 @@ function openRecipeModal(recipeId) {
       </div>
 
       <div class="space-y-4">
-        <h4 class="font-heading font-bold text-lg text-clove-900">Step-by-Step Cooking Technique & Visual Notes</h4>
+        <h4 class="font-heading font-bold text-lg text-clove-900 dark:text-parchment-50">Step-by-Step Cooking Technique & Visual Notes</h4>
         <div class="space-y-3">
           ${stepsListHTML}
         </div>
       </div>
 
-      <div class="p-4 rounded-xl bg-saffron-50 border border-saffron-200 text-xs text-saffron-900 font-semibold flex items-center gap-3">
-        <i class="fa-solid fa-crown text-saffron-700 text-lg"></i>
+      <div class="p-4 rounded-xl bg-saffron-50 dark:bg-saffron-950/40 border border-saffron-200 dark:border-saffron-800 text-xs text-saffron-900 dark:text-saffron-200 font-semibold flex items-center gap-3">
+        <i class="fa-solid fa-crown text-saffron-700 dark:text-saffron-400 text-lg"></i>
         <span>Master Chef Note: ${recipe.pairingTip}</span>
       </div>
 
@@ -702,7 +817,7 @@ function closeRecipeModal() {
   document.getElementById('recipe-modal')?.classList.add('hidden');
 }
 
-// --- QUICK VIEW MODAL ---
+// --- QUICK VIEW MODAL & PRODUCT CTAS ---
 function openQuickView(productId) {
   const p = SPICE_DATA.products.find(item => item.id === productId);
   if (!p) return;
@@ -710,54 +825,91 @@ function openQuickView(productId) {
   const modal = document.getElementById('quick-view-modal');
   const container = document.getElementById('quick-view-content');
 
-  const aromaPills = p.aromaNotes.map(n => `<span class="aroma-pill px-2.5 py-1 rounded-md">${n}</span>`).join('');
+  const aromaPills = p.aromaNotes.map(n => `<span class="aroma-pill px-2.5 py-1 rounded-md text-[11px] font-semibold">${n}</span>`).join('');
 
   container.innerHTML = `
-    <div class="relative h-72 md:h-full bg-parchment-200 overflow-hidden">
+    <div class="relative h-72 md:h-full bg-parchment-200 dark:bg-parchment-900 overflow-hidden">
       <img src="${p.image}" alt="${p.name}" class="w-full h-full object-cover">
-      <div class="absolute top-4 left-4">
-        <span class="px-3 py-1 rounded-full text-xs font-bold bg-clove-900/80 text-saffron-300 backdrop-blur-sm">${p.categoryName}</span>
+      <div class="absolute top-4 left-4 flex flex-col gap-2">
+        <span class="px-3 py-1 rounded-full text-xs font-bold bg-clove-900/90 text-saffron-300 backdrop-blur-sm border border-saffron-500/30 shadow">${p.categoryName}</span>
+        ${p.isSignature ? '<span class="px-3 py-1 rounded-full text-xs font-bold bg-amber-500/90 text-clove-950 backdrop-blur-sm shadow flex items-center gap-1"><i class="fa-solid fa-crown text-[10px]"></i> Signature Reserve</span>' : ''}
+      </div>
+      <div class="absolute bottom-4 left-4 right-4 bg-clove-950/80 backdrop-blur-md rounded-xl p-2.5 border border-saffron-500/30 text-white text-[11px] flex items-center justify-between">
+        <span class="flex items-center gap-1.5 text-cardamom-300 font-semibold"><i class="fa-solid fa-shield-halved"></i> 100% NABL Lab Verified</span>
+        <span class="text-saffron-300 font-bold">Grade A+ Terroir</span>
       </div>
     </div>
 
-    <div class="p-6 sm:p-8 flex flex-col justify-between space-y-4">
+    <div class="p-6 sm:p-8 flex flex-col justify-between space-y-4 max-h-[85vh] overflow-y-auto">
       <div class="space-y-3">
-        <div class="flex items-center gap-2 text-xs text-saffron-800 font-semibold">
-          <i class="fa-solid fa-location-dot text-terracotta-600"></i> ${p.origin} • <i class="fa-solid fa-calendar text-cardamom-700"></i> ${p.harvest}
+        <div class="flex items-center justify-between text-xs">
+          <span class="flex items-center gap-1.5 text-saffron-800 dark:text-saffron-400 font-semibold">
+            <i class="fa-solid fa-location-dot text-terracotta-600 dark:text-terracotta-400"></i> ${p.origin} • <i class="fa-solid fa-calendar text-cardamom-700 dark:text-cardamom-400"></i> ${p.harvest}
+          </span>
+          <span class="text-amber-500 dark:text-amber-400 font-bold flex items-center gap-1">
+            <i class="fa-solid fa-star text-xs"></i> ${p.rating.toFixed(1)} <span class="text-clove-800/60 dark:text-parchment-400 font-normal">(${p.reviewsCount} reviews)</span>
+          </span>
         </div>
 
-        <h2 class="font-heading font-bold text-xl text-clove-900">${p.name}</h2>
-        
-        <div class="flex items-center gap-2 text-xs">
-          <span class="text-amber-500 font-bold"><i class="fa-solid fa-star mr-1"></i>${p.rating}</span>
-          <span class="text-clove-800/60">(${p.reviewsCount} customer reviews)</span>
-        </div>
+        <h2 class="font-heading font-bold text-xl sm:text-2xl text-clove-900 dark:text-parchment-50 leading-tight">${p.name}</h2>
 
-        <p class="text-xs text-clove-800/80 font-light leading-relaxed">${p.description}</p>
+        <p class="text-xs sm:text-sm text-clove-800/80 dark:text-parchment-300 font-light leading-relaxed">${p.description}</p>
 
         <div>
-          <span class="text-[10px] uppercase font-bold text-clove-800/60 block mb-1">Aroma Profile & Terroir Notes:</span>
+          <span class="text-[10px] uppercase font-bold text-clove-800/60 dark:text-parchment-400 block mb-1.5 tracking-wider">Aroma Profile & Terroir Notes:</span>
           <div class="flex flex-wrap gap-1.5">
             ${aromaPills}
           </div>
         </div>
 
-        <div class="bg-parchment-100 p-3 rounded-xl border border-parchment-300 text-xs flex justify-between items-center">
-          <span class="font-semibold text-clove-900">Heat Index:</span>
-          <span class="font-bold text-terracotta-600">${p.heatLevel}</span>
+        <div class="grid grid-cols-2 gap-3 pt-1">
+          <div class="bg-parchment-100 dark:bg-parchment-900/60 p-2.5 rounded-xl border border-parchment-300 dark:border-saffron-900/40 text-xs">
+            <span class="font-bold text-clove-900 dark:text-parchment-100 block text-[11px]">Heat Index:</span>
+            <span class="font-semibold text-terracotta-600 dark:text-terracotta-400">${p.heatLevel}</span>
+          </div>
+          <div class="bg-parchment-100 dark:bg-parchment-900/60 p-2.5 rounded-xl border border-parchment-300 dark:border-saffron-900/40 text-xs">
+            <span class="font-bold text-clove-900 dark:text-parchment-100 block text-[11px]">Grind / State:</span>
+            <span class="font-semibold text-saffron-800 dark:text-saffron-400">${p.category === 'whole-spices' ? 'Whole Botanical' : (p.category === 'pickles-chutneys' ? 'Clay Pot Matured' : 'Cold Stone Pounded')}</span>
+          </div>
         </div>
       </div>
 
-      <div class="border-t border-parchment-300 pt-4 flex items-center justify-between">
-        <div>
-          <span class="text-xs text-clove-800/60 block">${p.weight}</span>
-          <span class="font-display font-bold text-2xl text-saffron-800">₹${p.price}</span>
+      <div class="border-t border-parchment-300 dark:border-saffron-900/40 pt-4 space-y-3">
+        <div class="flex items-baseline justify-between">
+          <div>
+            <span class="text-xs text-clove-800/60 dark:text-parchment-400 block font-medium">Net Weight: ${p.weight}</span>
+            <div class="flex items-baseline gap-2">
+              <span class="font-display font-bold text-2xl text-saffron-800 dark:text-saffron-400">₹${p.price}</span>
+              ${p.originalPrice ? `<span class="text-sm text-clove-800/40 dark:text-parchment-500 line-through">₹${p.originalPrice}</span>` : ''}
+            </div>
+          </div>
+          <span class="text-xs font-semibold text-cardamom-700 dark:text-cardamom-400 bg-cardamom-50 dark:bg-cardamom-950/60 px-2.5 py-1 rounded-md border border-cardamom-200 dark:border-cardamom-800">
+            <i class="fa-solid fa-truck-fast mr-1"></i> Ships within 24h
+          </span>
         </div>
 
-        <button onclick="quickAddToCart('${p.id}'); closeQuickView();" class="px-6 py-3 rounded-xl gold-gradient-bg text-white font-bold text-xs shadow hover:scale-105 transition flex items-center gap-2">
-          <i class="fa-solid fa-bag-shopping"></i>
-          <span>Add to Basket</span>
-        </button>
+        <!-- Action-Oriented Buttons -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1">
+          <button onclick="quickAddToCart('${p.id}'); closeQuickView();" class="w-full py-3 px-4 rounded-xl bg-clove-900 hover:bg-clove-800 dark:bg-saffron-700 dark:hover:bg-saffron-600 text-white font-bold text-xs shadow hover:scale-[1.02] transition flex items-center justify-center gap-2">
+            <i class="fa-solid fa-basket-shopping"></i>
+            <span>Add to Basket</span>
+          </button>
+          <button onclick="orderNowProduct('${p.id}')" class="w-full py-3 px-4 rounded-xl gold-gradient-bg text-white font-bold text-xs shadow hover:scale-[1.02] transition flex items-center justify-center gap-2">
+            <i class="fa-solid fa-bolt"></i>
+            <span>Order Now</span>
+          </button>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1">
+          <button onclick="enquireAboutProduct('${p.id}')" class="w-full py-2.5 px-3 rounded-xl border border-saffron-600/40 bg-saffron-50/50 dark:bg-saffron-950/40 hover:bg-saffron-100 dark:hover:bg-saffron-900/60 text-saffron-900 dark:text-saffron-300 font-bold text-[11px] transition flex items-center justify-center gap-1.5">
+            <i class="fa-regular fa-comment-dots text-saffron-700 dark:text-saffron-400"></i>
+            <span>Enquire About This Spice</span>
+          </button>
+          <button onclick="bulkEnquireProduct('${p.id}')" class="w-full py-2.5 px-3 rounded-xl border border-parchment-300 dark:border-saffron-900/50 bg-parchment-100 dark:bg-parchment-900/60 hover:bg-parchment-200 dark:hover:bg-parchment-800 text-clove-800 dark:text-parchment-300 font-bold text-[11px] transition flex items-center justify-center gap-1.5">
+            <i class="fa-solid fa-boxes-stacked text-terracotta-600 dark:text-terracotta-400"></i>
+            <span>Request Bulk / Wholesale</span>
+          </button>
+        </div>
       </div>
 
     </div>
@@ -770,28 +922,59 @@ function closeQuickView() {
   document.getElementById('quick-view-modal')?.classList.add('hidden');
 }
 
+function orderNowProduct(productId) {
+  quickAddToCart(productId);
+  closeQuickView();
+  toggleCartDrawer(true);
+}
+
+function enquireAboutProduct(productId) {
+  closeQuickView();
+  const p = SPICE_DATA.products.find(item => item.id === productId);
+  navigateTo('contact');
+  const purposeSelect = document.getElementById('contact-purpose');
+  const msgInput = document.getElementById('contact-message');
+  if (purposeSelect) {
+    purposeSelect.value = 'enquiry';
+  }
+  if (msgInput && p) {
+    msgInput.value = `Hello SuryaVeda Team, I would like to enquire about ${p.name} (${p.weight}, ₹${p.price}). Please share harvest batch availability and culinary pairing guidance.`;
+    msgInput.focus();
+  }
+}
+
+function bulkEnquireProduct(productId) {
+  closeQuickView();
+  navigateTo('bulk-orders');
+  const bulkSelect = document.getElementById('bulk-spice-select');
+  if (bulkSelect && productId) {
+    bulkSelect.value = productId;
+    calculateBulkQuote();
+  }
+}
+
 // --- BOUTIQUE LOCATIONS RENDERER ---
 function renderContactLocations() {
   const container = document.getElementById('contact-locations-list');
   if (!container || !SPICE_DATA.storeInfo.locations) return;
 
   container.innerHTML = SPICE_DATA.storeInfo.locations.map(loc => `
-    <div class="p-5 rounded-2xl bg-white border border-parchment-300 space-y-3 h-full flex flex-col justify-between">
+    <div class="p-5 rounded-2xl bg-white dark:bg-[#1E140C] border border-parchment-300 dark:border-saffron-900/40 space-y-3 h-full flex flex-col justify-between">
       <div class="space-y-1.5">
         <div class="flex items-center justify-between">
-          <h4 class="font-bold text-sm text-clove-900 flex items-center gap-1.5">
-            <i class="fa-solid fa-store text-saffron-700"></i> ${loc.city}
+          <h4 class="font-bold text-sm text-clove-900 dark:text-parchment-50 flex items-center gap-1.5">
+            <i class="fa-solid fa-store text-saffron-700 dark:text-saffron-400"></i> ${loc.city}
           </h4>
-          <span class="text-[10px] bg-cardamom-100 text-cardamom-800 font-bold px-2 py-0.5 rounded">${loc.state}</span>
+          <span class="text-[10px] bg-cardamom-100 dark:bg-cardamom-950/60 text-cardamom-800 dark:text-cardamom-300 font-bold px-2 py-0.5 rounded border border-cardamom-300 dark:border-cardamom-800">${loc.state}</span>
         </div>
-        <p class="text-xs text-clove-800/80 font-light leading-relaxed">${loc.address}</p>
+        <p class="text-xs text-clove-800/80 dark:text-parchment-300 font-light leading-relaxed">${loc.address}</p>
       </div>
-      <div class="text-[11px] text-clove-800/70 space-y-1 pt-2 border-t border-parchment-200 mt-auto">
-        <p><i class="fa-solid fa-phone mr-1 text-saffron-700"></i> ${loc.phone}</p>
-        <p><i class="fa-regular fa-clock mr-1 text-saffron-700"></i> ${loc.timing}</p>
+      <div class="text-[11px] text-clove-800/70 dark:text-parchment-400 space-y-1 pt-2 border-t border-parchment-200 dark:border-saffron-900/30 mt-auto">
+        <p><i class="fa-solid fa-phone mr-1 text-saffron-700 dark:text-saffron-400"></i> ${loc.phone}</p>
+        <p><i class="fa-regular fa-clock mr-1 text-saffron-700 dark:text-saffron-400"></i> ${loc.timing}</p>
       </div>
       <div class="flex flex-wrap gap-1.5 pt-1">
-        ${loc.features.map(f => `<span class="text-[10px] bg-parchment-100 px-2 py-0.5 rounded border border-parchment-200 text-clove-800">${f}</span>`).join('')}
+        ${loc.features.map(f => `<span class="text-[10px] bg-parchment-100 dark:bg-parchment-900/60 px-2 py-0.5 rounded border border-parchment-200 dark:border-saffron-900/40 text-clove-800 dark:text-parchment-300">${f}</span>`).join('')}
       </div>
     </div>
   `).join('');
@@ -857,50 +1040,6 @@ function renderCartOffers() {
       <p class="text-[10px] font-semibold text-clove-900 mt-1 line-clamp-1">${off.title}</p>
     </div>
   `).join('');
-}
-
-// --- AUTH (LOGIN / REGISTER) CONTROLLER ---
-function switchAuthTab(tab) {
-  const loginForm = document.getElementById('form-login');
-  const registerForm = document.getElementById('form-register');
-  const loginTab = document.getElementById('auth-tab-login');
-  const registerTab = document.getElementById('auth-tab-register');
-
-  if (tab === 'login') {
-    loginForm.classList.remove('hidden');
-    registerForm.classList.add('hidden');
-    loginTab.classList.add('text-saffron-800', 'border-b-2', 'border-saffron-800', 'font-bold');
-    loginTab.classList.remove('text-clove-800/50');
-    registerTab.classList.remove('text-saffron-800', 'border-b-2', 'border-saffron-800', 'font-bold');
-    registerTab.classList.add('text-clove-800/50');
-  } else {
-    loginForm.classList.add('hidden');
-    registerForm.classList.remove('hidden');
-    registerTab.classList.add('text-saffron-800', 'border-b-2', 'border-saffron-800', 'font-bold');
-    registerTab.classList.remove('text-clove-800/50');
-    loginTab.classList.remove('text-saffron-800', 'border-b-2', 'border-saffron-800', 'font-bold');
-    loginTab.classList.add('text-clove-800/50');
-  }
-}
-
-function handleAuthLogin(e) {
-  e.preventDefault();
-  showToast("Welcome back, Guild Member! Private harvest reserve unlocked.", "success");
-  setTimeout(() => navigateTo('home'), 1000);
-}
-
-function handleAuthRegister(e) {
-  e.preventDefault();
-  showToast("Registration successful! 100 Welcome Aroma points credited.", "success");
-  setTimeout(() => navigateTo('home'), 1000);
-}
-
-function handleSocialAuth(provider) {
-  showToast(`Authenticating with ${provider}... Accessing your SuryaVeda Guild Account.`, 'info');
-  setTimeout(() => {
-    showToast(`Successfully connected via ${provider}! Welcome to the Private Reserve.`, 'success');
-    navigateTo('home');
-  }, 1000);
 }
 
 // --- BULK ORDERS CALCULATOR ---
@@ -1100,22 +1239,22 @@ function updateCartUI() {
   // Populate Items
   if (itemsContainer) {
     itemsContainer.innerHTML = cart.map(item => `
-      <div class="flex items-center gap-3 p-3 bg-white rounded-xl border border-parchment-300 shadow-sm">
-        <img src="${item.image}" alt="${item.name}" class="w-14 h-14 rounded-lg object-cover border border-parchment-200">
+      <div class="flex items-center gap-3 p-3 bg-white dark:bg-[#1E140C] rounded-xl border border-parchment-300 dark:border-saffron-900/40 shadow-sm">
+        <img src="${item.image}" alt="${item.name}" class="w-14 h-14 rounded-lg object-cover border border-parchment-200 dark:border-saffron-900/40">
         
         <div class="flex-grow space-y-1">
-          <h4 class="font-bold text-xs text-clove-900 line-clamp-1">${item.name}</h4>
-          <span class="text-[10px] text-clove-800/60 block">${item.weight}</span>
-          <span class="font-display font-bold text-xs text-saffron-800">₹${item.price * item.qty}</span>
+          <h4 class="font-bold text-xs text-clove-900 dark:text-parchment-50 line-clamp-1">${item.name}</h4>
+          <span class="text-[10px] text-clove-800/60 dark:text-parchment-400 block">${item.weight}</span>
+          <span class="font-display font-bold text-xs text-saffron-800 dark:text-saffron-400">₹${item.price * item.qty}</span>
         </div>
 
-        <div class="flex items-center gap-2 bg-parchment-100 rounded-lg p-1 border border-parchment-300">
-          <button onclick="updateCartQty('${item.id}', -1)" class="w-6 h-6 rounded bg-white text-clove-900 hover:bg-saffron-100 font-bold text-xs flex items-center justify-center">-</button>
-          <span class="text-xs font-bold w-4 text-center">${item.qty}</span>
-          <button onclick="updateCartQty('${item.id}', 1)" class="w-6 h-6 rounded bg-white text-clove-900 hover:bg-saffron-100 font-bold text-xs flex items-center justify-center">+</button>
+        <div class="flex items-center gap-2 bg-parchment-100 dark:bg-parchment-900/60 rounded-lg p-1 border border-parchment-300 dark:border-saffron-900/40">
+          <button onclick="updateCartQty('${item.id}', -1)" class="w-6 h-6 rounded bg-white dark:bg-[#2A190E] text-clove-900 dark:text-parchment-100 hover:bg-saffron-100 dark:hover:bg-saffron-900/60 font-bold text-xs flex items-center justify-center">-</button>
+          <span class="text-xs font-bold w-4 text-center text-clove-900 dark:text-parchment-50">${item.qty}</span>
+          <button onclick="updateCartQty('${item.id}', 1)" class="w-6 h-6 rounded bg-white dark:bg-[#2A190E] text-clove-900 dark:text-parchment-100 hover:bg-saffron-100 dark:hover:bg-saffron-900/60 font-bold text-xs flex items-center justify-center">+</button>
         </div>
 
-        <button onclick="removeCartItem('${item.id}')" class="text-clove-800/40 hover:text-terracotta-600 p-1">
+        <button onclick="removeCartItem('${item.id}')" class="text-clove-800/40 dark:text-parchment-400 hover:text-terracotta-600 dark:hover:text-terracotta-400 p-1">
           <i class="fa-solid fa-trash text-xs"></i>
         </button>
       </div>

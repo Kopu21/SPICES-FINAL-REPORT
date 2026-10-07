@@ -64,59 +64,388 @@ body.dark-mode .brand-tagline-sub {
   color: #FB923C;
 }
 
-/* Dark Theme Variables */
+/* ========================================================================= */
+/* COMPLETE ACCESSIBLE DARK MODE THEME SYSTEM */
+/* ========================================================================= */
+
+/* ========================================================================= */
+/* COMPLETE ACCESSIBLE THEME TOKEN & CONTRAST SYSTEM (WCAG AA/AAA) */
+/* ========================================================================= */
+
+:root {
+  --font-heading: 'Playfair Display', Georgia, serif;
+  --font-display: 'Cinzel Decorative', Georgia, serif;
+  --font-body: 'Plus Jakarta Sans', system-ui, sans-serif;
+
+  /* Brand Accents */
+  --color-saffron: #B45309;
+  --color-saffron-light: #D97706;
+  --color-terracotta: #C2410C;
+  --color-cardamom: #15803D;
+  --color-deep-forest: #064E3B;
+  --color-clove-dark: #24180E;
+  --color-gold-antique: #B45309;
+  --color-gold-light: #F59E0B;
+  
+  /* Light Mode Color System (Crisp, High-Contrast) */
+  --bg-primary: #FDFBF7;
+  --bg-secondary: #F6EFE6;
+  --bg-card: #FFFFFF;
+  --bg-card-hover: #FAF5ED;
+  --bg-input: #FFFFFF;
+  --text-main: #1C130B;       /* Contrast > 13:1 on parchment */
+  --text-secondary: #3D2B1D;  /* Contrast > 8.5:1 on parchment */
+  --text-muted: #57402E;      /* Contrast > 5.5:1 on parchment */
+  --text-light: #6E533D;      /* Contrast > 4.5:1 on parchment */
+  --border-color: #E2D0BA;
+  --border-subtle: #EDE0CE;
+  --focus-ring: #D97706;
+}
+
 body.dark-mode {
-  --bg-primary: #120C07;
-  --bg-secondary: #1C130B;
-  --bg-card: #23180E;
-  --text-main: #FBF6EE;
-  --text-muted: #D1C0AA;
-  --border-color: #3D2817;
+  /* Dark Mode Color System (Velvet Clove & Radiant Warm Gold) */
+  --bg-primary: #120B07;
+  --bg-secondary: #181009;
+  --bg-card: #1E140C;
+  --bg-card-hover: #291A10;
+  --bg-input: #170E08;
+  --text-main: #FFF7EA;       /* Contrast > 14:1 on #120B07 / #1E140C */
+  --text-secondary: #F0E2D2;  /* Contrast > 10:1 */
+  --text-muted: #D8C6B2;      /* Contrast > 7:1 */
+  --text-light: #C4B09A;      /* Contrast > 5.5:1 */
+  --border-color: rgba(245, 158, 11, 0.28);
+  --border-subtle: rgba(217, 119, 6, 0.20);
+  --focus-ring: #F59E0B;
   
   background-color: var(--bg-primary) !important;
   color: var(--text-main) !important;
-  background-image: radial-gradient(#3a2614 0.65px, transparent 0.65px), radial-gradient(#3a2614 0.65px, #120c07 0.65px) !important;
+  background-image: radial-gradient(#3a2614 0.65px, transparent 0.65px), radial-gradient(#3a2614 0.65px, #120b07 0.65px) !important;
 }
 
-body.dark-mode .bg-white {
-  background-color: #23180E !important;
-  color: #FBF6EE !important;
+/* ========================================================================= */
+/* GLOBAL HIGH CONTRAST TYPOGRAPHY & ELEMENT OVERRIDES (LIGHT MODE) */
+/* ========================================================================= */
+
+p, span, li, div, label {
+  color: inherit;
 }
 
-body.dark-mode .bg-parchment-50 {
-  background-color: #1A1108 !important;
+/* Ensure secondary/muted text in Light Mode is never too faint */
+.text-clove-800\/70,
+.text-clove-800\/60,
+.text-clove-800\/80 {
+  color: #523D2C;
 }
 
-body.dark-mode .bg-parchment-100 {
-  background-color: #20150B !important;
+.text-clove-800\/50,
+.text-clove-800\/40 {
+  color: #634C38;
 }
 
-body.dark-mode .bg-parchment-200 {
-  background-color: #2A1C0E !important;
+/* ========================================================================= */
+/* COMPLETE ACCESSIBLE DARK MODE THEME SYSTEM OVERRIDES */
+/* ========================================================================= */
+
+/* Base Card & Container Overrides in Dark Mode */
+body.dark-mode .bg-white,
+body.dark-mode [class*="bg-white"] {
+  background-color: #1E140C !important;
+  color: #FFF7EA !important;
 }
 
+body.dark-mode .bg-parchment-50,
+body.dark-mode [class*="bg-parchment-50"] {
+  background-color: #181009 !important;
+}
+
+body.dark-mode .bg-parchment-100,
+body.dark-mode [class*="bg-parchment-100"] {
+  background-color: #21150C !important;
+}
+
+body.dark-mode .bg-parchment-200,
+body.dark-mode [class*="bg-parchment-200"] {
+  background-color: #2B1B10 !important;
+}
+
+body.dark-mode .bg-parchment-300,
+body.dark-mode [class*="bg-parchment-300"] {
+  background-color: #382315 !important;
+}
+
+body.dark-mode .bg-saffron-50,
+body.dark-mode [class*="bg-saffron-50"] {
+  background-color: #281A0E !important;
+}
+
+body.dark-mode .bg-saffron-100,
+body.dark-mode [class*="bg-saffron-100"] {
+  background-color: #332012 !important;
+}
+
+body.dark-mode .bg-cardamom-50,
+body.dark-mode [class*="bg-cardamom-50"] {
+  background-color: #0F2518 !important;
+}
+
+body.dark-mode .bg-cardamom-100,
+body.dark-mode [class*="bg-cardamom-100"] {
+  background-color: #143522 !important;
+}
+
+/* Borders in Dark Mode */
 body.dark-mode .border-parchment-200,
-body.dark-mode .border-parchment-300 {
-  border-color: #3D2817 !important;
+body.dark-mode .border-parchment-300,
+body.dark-mode [class*="border-parchment-200"],
+body.dark-mode [class*="border-parchment-300"],
+body.dark-mode [class*="border-parchment-700"] {
+  border-color: rgba(245, 158, 11, 0.28) !important;
 }
 
-body.dark-mode .text-clove-900 {
-  color: #FBF6EE !important;
+body.dark-mode .border-saffron-200,
+body.dark-mode .border-saffron-300,
+body.dark-mode [class*="border-saffron-200"],
+body.dark-mode [class*="border-saffron-300"],
+body.dark-mode [class*="border-saffron-700"],
+body.dark-mode [class*="border-saffron-800"],
+body.dark-mode [class*="border-saffron-900"] {
+  border-color: rgba(245, 158, 11, 0.38) !important;
 }
 
-body.dark-mode .text-clove-800 {
-  color: #E8D7BF !important;
+body.dark-mode .border-cardamom-200,
+body.dark-mode .border-cardamom-300,
+body.dark-mode [class*="border-cardamom-200"],
+body.dark-mode [class*="border-cardamom-300"] {
+  border-color: rgba(74, 222, 128, 0.35) !important;
 }
 
-body.dark-mode header {
-  background-color: rgba(18, 12, 7, 0.95) !important;
-  border-color: #3D2817 !important;
+/* Headings and Main Titles in Dark Mode */
+body.dark-mode h1,
+body.dark-mode h2,
+body.dark-mode h3,
+body.dark-mode h4,
+body.dark-mode h5,
+body.dark-mode h6,
+body.dark-mode .font-heading,
+body.dark-mode .font-display {
+  color: #FFF7EA !important;
 }
 
+/* Text Colors in Dark Mode */
+body.dark-mode .text-clove-950,
+body.dark-mode .text-clove-900,
+body.dark-mode [class*="text-clove-900"],
+body.dark-mode [class*="text-clove-950"] {
+  color: #FFF7EA !important;
+}
+
+body.dark-mode .text-clove-800,
+body.dark-mode [class*="text-clove-800"] {
+  color: #F0E2D2 !important;
+}
+
+body.dark-mode .text-clove-700,
+body.dark-mode [class*="text-clove-700"] {
+  color: #E2D2C0 !important;
+}
+
+/* Muted / Secondary text variants in Dark Mode */
+body.dark-mode [class*="text-clove-800/80"],
+body.dark-mode [class*="text-clove-800/70"],
+body.dark-mode [class*="text-clove-800/60"],
+body.dark-mode [class*="text-clove-900/80"],
+body.dark-mode [class*="text-clove-900/70"] {
+  color: #D8C6B2 !important;
+}
+
+body.dark-mode [class*="text-clove-800/50"],
+body.dark-mode [class*="text-clove-800/40"] {
+  color: #C4B09A !important;
+}
+
+/* Light text variants in Dark Mode */
+body.dark-mode .text-parchment-100,
+body.dark-mode .text-parchment-200,
+body.dark-mode .text-parchment-300,
+body.dark-mode [class*="text-parchment-"] {
+  color: #FFF7EA !important;
+}
+
+/* Accent Text Colors in Dark Mode */
+body.dark-mode .text-saffron-900,
+body.dark-mode [class*="text-saffron-900"] {
+  color: #FDE68A !important;
+}
+
+body.dark-mode .text-saffron-800,
+body.dark-mode [class*="text-saffron-800"] {
+  color: #FCD34D !important;
+}
+
+body.dark-mode .text-saffron-700,
+body.dark-mode [class*="text-saffron-700"],
+body.dark-mode .text-saffron-600 {
+  color: #F59E0B !important;
+}
+
+body.dark-mode .text-cardamom-900,
+body.dark-mode [class*="text-cardamom-900"] {
+  color: #86EFAC !important;
+}
+
+body.dark-mode .text-cardamom-800,
+body.dark-mode [class*="text-cardamom-800"] {
+  color: #4ADE80 !important;
+}
+
+body.dark-mode .text-cardamom-700,
+body.dark-mode [class*="text-cardamom-700"] {
+  color: #22C55E !important;
+}
+
+body.dark-mode .text-terracotta-900,
+body.dark-mode .text-terracotta-800,
+body.dark-mode .text-terracotta-700,
+body.dark-mode .text-terracotta-600,
+body.dark-mode [class*="text-terracotta-"] {
+  color: #FB923C !important;
+}
+
+/* Inputs, Selects, and Textareas in Dark Mode */
+body.dark-mode input[type="text"],
+body.dark-mode input[type="email"],
+body.dark-mode input[type="tel"],
+body.dark-mode input[type="number"],
+body.dark-mode input[type="search"],
+body.dark-mode select,
+body.dark-mode textarea {
+  background-color: #170E08 !important;
+  color: #FFF7EA !important;
+  border-color: rgba(245, 158, 11, 0.35) !important;
+}
+
+body.dark-mode input::placeholder,
+body.dark-mode textarea::placeholder {
+  color: #B8A490 !important;
+  opacity: 1;
+}
+
+body.dark-mode select option {
+  background-color: #170E08 !important;
+  color: #FFF7EA !important;
+}
+
+body.dark-mode input:focus,
+body.dark-mode select:focus,
+body.dark-mode textarea:focus {
+  border-color: #F59E0B !important;
+  box-shadow: 0 0 0 2px rgba(245, 158, 11, 0.35) !important;
+}
+
+/* Keyboard Focus Indicators (Global Accessibility) */
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid #F59E0B !important;
+  outline-offset: 2px !important;
+}
+
+/* Sliders in Dark Mode */
+body.dark-mode input[type=range] {
+  background: #382416 !important;
+  accent-color: #F59E0B !important;
+}
+
+/* Quick View & Recipe Modals in Dark Mode */
+body.dark-mode #quick-view-modal > div,
+body.dark-mode #recipe-modal > div {
+  background-color: #181009 !important;
+  border: 1px solid rgba(245, 158, 11, 0.4) !important;
+  color: #FFF7EA !important;
+}
+
+/* Cart Drawer in Dark Mode */
 body.dark-mode #cart-drawer {
-  background-color: #1A1108 !important;
-  color: #FBF6EE !important;
-  border-color: #3D2817 !important;
+  background-color: #181009 !important;
+  color: #FFF7EA !important;
+  border-color: rgba(245, 158, 11, 0.35) !important;
+}
+
+body.dark-mode #cart-drawer .bg-parchment-100 {
+  background-color: #21150C !important;
+}
+
+body.dark-mode #cart-drawer .bg-saffron-50,
+body.dark-mode #cart-drawer [class*="bg-saffron-100"] {
+  background-color: #2B1C10 !important;
+}
+
+body.dark-mode #cart-drawer input#coupon-input {
+  background-color: #170E08 !important;
+  color: #FFF7EA !important;
+  border-color: rgba(245, 158, 11, 0.35) !important;
+}
+
+/* Bulk Order Estimator Specific in Dark Mode */
+body.dark-mode #bulk-kg-display {
+  background-color: #2B1B10 !important;
+  color: #FCD34D !important;
+  border-color: rgba(245, 158, 11, 0.45) !important;
+}
+
+body.dark-mode #bulk-retail-total {
+  color: #C4B09A !important;
+}
+
+body.dark-mode #bulk-discount-val {
+  color: #4ADE80 !important;
+}
+
+body.dark-mode #bulk-final-quote {
+  color: #FCD34D !important;
+}
+
+/* Packaging Radio Cards in Dark Mode */
+body.dark-mode #packaging-options label {
+  background-color: #1E140C !important;
+  border-color: rgba(245, 158, 11, 0.28) !important;
+}
+
+body.dark-mode #packaging-options label:has(input:checked) {
+  border-color: #F59E0B !important;
+  background-color: #2D1C10 !important;
+}
+
+/* Purity Portal in Dark Mode */
+body.dark-mode #purity-result-card {
+  background-color: #181009 !important;
+  border-color: rgba(74, 222, 128, 0.4) !important;
+}
+
+/* Mobile Nav in Dark Mode */
+body.dark-mode #mobile-nav {
+  background-color: #181009 !important;
+  border-color: rgba(245, 158, 11, 0.3) !important;
+}
+
+body.dark-mode #mobile-nav a {
+  color: #FFF7EA !important;
+}
+
+body.dark-mode #mobile-nav a:hover {
+  color: #F59E0B !important;
+}
+
+/* Custom Crate Box Cards in Dark Mode */
+body.dark-mode .crate-box-card {
+  background-color: #1E140C !important;
+  border-color: rgba(245, 158, 11, 0.28) !important;
+}
+
+body.dark-mode .crate-box-card:hover {
+  border-color: #F59E0B !important;
 }
 
 /* RTL Layout Adjustments */
@@ -175,13 +504,25 @@ body.dark-mode #cart-drawer {
   box-sizing: border-box;
 }
 
-html, body {
+html {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  scroll-padding-top: 5.5rem;
+  scroll-behavior: smooth;
+}
+
+body {
   width: 100%;
   max-width: 100vw;
-  overflow-x: hidden !important;
+  overflow-x: clip;
   margin: 0;
   padding: 0;
   -webkit-text-size-adjust: 100%;
+}
+
+section, [id], .spa-view {
+  scroll-margin-top: 5.5rem;
 }
 
 body {
@@ -251,9 +592,9 @@ h1, h2, h3, .font-heading {
 
 /* Animated Spice Glow */
 @keyframes aromaDrift {
-  0% { transform: translateY(0) scale(1); opacity: 0.7; }
-  50% { transform: translateY(-8px) scale(1.04); opacity: 0.95; }
-  100% { transform: translateY(0) scale(1); opacity: 0.7; }
+  0% { transform: scale(1); opacity: 0.7; }
+  50% { transform: scale(1.04); opacity: 0.95; }
+  100% { transform: scale(1); opacity: 0.7; }
 }
 
 .aroma-glow {
@@ -316,23 +657,303 @@ input[type=range] {
   accent-color: #B45309;
 }
 
-/* Badges */
-.badge-signature {
-  background: linear-gradient(135deg, #78350F 0%, #B45309 100%);
-  color: #FDE68A;
-  border: 1px solid rgba(253, 230, 138, 0.3);
+/* ========================================================================= */
+/* HEADER CONTROL SYSTEM (THEME, RTL, CTA, BASKET) */
+/* ========================================================================= */
+
+.header-controls-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
 }
 
-/* Floating Navigation Active States */
-.nav-link.active {
-  color: #B45309;
-  border-bottom: 2px solid #B45309;
+.header-btn {
+  height: 38px;
+  min-height: 38px;
+  max-height: 38px;
+  border-radius: 9999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-family: var(--font-body);
+  font-size: 12px;
   font-weight: 700;
+  line-height: 1;
+  text-decoration: none;
+  box-sizing: border-box;
+  padding: 0 14px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  flex-shrink: 0;
+  white-space: nowrap;
+  vertical-align: middle;
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+  user-select: none;
+}
+
+.header-btn i {
+  font-size: 12px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  margin: 0;
+  padding: 0;
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+/* 1. Primary CTA: Shop Spices */
+.header-btn-cta {
+  background: linear-gradient(135deg, #B45309 0%, #D97706 50%, #F59E0B 100%);
+  color: #FFFFFF !important;
+  border: 1px solid rgba(254, 243, 199, 0.4);
+  box-shadow: 0 2px 6px rgba(180, 83, 9, 0.25);
+  padding: 0 16px;
+}
+
+.header-btn-cta:hover {
+  background: linear-gradient(135deg, #92400E 0%, #B45309 50%, #D97706 100%);
+  box-shadow: 0 4px 12px rgba(180, 83, 9, 0.35);
+  color: #FFFFFF !important;
+}
+
+.header-btn-cta:focus-visible {
+  outline: 2px solid #F59E0B;
+  outline-offset: 2px;
+}
+
+/* 2. Secondary Utility Controls: Theme & RTL */
+.header-btn-secondary {
+  background-color: #F4ECE1;
+  color: #2D2319;
+  border-color: #E6D5C1;
+  padding: 0 12px;
+}
+
+.header-btn-secondary:hover {
+  background-color: #EADBC8;
+  border-color: #D97706;
+  color: #B45309;
+}
+
+.header-btn-secondary:focus-visible {
+  outline: 2px solid #D97706;
+  outline-offset: 2px;
+}
+
+/* RTL Active State */
+.header-btn-secondary.rtl-active {
+  background-color: #FEF3C7;
+  border-color: #D97706;
+  color: #92400E;
+}
+
+/* 3. Basket / Cart Header Button */
+.header-btn-cart {
+  background-color: #2A1B0E;
+  color: #FDE68A;
+  border-color: #78350F;
+  padding: 0 14px;
+  position: relative;
+}
+
+.header-btn-cart:hover {
+  background-color: #B45309;
+  color: #FFFFFF;
+  border-color: #D97706;
+}
+
+.header-btn-cart:focus-visible {
+  outline: 2px solid #F59E0B;
+  outline-offset: 2px;
+}
+
+/* Dark Mode Overrides for Header Controls */
+body.dark-mode .header-btn-secondary {
+  background-color: #26170E !important;
+  color: #FFF7EA !important;
+  border-color: rgba(245, 158, 11, 0.3) !important;
+}
+
+body.dark-mode .header-btn-secondary:hover {
+  background-color: #352114 !important;
+  border-color: #F59E0B !important;
+  color: #FCD34D !important;
+}
+
+body.dark-mode .header-btn-secondary.rtl-active {
+  background-color: #3D2415 !important;
+  border-color: #F59E0B !important;
+  color: #FDE68A !important;
+}
+
+body.dark-mode .header-btn-cart {
+  background-color: #B45309 !important;
+  color: #FFF7EA !important;
+  border-color: rgba(253, 230, 138, 0.4) !important;
+}
+
+body.dark-mode .header-btn-cart:hover {
+  background-color: #D97706 !important;
+}
+
+/* 4. Accessible Mobile Hamburger Button (Touch Target 44px x 44px) */
+.header-hamburger-btn {
+  width: 44px;
+  min-width: 44px;
+  max-width: 44px;
+  height: 44px;
+  min-height: 44px;
+  max-height: 44px;
+  border-radius: 12px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #F4ECE1;
+  color: #2D2319;
+  border: 1px solid #E6D5C1;
+  cursor: pointer;
+  padding: 0;
+  flex-shrink: 0;
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease, transform 0.15s ease;
+  user-select: none;
+}
+
+.header-hamburger-btn:hover {
+  background-color: #EADBC8;
+  border-color: #D97706;
+  color: #B45309;
+}
+
+.header-hamburger-btn:focus-visible {
+  outline: 2px solid #F59E0B;
+  outline-offset: 2px;
+}
+
+.header-hamburger-btn:active {
+  transform: scale(0.95);
+}
+
+body.dark-mode .header-hamburger-btn {
+  background-color: #26170E !important;
+  color: #FFF7EA !important;
+  border-color: rgba(245, 158, 11, 0.35) !important;
+}
+
+body.dark-mode .header-hamburger-btn:hover {
+  background-color: #352114 !important;
+  border-color: #F59E0B !important;
+  color: #FCD34D !important;
+}
+
+/* ========================================================================= */
+/* STICKY HEADER & NAVIGATION LINK SYSTEM (HIGH CONTRAST) */
+/* ========================================================================= */
+
+#main-site-header {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  background-color: rgba(253, 251, 247, 0.98);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid #E8D7BF;
+  box-shadow: 0 2px 10px rgba(42, 27, 14, 0.05);
+  width: 100%;
+}
+
+body.dark-mode #main-site-header {
+  background-color: rgba(27, 16, 9, 0.98) !important;
+  border-bottom: 1px solid rgba(245, 158, 11, 0.25) !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.45) !important;
+}
+
+/* Base Navigation Links (Light Mode) */
+.nav-link {
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 700;
+  color: #2D2319 !important; /* Deep clove - clear readability */
+  padding: 6px 2px;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  text-decoration: none;
+  border-bottom: 2px solid transparent;
+  transition: color 0.2s ease, border-color 0.2s ease;
+  cursor: pointer;
+}
+
+.nav-link:hover {
+  color: #B45309 !important; /* Golden saffron hover */
+}
+
+.nav-link.active {
+  color: #B45309 !important;
+  border-bottom: 2px solid #B45309 !important;
+  font-weight: 800;
+}
+
+.nav-link i {
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+/* Home Dropdown Button specifics */
+#nav-home i {
+  color: #B45309;
+}
+
+/* Dark Mode Navigation Links */
+body.dark-mode .nav-link {
+  color: #FFF7EA !important; /* Radiant light cream - 100% contrast against dark header */
+  border-bottom-color: transparent !important;
+}
+
+body.dark-mode .nav-link:hover {
+  color: #FCD34D !important; /* Warm gold hover */
 }
 
 body.dark-mode .nav-link.active {
-  color: #F59E0B;
-  border-color: #F59E0B;
+  color: #F59E0B !important; /* Radiant golden saffron */
+  border-bottom: 2px solid #F59E0B !important;
+  font-weight: 800;
+}
+
+body.dark-mode #nav-home i {
+  color: #FCD34D !important;
+}
+
+body.dark-mode .group:hover #nav-home {
+  color: #FCD34D !important;
+}
+
+/* Home Dropdown Menu in Light & Dark Mode */
+.relative.group > div.absolute {
+  background-color: #FDFBF7;
+  border: 1px solid #E8D7BF;
+  box-shadow: 0 10px 25px rgba(42, 27, 14, 0.12);
+}
+
+body.dark-mode .relative.group > div.absolute {
+  background-color: #21140C !important;
+  border-color: rgba(245, 158, 11, 0.3) !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6) !important;
+}
+
+body.dark-mode .relative.group > div.absolute a {
+  color: #FFF7EA !important;
+}
+
+body.dark-mode .relative.group > div.absolute a:hover {
+  background-color: #2D1B10 !important;
+}
+
+body.dark-mode .relative.group > div.absolute a p {
+  color: #D6C2A8 !important;
 }
 
 /* Toast Message */
@@ -386,17 +1007,15 @@ body.dark-mode .dish-btn:hover {
 
 /* Smooth View Fade */
 .spa-view {
-  animation: fadeInView 0.35s ease-out forwards;
+  animation: fadeInView 0.25s ease-out forwards;
 }
 
 @keyframes fadeInView {
   from {
     opacity: 0;
-    transform: translateY(6px);
   }
   to {
     opacity: 1;
-    transform: translateY(0);
   }
 }
 
@@ -416,3 +1035,30 @@ body.dark-mode .offer-coupon-card {
   background: rgba(45, 30, 18, 0.7);
   border-color: rgba(245, 158, 11, 0.5);
 }
+
+/* Category & Supplies Card Hover Enhancements */
+.category-card, .supplies-card {
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.2s ease;
+}
+
+.category-card:hover, .supplies-card:hover {
+  transform: translateY(-4px);
+}
+
+/* Wishlist Button Animation */
+.wishlist-btn {
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.2s ease;
+}
+.wishlist-btn:hover {
+  transform: scale(1.15);
+}
+.wishlist-btn:active {
+  transform: scale(0.9);
+}
+
+/* Responsive Image Containers */
+img {
+  max-width: 100%;
+  height: auto;
+}
+
