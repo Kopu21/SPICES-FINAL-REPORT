@@ -12,18 +12,30 @@
     tailwind.config = {
       darkMode: 'class',
       theme: {
+        screens: {
+          /* Mobile Extra Small: 0px – 576px (default, no min-width needed) */
+          'sm':  '577px',   /* Tablet Small:              577px – 768px */
+          'md':  '769px',   /* Large Tablet / Compact Laptop: 769px – 1024px */
+          'lg':  '1025px',  /* Desktop / Laptop:          1025px – 1200px */
+          'xl':  '1201px',  /* Extra Large Desktop:       1201px – 1400px */
+          '2xl': '1401px',  /* 2XL / Giant Monitors:      1401px+ */
+        },
         extend: {
           colors: {
-            saffron: { 50: '#FFFBEB', 100: '#FEF3C7', 200: '#FDE68A', 500: '#F59E0B', 600: '#D97706', 700: '#B45309', 800: '#92400E', 900: '#78350F' },
-            terracotta: { 500: '#EA580C', 600: '#C2410C', 700: '#9A3412', 800: '#7C2D12' },
-            cardamom: { 100: '#DCFCE7', 600: '#16A34A', 700: '#15803D', 800: '#166534', 900: '#064E3B' },
-            parchment: { 50: '#FDFBF7', 100: '#FAF4E8', 200: '#F5EADB', 300: '#E8D7BF', 400: '#D8C09E' },
-            clove: { 900: '#1A120B', 800: '#2A1B0E', 700: '#3D2817' }
+            saffron: { 50: '#FFFBEB', 100: '#FEF3C7', 200: '#FDE68A', 300: '#FCD34D', 400: '#FBBF24', 500: '#F59E0B', 600: '#D97706', 700: '#B45309', 800: '#92400E', 900: '#78350F', 950: '#3D1A00' },
+            terracotta: { 100: '#FEE2D5', 300: '#FDBA8C', 400: '#F87A46', 500: '#EA580C', 600: '#C2410C', 700: '#9A3412', 800: '#7C2D12', 900: '#6B2112' },
+            cardamom: { 50: '#F0FDF4', 100: '#DCFCE7', 200: '#BBF7D0', 300: '#86EFAC', 400: '#4ADE80', 500: '#22C55E', 600: '#16A34A', 700: '#15803D', 800: '#166534', 900: '#064E3B', 950: '#022C22' },
+            parchment: { 50: '#FDFBF7', 100: '#FAF4E8', 200: '#F5EADB', 300: '#E8D7BF', 400: '#D8C09E', 500: '#C4A882' },
+            clove: { 700: '#3D2817', 800: '#2A1B0E', 900: '#1A120B', 950: '#120B07' }
           },
           fontFamily: {
             serif: ['Playfair Display', 'Georgia', 'serif'],
             display: ['Cinzel Decorative', 'Georgia', 'serif'],
             sans: ['Plus Jakarta Sans', 'system-ui', 'sans-serif']
+          },
+          maxWidth: {
+            '8xl': '88rem',
+            '9xl': '96rem',
           }
         }
       }
@@ -464,7 +476,7 @@
             <div class="group rounded-2xl bg-white dark:bg-[#1E140C] border border-parchment-300 dark:border-saffron-900/40 p-5 space-y-4 hover:shadow-lg hover:border-saffron-500 transition-all flex flex-col justify-between">
               <div class="space-y-3">
                 <div class="relative h-44 rounded-xl overflow-hidden bg-parchment-200">
-                  <img src="https://images.unsplash.com/photo-1532336414038-cf19250c5757?auto=format&fit=crop&w=800&q=85" alt="Signature Masalas" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                  <img src="https://images.unsplash.com/photo-1618160702438-9b02ab6515c9?auto=format&fit=crop&w=800&q=85" alt="Signature Indian masalas, garam masala blend, biryani spice mix in traditional brass bowls" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1576092768241-dec231879fc3?auto=format&fit=crop&w=800&q=85'">
                   <span class="absolute top-2.5 left-2.5 bg-clove-900/90 text-saffron-300 text-[10px] font-bold px-2.5 py-0.5 rounded-full border border-saffron-500/30">Royal Formulas</span>
                 </div>
                 <h3 class="font-heading font-bold text-lg text-clove-900 dark:text-parchment-50">Signature Masalas</h3>
@@ -761,7 +773,7 @@
           <!-- Right Story Visual -->
           <div class="lg:col-span-6 relative">
             <div class="relative rounded-3xl overflow-hidden shadow-2xl border-4 border-parchment-300 dark:border-saffron-800/40 group">
-              <img src="https://images.unsplash.com/photo-1532336414038-cf19250c5757?auto=format&fit=crop&w=1200&q=90" alt="Traditional Indian spice grinding in brass bowls and stone mortar" class="w-full h-96 sm:h-[480px] object-cover group-hover:scale-105 transition-transform duration-700">
+              <img src="https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&w=1200&q=90" alt="Traditional Indian spice grinding stone mortar with colorful spice powders and whole spices in clay vessels" class="w-full h-96 sm:h-[480px] object-cover object-center group-hover:scale-105 transition-transform duration-700" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1599940824399-b87987ceb72a?auto=format&fit=crop&w=1200&q=90'">
               <div class="absolute inset-0 bg-gradient-to-t from-clove-900 via-transparent to-transparent opacity-80"></div>
               
               <div class="absolute bottom-6 left-6 right-6 p-5 rounded-2xl bg-clove-900/90 backdrop-blur-md border border-saffron-500/40 text-white">
@@ -3104,6 +3116,32 @@
             <p><strong class="text-saffron-400">Toll-Free Helpline:</strong> +91 (800) 555-SPICE (1800-555-7742)</p>
             <p><strong class="text-saffron-400">WhatsApp Concierge:</strong> +91 98470 19240</p>
             <p><strong class="text-saffron-400">Email:</strong> concierge@suryavedaspices.com</p>
+          </div>
+
+          <!-- Social Media Follow Section -->
+          <div class="space-y-3">
+            <h4 class="font-heading font-bold text-sm text-saffron-400 uppercase tracking-wider">Follow Us</h4>
+            <div class="flex items-center gap-3">
+              <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer"
+                 aria-label="Follow SuryaVeda Spices on Instagram"
+                 title="Follow us on Instagram"
+                 class="w-10 h-10 rounded-full bg-clove-800/80 border border-saffron-700/40 text-parchment-300 flex items-center justify-center hover:bg-gradient-to-br hover:from-purple-600 hover:to-orange-500 hover:border-transparent hover:text-white hover:scale-110 focus-visible:outline focus-visible:outline-2 focus-visible:outline-saffron-400 transition-all duration-200">
+                <i class="fa-brands fa-instagram text-base" aria-hidden="true"></i>
+              </a>
+              <a href="https://x.com/" target="_blank" rel="noopener noreferrer"
+                 aria-label="Follow SuryaVeda Spices on X (Twitter)"
+                 title="Follow us on X (formerly Twitter)"
+                 class="w-10 h-10 rounded-full bg-clove-800/80 border border-saffron-700/40 text-parchment-300 flex items-center justify-center hover:bg-black hover:border-transparent hover:text-white hover:scale-110 focus-visible:outline focus-visible:outline-2 focus-visible:outline-saffron-400 transition-all duration-200">
+                <i class="fa-brands fa-x-twitter text-base" aria-hidden="true"></i>
+              </a>
+              <a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer"
+                 aria-label="Follow SuryaVeda Spices on Facebook"
+                 title="Follow us on Facebook"
+                 class="w-10 h-10 rounded-full bg-clove-800/80 border border-saffron-700/40 text-parchment-300 flex items-center justify-center hover:bg-blue-600 hover:border-transparent hover:text-white hover:scale-110 focus-visible:outline focus-visible:outline-2 focus-visible:outline-saffron-400 transition-all duration-200">
+                <i class="fa-brands fa-facebook-f text-base" aria-hidden="true"></i>
+              </a>
+            </div>
+            <p class="text-[11px] text-parchment-400 font-light">Join our community of spice connoisseurs</p>
           </div>
         </div>
 

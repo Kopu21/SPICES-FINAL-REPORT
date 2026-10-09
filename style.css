@@ -1062,3 +1062,304 @@ img {
   height: auto;
 }
 
+/* =========================================================================
+   RESPONSIVE BREAKPOINT SYSTEM (CUSTOM 6-TIER)
+   Mobile XS : 0px–576px     (base styles, no query needed)
+   Tablet    : 577px–768px   (@media min 577px)
+   Lg Tablet : 769px–1024px  (@media min 769px)
+   Desktop   : 1025px–1200px (@media min 1025px)
+   XL Desktop: 1201px–1400px (@media min 1201px)
+   2XL Giant : 1401px+       (@media min 1401px)
+   ========================================================================= */
+
+/* Prevent horizontal scrolling on all sizes */
+html, body {
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+}
+
+main, header, footer, section, .spa-view {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+/* Grids should never overflow */
+.grid { min-width: 0; }
+.grid > * { min-width: 0; overflow-wrap: break-word; word-break: break-word; }
+
+/* ── Mobile XS (0px–576px) ── */
+@media (max-width: 576px) {
+  #main-site-header .max-w-7xl { padding-left: 0.75rem; padding-right: 0.75rem; }
+
+  /* Typography */
+  h1 { font-size: clamp(1.65rem, 7.5vw, 2.25rem) !important; line-height: 1.2 !important; }
+  h2 { font-size: clamp(1.4rem, 6vw, 2rem) !important; line-height: 1.25 !important; }
+  h3 { font-size: clamp(1rem, 4.5vw, 1.4rem) !important; }
+
+  /* Announcement bar */
+  #top-announcement-bar > div {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.2rem;
+    font-size: 10px;
+    text-align: center;
+    padding: 0.1rem 0;
+  }
+
+  /* Hero paddings */
+  .py-16, .sm\:py-20, .lg\:py-24 { padding-top: 2.5rem !important; padding-bottom: 2.5rem !important; }
+
+  /* Hero grids — single column */
+  .lg\:grid-cols-12 { display: flex !important; flex-direction: column !important; }
+  .lg\:col-span-7, .lg\:col-span-5, .lg\:col-span-6 { width: 100% !important; }
+
+  /* Best sellers grid: single column */
+  #home-bestsellers-grid { grid-template-columns: 1fr !important; }
+
+  /* Category grid: 2 cols */
+  #home-categories-grid { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; gap: 0.75rem !important; }
+
+  /* Hero image heights: smaller on mobile */
+  .h-96 { height: 14rem !important; }
+  .sm\:h-\[440px\], .sm\:h-\[460px\], .sm\:h-\[480px\] { height: 14rem !important; }
+
+  /* Header button sizes */
+  .header-btn { height: 34px; min-height: 34px; max-height: 34px; font-size: 11px; padding: 0 10px; gap: 5px; }
+  .header-hamburger-btn { width: 40px; min-width: 40px; max-width: 40px; height: 40px; min-height: 40px; max-height: 40px; }
+
+  /* Hero CTA buttons: full-width stack */
+  #view-home .flex.flex-wrap.items-center.gap-3\.5,
+  #view-home-2 .flex.flex-wrap.items-center.gap-3\.5 {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  #view-home .flex.flex-wrap.items-center.gap-3\.5 > button,
+  #view-home .flex.flex-wrap.items-center.gap-3\.5 > a,
+  #view-home-2 .flex.flex-wrap.items-center.gap-3\.5 > button,
+  #view-home-2 .flex.flex-wrap.items-center.gap-3\.5 > a {
+    width: 100%;
+    justify-content: center;
+  }
+
+  /* Footer */
+  #main-site-footer .grid-cols-1.md\:grid-cols-3 { grid-template-columns: 1fr; }
+
+  /* Collection section: 1 col on mobile */
+  #collection-section .grid-cols-1.md\:grid-cols-2.lg\:grid-cols-3 { grid-template-columns: 1fr !important; }
+
+  /* Terroir cards */
+  #terroir-cards-container { grid-template-columns: repeat(2, 1fr) !important; }
+
+  /* Order steps */
+  .grid-cols-1.sm\:grid-cols-2.lg\:grid-cols-5 { grid-template-columns: 1fr !important; }
+}
+
+/* ── Tablet Small (577px–768px) ── */
+@media (min-width: 577px) and (max-width: 768px) {
+  h1 { font-size: clamp(2rem, 5.5vw, 2.75rem) !important; }
+  h2 { font-size: clamp(1.75rem, 4.5vw, 2.25rem) !important; }
+
+  /* Hero: single-column layout */
+  .lg\:grid-cols-12 { display: flex !important; flex-direction: column !important; }
+  .lg\:col-span-7, .lg\:col-span-5, .lg\:col-span-6 { width: 100% !important; }
+
+  #home-bestsellers-grid { grid-template-columns: repeat(2, 1fr) !important; }
+  #home-categories-grid  { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
+
+  #collection-section .grid-cols-1.md\:grid-cols-2.lg\:grid-cols-3 { grid-template-columns: repeat(2, 1fr) !important; }
+  .grid-cols-1.sm\:grid-cols-2.lg\:grid-cols-3 { grid-template-columns: repeat(2, 1fr) !important; }
+  .grid-cols-1.sm\:grid-cols-2.lg\:grid-cols-5 { grid-template-columns: repeat(2, 1fr) !important; }
+}
+
+/* ── Large Tablet / Small Laptop (769px–1024px) ── */
+@media (min-width: 769px) and (max-width: 1024px) {
+  /* Single-col hero */
+  .lg\:grid-cols-12 { display: flex !important; flex-direction: column !important; }
+  .lg\:col-span-7, .lg\:col-span-5, .lg\:col-span-6 { width: 100% !important; }
+
+  #home-bestsellers-grid { grid-template-columns: repeat(2, 1fr) !important; }
+  .grid-cols-1.sm\:grid-cols-2.lg\:grid-cols-3 { grid-template-columns: repeat(3, 1fr) !important; }
+
+  /* Terroir cards */
+  #terroir-cards-container { grid-template-columns: repeat(3, 1fr) !important; }
+}
+
+/* ── Desktop / Laptop (1025px–1200px) ── */
+@media (min-width: 1025px) and (max-width: 1200px) {
+  .max-w-7xl { padding-left: 2rem; padding-right: 2rem; }
+
+  /* Two-col hero layout restored */
+  .lg\:grid-cols-12 { display: grid !important; grid-template-columns: repeat(12, minmax(0, 1fr)) !important; }
+
+  #home-bestsellers-grid { grid-template-columns: repeat(4, 1fr) !important; }
+}
+
+/* ── Extra-Large Desktop (1201px–1400px) ── */
+@media (min-width: 1201px) and (max-width: 1400px) {
+  .max-w-7xl { max-width: 1200px; padding-left: 1.5rem; padding-right: 1.5rem; }
+}
+
+/* ── 2XL / Giant (1401px+) ── */
+@media (min-width: 1401px) {
+  .max-w-7xl { max-width: 1320px; }
+}
+
+/* =========================================================================
+   DARK MODE CONTRAST ENHANCEMENTS (WCAG AA)
+   ========================================================================= */
+
+/* Footer in dark mode */
+body.dark-mode #main-site-footer {
+  background-color: #120B07 !important;
+}
+
+body.dark-mode #main-site-footer h4 {
+  color: #FBBF24 !important;
+}
+
+body.dark-mode #main-site-footer a {
+  color: #D8C6B2 !important;
+}
+
+body.dark-mode #main-site-footer a:hover {
+  color: #FCD34D !important;
+}
+
+body.dark-mode #main-site-footer p,
+body.dark-mode #main-site-footer ul li {
+  color: #D8C6B2 !important;
+}
+
+/* Social media icons in dark mode */
+body.dark-mode #main-site-footer a[href*="instagram.com"],
+body.dark-mode #main-site-footer a[href*="x.com"],
+body.dark-mode #main-site-footer a[href*="facebook.com"] {
+  color: #D8C6B2 !important;
+  border-color: rgba(245, 158, 11, 0.35) !important;
+}
+
+/* Muted text in dark mode */
+body.dark-mode .text-clove-800\/75,
+body.dark-mode [class*="text-clove-800/75"] {
+  color: #D8C6B2 !important;
+}
+
+/* Form labels */
+body.dark-mode label {
+  color: #F0E2D2 !important;
+}
+
+/* Error/success text in dark mode */
+body.dark-mode .text-red-600,
+body.dark-mode [class*="text-red-"] {
+  color: #FCA5A5 !important;
+}
+
+body.dark-mode .text-green-600,
+body.dark-mode [class*="text-green-"] {
+  color: #6EE7B7 !important;
+}
+
+/* Table headings in dark mode */
+body.dark-mode table th {
+  background-color: #2B1B10 !important;
+  color: #FFF7EA !important;
+}
+
+body.dark-mode table td {
+  color: #F0E2D2 !important;
+  border-color: rgba(245, 158, 11, 0.2) !important;
+}
+
+/* Disabled states */
+body.dark-mode button:disabled,
+body.dark-mode input:disabled,
+body.dark-mode select:disabled {
+  color: #6E5540 !important;
+  opacity: 0.6;
+}
+
+/* Toast notifications */
+body.dark-mode .toast-item {
+  background-color: #21140C !important;
+  color: #FFF7EA !important;
+  border: 1px solid rgba(245, 158, 11, 0.3) !important;
+}
+
+/* Promotional banner text */
+body.dark-mode .bg-gradient-to-r.from-saffron-900 h3,
+body.dark-mode .bg-gradient-to-r.from-saffron-900 p,
+body.dark-mode .bg-gradient-to-b h2,
+body.dark-mode .bg-gradient-to-b p {
+  color: #FFF7EA !important;
+}
+
+/* Headings in hero sections stay readable */
+body.dark-mode #view-home h1,
+body.dark-mode #view-home h2,
+body.dark-mode #view-home-2 h1,
+body.dark-mode #view-home-2 h2 {
+  color: #FFF7EA !important;
+}
+
+/* =========================================================================
+   TEXT VISIBILITY OVER IMAGES
+   ========================================================================= */
+
+/* Image overlay text containers */
+.absolute.bottom-4.left-4.right-4,
+.absolute.bottom-6.left-6.right-6 {
+  z-index: 10;
+  isolation: isolate;
+}
+
+/* Hero heading centering on mobile */
+@media (max-width: 576px) {
+  #view-home .lg\:col-span-7 {
+    text-align: center;
+  }
+
+  #view-home .pt-6.border-t {
+    text-align: left;
+  }
+}
+
+/* =========================================================================
+   MOBILE NAV — TOUCH TARGETS & SPACING
+   ========================================================================= */
+
+#mobile-nav a,
+#mobile-nav button {
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+}
+
+/* =========================================================================
+   SOCIAL MEDIA ICONS — CONSISTENT TOUCH TARGETS
+   ========================================================================= */
+
+#main-site-footer a[href*="instagram.com"],
+#main-site-footer a[href*="x.com"],
+#main-site-footer a[href*="facebook.com"] {
+  min-width: 40px;
+  min-height: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+/* =========================================================================
+   FONT OVERFLOW PREVENTION
+   ========================================================================= */
+
+[class*="font-heading"],
+.spice-card h3,
+.spice-card h4,
+h1, h2, h3, h4, h5, h6 {
+  overflow-wrap: break-word;
+  word-break: break-word;
+  hyphens: auto;
+}
