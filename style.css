@@ -227,22 +227,30 @@ body.dark-mode .hero-showcase-overlay .hero-text-title {
 }
 
 /* 3. 100% Unadulterated Botanical Integrity:
-   Light Mode: readable dark olive / deep botanical green (#354B32)
-   Dark Mode: luminous herbal green (#86EFAC) */
+   Light Mode: deep botanical green (#354B32)
+   Dark Mode: bright ivory / warm cream (#FFF4DF) */
 .hero-text-botanical,
 .hero-showcase-overlay .hero-text-botanical {
   color: #354B32 !important;
   text-shadow: none !important;
 }
+.hero-text-botanical i,
+.hero-showcase-overlay .hero-text-botanical i {
+  color: inherit !important;
+}
 body.dark-mode .hero-text-botanical,
 body.dark-mode .hero-showcase-overlay .hero-text-botanical {
-  color: #86EFAC !important;
+  color: #FFF4DF !important;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6) !important;
+}
+body.dark-mode .hero-text-botanical i,
+body.dark-mode .hero-showcase-overlay .hero-text-botanical i {
+  color: inherit !important;
 }
 
 /* 4. Cold-packed within 48 hours of stone grinding to ensure zero aroma decay.:
    Light Mode: dark charcoal (#292521)
-   Dark Mode: soft warm cream (#EBDCCE) */
+   Dark Mode: bright ivory / warm cream (#FFF4DF) */
 .hero-text-desc,
 .hero-showcase-overlay .hero-text-desc {
   color: #292521 !important;
@@ -250,7 +258,7 @@ body.dark-mode .hero-showcase-overlay .hero-text-botanical {
 }
 body.dark-mode .hero-text-desc,
 body.dark-mode .hero-showcase-overlay .hero-text-desc {
-  color: #EBDCCE !important;
+  color: #FFF4DF !important;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5) !important;
 }
 
