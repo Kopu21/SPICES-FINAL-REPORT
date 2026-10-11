@@ -50,24 +50,9 @@
 </head>
 <body class="min-h-screen text-clove-800 flex flex-col antialiased selection:bg-saffron-200 selection:text-saffron-900 transition-colors duration-300">
 
-  <!-- TOP ANNOUNCEMENT BAR (HIDDEN ON LOGIN) -->
-  <div id="top-announcement-bar" class="bg-clove-900 text-saffron-200 text-xs py-2 px-4 border-b border-saffron-700/30">
-    <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center text-center gap-2">
-      <div class="flex items-center gap-2">
-        <span class="inline-block w-2 h-2 rounded-full bg-saffron-500 animate-ping"></span>
-        <span class="font-medium tracking-wide">✨ 2025 Fresh Winter Harvest Released • Direct from Kerala & Meghalaya Estates</span>
-      </div>
-      <div class="flex items-center gap-6 text-xs text-saffron-200/80">
-        <span><i class="fa-solid fa-truck-fast text-saffron-500 mr-1.5"></i> Complimentary Heritage Brass Tin with orders over ₹1,499</span>
-        <span class="hidden md:inline"><i class="fa-solid fa-certificate text-saffron-500 mr-1.5"></i> NABL Certified Lab Purity Reports</span>
-        <a href="#contact" onclick="navigateTo('contact')" class="text-saffron-400 hover:text-saffron-300 underline underline-offset-2">Concierge Desk</a>
-      </div>
-    </div>
-  </div>
-
   <!-- MAIN SITE HEADER (EXACT REQUESTED NAVBAR ORDER) -->
   <!-- Left Logo -> Nav Links: Home (dropdown Home 1, Home 2) -> Products -> Recipes -> Bulk Orders -> Contact with enquiry form -> Right: Primary CTA (Shop Spices) -> Toggle Theme -> RTL/LTR -> Cart -->
-  <header id="main-site-header" class="sticky top-0 z-40 bg-parchment-50/95 backdrop-blur-md border-b border-parchment-300 shadow-sm transition-all duration-300">
+  <header id="main-site-header" class="sticky top-0 z-50 bg-parchment-50/95 dark:bg-[#150E08]/95 backdrop-blur-md border-b border-parchment-300 dark:border-saffron-900/40 shadow-sm transition-all duration-300">
     <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
       <div class="flex items-center justify-between h-16 sm:h-20 gap-2 sm:gap-4">
         
@@ -299,26 +284,43 @@
           <!-- Hero Image Showcase with Authentic Indian Spices in Clay & Brass Bowls -->
           <div class="lg:col-span-5 relative">
             <div class="relative mx-auto max-w-md lg:max-w-none">
-              <div class="relative rounded-3xl overflow-hidden shadow-2xl border-2 border-saffron-600/50 group">
-                <img src="https://images.unsplash.com/photo-1532336414038-cf19250c5757?auto=format&fit=crop&w=1200&q=90" alt="Assorted authentic Indian whole spices, turmeric, cardamom, cloves and cinnamon in traditional bowls" class="w-full h-96 sm:h-[440px] object-cover group-hover:scale-105 transition-transform duration-700">
-                <div class="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-clove-950/90 via-clove-950/40 to-transparent pointer-events-none"></div>
+              <div class="relative rounded-3xl overflow-hidden shadow-2xl border-2 border-saffron-600/60 group hero-showcase-card">
+                <img src="https://images.unsplash.com/photo-1532336414038-cf19250c5757?auto=format&fit=crop&w=1200&q=90" alt="Assorted authentic Indian whole spices, turmeric, cardamom, cloves and cinnamon in traditional bowls" class="w-full h-96 sm:h-[450px] object-cover group-hover:scale-102 transition-transform duration-700" loading="eager" decoding="async">
                 
-                <div class="absolute bottom-4 left-4 right-4 p-4 rounded-2xl bg-clove-900/90 backdrop-blur-md border border-saffron-500/40 text-white flex items-center justify-between shadow-xl">
-                  <div>
-                    <span class="text-[10px] text-saffron-400 uppercase font-bold tracking-wider flex items-center gap-1">
-                      <i class="fa-solid fa-crown text-[10px]"></i> Flagship Heritage Blend
-                    </span>
-                    <h4 class="font-heading font-bold text-sm text-parchment-50">21-Spice Royal Shahi Garam Masala</h4>
-                    <p class="text-xs text-parchment-300 font-light">With Dagad Phool, Green Cardamom & Saffron</p>
+                <!-- Refined gradient overlays for maximum text readability without dimming the central spice imagery -->
+                <div class="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-clove-950/85 via-clove-950/40 to-transparent pointer-events-none"></div>
+                <div class="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-clove-950/95 via-clove-950/50 to-transparent pointer-events-none"></div>
+                
+                <!-- Top Badge: 100% Unadulterated Botanical Integrity -->
+                <div class="absolute top-4 left-4 right-4 p-3 rounded-2xl bg-clove-950/90 backdrop-blur-md border border-saffron-500/50 text-white shadow-xl flex items-center gap-3">
+                  <div class="w-8 h-8 rounded-full bg-saffron-600 text-white flex items-center justify-center font-bold text-xs shrink-0 shadow">
+                    <i class="fa-solid fa-seedling"></i>
                   </div>
-                  <button onclick="quickAddToCart('ms-01')" class="px-3.5 py-2 rounded-xl bg-saffron-600 hover:bg-saffron-500 text-white font-bold text-xs shadow-md transition shrink-0">
-                    ₹490
+                  <div class="min-w-0">
+                    <h5 class="font-heading font-extrabold text-xs text-[#FFFDF7] tracking-wide leading-tight drop-shadow-sm">100% Unadulterated Botanical Integrity</h5>
+                    <p class="text-[10px] text-parchment-200 font-medium leading-snug drop-shadow-sm">Cold-packed within 48 hours of stone grinding to ensure zero aroma decay.</p>
+                  </div>
+                </div>
+
+                <!-- Bottom Product Card: Flagship Heritage Blend & 21-Spice Royal Shahi Garam Masala -->
+                <div class="absolute bottom-4 left-4 right-4 p-4 rounded-2xl bg-clove-950/92 backdrop-blur-md border border-saffron-500/50 text-white flex items-center justify-between shadow-2xl">
+                  <div class="space-y-0.5 min-w-0">
+                    <span class="text-[10px] text-saffron-300 uppercase font-black tracking-wider flex items-center gap-1.5 drop-shadow-sm">
+                      <i class="fa-solid fa-crown text-amber-400"></i> Flagship Heritage Blend
+                    </span>
+                    <h4 class="font-heading font-black text-sm sm:text-base text-[#FFFDF7] tracking-tight leading-snug drop-shadow-sm truncate">21-Spice Royal Shahi Garam Masala</h4>
+                    <p class="text-xs text-parchment-100 font-semibold leading-relaxed drop-shadow-sm truncate">With Dagad Phool, Green Cardamom &amp; Saffron</p>
+                  </div>
+                  <button onclick="quickAddToCart('ms-01')" class="ml-2 px-4 py-2.5 rounded-xl gold-gradient-bg hover:brightness-110 text-white font-bold text-xs shadow-lg transition-transform hover:scale-105 shrink-0 flex items-center gap-1 cursor-pointer" aria-label="Add 21-Spice Royal Shahi Garam Masala to Basket">
+                    <span>₹490</span>
+                    <i class="fa-solid fa-plus text-[10px]"></i>
                   </button>
                 </div>
               </div>
 
-              <div class="absolute -top-5 -left-5 bg-parchment-50 text-clove-900 p-3.5 rounded-full shadow-2xl border-2 border-saffron-500 w-22 h-22 flex flex-col items-center justify-center text-center aroma-glow">
-                <i class="fa-solid fa-award text-saffron-600 text-base"></i>
+              <!-- Floating 100% Pure Seal Badge -->
+              <div class="absolute -top-5 -left-5 bg-parchment-50 dark:bg-[#1E140C] text-clove-900 dark:text-parchment-50 p-3.5 rounded-full shadow-2xl border-2 border-saffron-500 w-22 h-22 flex flex-col items-center justify-center text-center aroma-glow">
+                <i class="fa-solid fa-award text-saffron-600 dark:text-saffron-400 text-base"></i>
                 <span class="text-[9px] font-black uppercase tracking-tighter leading-tight mt-0.5">100% Pure</span>
               </div>
             </div>

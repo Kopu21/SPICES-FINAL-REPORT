@@ -130,16 +130,38 @@ p, span, li, div, label {
   color: inherit;
 }
 
-/* Ensure secondary/muted text in Light Mode is never too faint */
+/* Ensure secondary/muted text in Light Mode is never too faint (WCAG AA/AAA) */
 .text-clove-800\/70,
 .text-clove-800\/60,
+.text-clove-800\/75,
 .text-clove-800\/80 {
-  color: #523D2C;
+  color: #2D1F14 !important; /* Deep warm charcoal - contrast > 10:1 */
 }
 
 .text-clove-800\/50,
 .text-clove-800\/40 {
-  color: #634C38;
+  color: #3D2B1D !important; /* Rich espresso - contrast > 8:1 */
+}
+
+.text-clove-900,
+[class*="text-clove-900"] {
+  color: #1A1108; /* Maximum contrast heading dark clove > 15:1 */
+}
+
+.text-clove-800,
+[class*="text-clove-800"] {
+  color: #24180E; /* Contrast > 12:1 */
+}
+
+/* Hero text contrast helpers for maximum readability over images */
+.hero-showcase-card h4,
+.hero-showcase-card h5 {
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.7);
+}
+
+.hero-showcase-card p,
+.hero-showcase-card span {
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
 }
 
 /* ========================================================================= */
@@ -251,16 +273,17 @@ body.dark-mode [class*="text-clove-700"] {
 
 /* Muted / Secondary text variants in Dark Mode */
 body.dark-mode [class*="text-clove-800/80"],
+body.dark-mode [class*="text-clove-800/75"],
 body.dark-mode [class*="text-clove-800/70"],
 body.dark-mode [class*="text-clove-800/60"],
 body.dark-mode [class*="text-clove-900/80"],
 body.dark-mode [class*="text-clove-900/70"] {
-  color: #D8C6B2 !important;
+  color: #EBDCCE !important; /* Soft radiant cream, contrast > 10:1 */
 }
 
 body.dark-mode [class*="text-clove-800/50"],
 body.dark-mode [class*="text-clove-800/40"] {
-  color: #C4B09A !important;
+  color: #D6C5B4 !important; /* High contrast muted cream, contrast > 7.5:1 */
 }
 
 /* Light text variants in Dark Mode */
@@ -853,22 +876,22 @@ body.dark-mode .header-hamburger-btn:hover {
 /* ========================================================================= */
 
 #main-site-header {
-  position: -webkit-sticky;
-  position: sticky;
-  top: 0;
-  z-index: 40;
+  position: -webkit-sticky !important;
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 100 !important;
   background-color: rgba(253, 251, 247, 0.98);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border-bottom: 1px solid #E8D7BF;
-  box-shadow: 0 2px 10px rgba(42, 27, 14, 0.05);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid #E5D2B8;
+  box-shadow: 0 4px 14px rgba(42, 27, 14, 0.08);
   width: 100%;
 }
 
 body.dark-mode #main-site-header {
-  background-color: rgba(27, 16, 9, 0.98) !important;
-  border-bottom: 1px solid rgba(245, 158, 11, 0.25) !important;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.45) !important;
+  background-color: rgba(20, 13, 7, 0.98) !important;
+  border-bottom: 1px solid rgba(245, 158, 11, 0.3) !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.55) !important;
 }
 
 /* Base Navigation Links (Light Mode) */
@@ -1139,15 +1162,15 @@ body.dark-mode .heritage-story-card {
    2XL Giant : 1401px+       (@media min 1401px)
    ========================================================================= */
 
-/* Prevent horizontal scrolling on all sizes */
+/* Prevent horizontal scrolling on all sizes WITHOUT breaking position: sticky */
 html, body {
-  overflow-x: hidden;
+  overflow-x: clip !important;
   scroll-behavior: smooth;
 }
 
-main, header, footer, section, .spa-view {
+main, footer, section, .spa-view {
   max-width: 100%;
-  overflow-x: hidden;
+  overflow-x: clip;
 }
 
 /* Grids should never overflow */
@@ -1162,16 +1185,6 @@ main, header, footer, section, .spa-view {
   h1 { font-size: clamp(1.65rem, 7.5vw, 2.25rem) !important; line-height: 1.2 !important; }
   h2 { font-size: clamp(1.4rem, 6vw, 2rem) !important; line-height: 1.25 !important; }
   h3 { font-size: clamp(1rem, 4.5vw, 1.4rem) !important; }
-
-  /* Announcement bar */
-  #top-announcement-bar > div {
-    flex-direction: column;
-    align-items: center;
-    gap: 0.2rem;
-    font-size: 10px;
-    text-align: center;
-    padding: 0.1rem 0;
-  }
 
   /* Hero paddings */
   .py-16, .sm\:py-20, .lg\:py-24 { padding-top: 2.5rem !important; padding-bottom: 2.5rem !important; }
