@@ -1063,6 +1063,73 @@ img {
 }
 
 /* =========================================================================
+   HERITAGE STORY IMAGE SYSTEM ("From Heritage Kitchens to Your Pantry")
+   ========================================================================= */
+.heritage-story-card {
+  width: 100%;
+  position: relative;
+  border-radius: 1.5rem;
+  overflow: hidden;
+  box-shadow: 0 25px 50px -12px rgba(26, 18, 11, 0.25);
+  background-color: #1A120B;
+}
+
+.heritage-story-img {
+  width: 100%;
+  height: 340px;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  image-rendering: auto;
+  image-rendering: -webkit-optimize-contrast;
+}
+
+.heritage-story-card:hover .heritage-story-img {
+  transform: scale(1.02);
+}
+
+/* Tablet (Small): 577px to 768px */
+@media (min-width: 577px) and (max-width: 768px) {
+  .heritage-story-img {
+    height: 420px;
+  }
+}
+
+/* Large Tablet / Small Laptop: 769px to 1024px */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .heritage-story-img {
+    height: 460px;
+  }
+}
+
+/* Desktop / Laptop: 1025px to 1200px */
+@media (min-width: 1025px) and (max-width: 1200px) {
+  .heritage-story-img {
+    height: 490px;
+  }
+}
+
+/* Extra Large Desktop: 1201px to 1400px */
+@media (min-width: 1201px) and (max-width: 1400px) {
+  .heritage-story-img {
+    height: 520px;
+  }
+}
+
+/* 2XL / Giant Monitors: 1401px and above */
+@media (min-width: 1401px) {
+  .heritage-story-img {
+    height: 550px;
+  }
+}
+
+body.dark-mode .heritage-story-card {
+  border-color: rgba(245, 158, 11, 0.35) !important;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.65) !important;
+}
+
+/* =========================================================================
    RESPONSIVE BREAKPOINT SYSTEM (CUSTOM 6-TIER)
    Mobile XS : 0px–576px     (base styles, no query needed)
    Tablet    : 577px–768px   (@media min 577px)

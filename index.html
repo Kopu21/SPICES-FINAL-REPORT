@@ -772,11 +772,25 @@
 
           <!-- Right Story Visual -->
           <div class="lg:col-span-6 relative">
-            <div class="relative rounded-3xl overflow-hidden shadow-2xl border-4 border-parchment-300 dark:border-saffron-800/40 group">
-              <img src="https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&w=1200&q=90" alt="Traditional Indian spice grinding stone mortar with colorful spice powders and whole spices in clay vessels" class="w-full h-96 sm:h-[480px] object-cover object-center group-hover:scale-105 transition-transform duration-700" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1599940824399-b87987ceb72a?auto=format&fit=crop&w=1200&q=90'">
-              <div class="absolute inset-0 bg-gradient-to-t from-clove-900 via-transparent to-transparent opacity-80"></div>
+            <div class="relative rounded-3xl overflow-hidden shadow-2xl border-4 border-parchment-300 dark:border-saffron-800/40 group heritage-story-card">
+              <img 
+                src="https://images.unsplash.com/photo-1716816211590-c15a328a5ff0?auto=format&fit=crop&w=1200&q=90" 
+                srcset="https://images.unsplash.com/photo-1716816211590-c15a328a5ff0?auto=format&fit=crop&w=600&q=90 600w,
+                        https://images.unsplash.com/photo-1716816211590-c15a328a5ff0?auto=format&fit=crop&w=1000&q=90 1000w,
+                        https://images.unsplash.com/photo-1716816211590-c15a328a5ff0?auto=format&fit=crop&w=1400&q=90 1400w,
+                        https://images.unsplash.com/photo-1716816211590-c15a328a5ff0?auto=format&fit=crop&w=1800&q=90 1800w"
+                sizes="(max-width: 576px) 100vw, (max-width: 1024px) 100vw, (max-width: 1400px) 50vw, 640px"
+                alt="Authentic heritage Indian spices and traditional pantry ingredients: whole turmeric roots, green and black cardamom, whole dried red chillies, cinnamon bark, coriander seeds, and cold-ground powders" 
+                class="heritage-story-img group-hover:scale-102" 
+                loading="eager" 
+                decoding="async"
+                onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1599940824399-b87987ceb72a?auto=format&fit=crop&w=1200&q=90'">
               
-              <div class="absolute bottom-6 left-6 right-6 p-5 rounded-2xl bg-clove-900/90 backdrop-blur-md border border-saffron-500/40 text-white">
+              <!-- Refined bottom-only vignette to keep >75% of the spice photograph 100% bright, sharp and clear -->
+              <div class="absolute inset-x-0 bottom-0 h-44 bg-gradient-to-t from-clove-950/95 via-clove-950/50 to-transparent pointer-events-none"></div>
+              
+              <!-- Floating Heritage Botanical Integrity Card -->
+              <div class="absolute bottom-4 sm:bottom-6 left-4 sm:left-6 right-4 sm:right-6 p-4 sm:p-5 rounded-2xl bg-clove-900/90 backdrop-blur-md border border-saffron-500/40 text-white shadow-xl">
                 <div class="flex items-center gap-3">
                   <div class="w-10 h-10 rounded-full bg-saffron-600 text-white flex items-center justify-center font-bold text-sm shrink-0">
                     <i class="fa-solid fa-seedling"></i>
