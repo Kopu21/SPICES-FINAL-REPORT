@@ -153,15 +153,119 @@ p, span, li, div, label {
   color: #24180E; /* Contrast > 12:1 */
 }
 
-/* Hero text contrast helpers for maximum readability over images */
-.hero-showcase-card h4,
-.hero-showcase-card h5 {
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.7);
+/* =========================================================================
+   HOMEPAGE HERO SHOWCASE CARD — THEME ADAPTIVE TEXT & OVERLAY
+   ========================================================================= */
+
+.hero-showcase-card {
+  position: relative;
+  overflow: hidden;
 }
 
-.hero-showcase-card p,
-.hero-showcase-card span {
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+.hero-showcase-card > img {
+  width: 100% !important;
+  height: 480px !important;
+  object-fit: cover !important;
+  display: block !important;
+}
+
+@media (max-width: 576px) {
+  .hero-showcase-card > img {
+    height: 440px !important;
+  }
+}
+
+.hero-showcase-overlay {
+  background-color: rgba(254, 252, 248, 0.94) !important;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(212, 175, 55, 0.45) !important;
+  box-shadow: 0 10px 30px -5px rgba(59, 36, 24, 0.15), 0 4px 12px rgba(0, 0, 0, 0.08) !important;
+  transition: background-color 0.25s ease, border-color 0.25s ease;
+}
+
+body.dark-mode .hero-showcase-overlay {
+  background-color: rgba(20, 13, 7, 0.94) !important;
+  border-color: rgba(245, 158, 11, 0.4) !important;
+  box-shadow: 0 12px 32px -4px rgba(0, 0, 0, 0.7) !important;
+}
+
+.hero-image-scrim {
+  background: linear-gradient(to top, rgba(254, 252, 248, 0.85) 0%, rgba(254, 252, 248, 0.25) 50%, transparent 100%);
+}
+
+body.dark-mode .hero-image-scrim {
+  background: linear-gradient(to top, rgba(18, 12, 7, 0.92) 0%, rgba(18, 12, 7, 0.4) 50%, transparent 100%) !important;
+}
+
+/* 1. Flagship Heritage Blend:
+   Light Mode: contrasting dark brown (#5C351E)
+   Dark Mode: radiant amber/gold (#FBBF24) */
+.hero-text-blend,
+.hero-showcase-overlay .hero-text-blend {
+  color: #5C351E !important;
+  text-shadow: none !important;
+}
+body.dark-mode .hero-text-blend,
+body.dark-mode .hero-showcase-overlay .hero-text-blend {
+  color: #FBBF24 !important;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6) !important;
+}
+
+/* 2. 21-Spice Royal Shahi Garam Masala (Main Heading):
+   Light Mode: deep espresso brown (#3B2418)
+   Dark Mode: bright ivory (#FFFDF7) */
+.hero-text-title,
+.hero-showcase-overlay .hero-text-title {
+  color: #3B2418 !important;
+  text-shadow: none !important;
+}
+body.dark-mode .hero-text-title,
+body.dark-mode .hero-showcase-overlay .hero-text-title {
+  color: #FFFDF7 !important;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8) !important;
+}
+
+/* 3. 100% Unadulterated Botanical Integrity:
+   Light Mode: readable dark olive / deep botanical green (#354B32)
+   Dark Mode: luminous herbal green (#86EFAC) */
+.hero-text-botanical,
+.hero-showcase-overlay .hero-text-botanical {
+  color: #354B32 !important;
+  text-shadow: none !important;
+}
+body.dark-mode .hero-text-botanical,
+body.dark-mode .hero-showcase-overlay .hero-text-botanical {
+  color: #86EFAC !important;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6) !important;
+}
+
+/* 4. Cold-packed within 48 hours of stone grinding to ensure zero aroma decay.:
+   Light Mode: dark charcoal (#292521)
+   Dark Mode: soft warm cream (#EBDCCE) */
+.hero-text-desc,
+.hero-showcase-overlay .hero-text-desc {
+  color: #292521 !important;
+  text-shadow: none !important;
+}
+body.dark-mode .hero-text-desc,
+body.dark-mode .hero-showcase-overlay .hero-text-desc {
+  color: #EBDCCE !important;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5) !important;
+}
+
+/* 5. With Dagad Phool, Green Cardamom & Saffron:
+   Light Mode: dark brown (#4A3023)
+   Dark Mode: light warm ivory (#F5EDE0) */
+.hero-text-supporting,
+.hero-showcase-overlay .hero-text-supporting {
+  color: #4A3023 !important;
+  text-shadow: none !important;
+}
+body.dark-mode .hero-text-supporting,
+body.dark-mode .hero-showcase-overlay .hero-text-supporting {
+  color: #F5EDE0 !important;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5) !important;
 }
 
 /* ========================================================================= */
@@ -1371,7 +1475,7 @@ body.dark-mode .toast-item {
 body.dark-mode .bg-gradient-to-r.from-saffron-900 h3,
 body.dark-mode .bg-gradient-to-r.from-saffron-900 p,
 body.dark-mode .bg-gradient-to-b h2,
-body.dark-mode .bg-gradient-to-b p {
+body.dark-mode .bg-gradient-to-b p:not(.hero-showcase-overlay *) {
   color: #FFF7EA !important;
 }
 

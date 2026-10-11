@@ -285,43 +285,48 @@
           <div class="lg:col-span-5 relative">
             <div class="relative mx-auto max-w-md lg:max-w-none">
               <div class="relative rounded-3xl overflow-hidden shadow-2xl border-2 border-saffron-600/60 group hero-showcase-card">
-                <img src="https://images.unsplash.com/photo-1532336414038-cf19250c5757?auto=format&fit=crop&w=1200&q=90" alt="Assorted authentic Indian whole spices, turmeric, cardamom, cloves and cinnamon in traditional bowls" class="w-full h-96 sm:h-[450px] object-cover group-hover:scale-102 transition-transform duration-700" loading="eager" decoding="async">
+                <img src="https://images.unsplash.com/photo-1532336414038-cf19250c5757?auto=format&fit=crop&w=1200&q=90" alt="Assorted authentic Indian whole spices, turmeric, cardamom, cloves and cinnamon in traditional bowls" class="w-full h-[440px] sm:h-[480px] object-cover group-hover:scale-102 transition-transform duration-700" loading="eager" decoding="async">
                 
-                <!-- Refined gradient overlays for maximum text readability without dimming the central spice imagery -->
-                <div class="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-clove-950/85 via-clove-950/40 to-transparent pointer-events-none"></div>
-                <div class="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-clove-950/95 via-clove-950/50 to-transparent pointer-events-none"></div>
-                
-                <!-- Top Badge: 100% Unadulterated Botanical Integrity -->
-                <div class="absolute top-4 left-4 right-4 p-3 rounded-2xl bg-clove-950/90 backdrop-blur-md border border-saffron-500/50 text-white shadow-xl flex items-center gap-3">
-                  <div class="w-8 h-8 rounded-full bg-saffron-600 text-white flex items-center justify-center font-bold text-xs shrink-0 shadow">
-                    <i class="fa-solid fa-seedling"></i>
-                  </div>
-                  <div class="min-w-0">
-                    <h5 class="font-heading font-extrabold text-xs text-[#FFFDF7] tracking-wide leading-tight drop-shadow-sm">100% Unadulterated Botanical Integrity</h5>
-                    <p class="text-[10px] text-parchment-200 font-medium leading-snug drop-shadow-sm">Cold-packed within 48 hours of stone grinding to ensure zero aroma decay.</p>
-                  </div>
-                </div>
+                <!-- Bottom Scrim Gradient -->
+                <div class="absolute inset-x-0 bottom-0 h-64 hero-image-scrim pointer-events-none"></div>
 
-                <!-- Bottom Product Card: Flagship Heritage Blend & 21-Spice Royal Shahi Garam Masala -->
-                <div class="absolute bottom-4 left-4 right-4 p-4 rounded-2xl bg-clove-950/92 backdrop-blur-md border border-saffron-500/50 text-white flex items-center justify-between shadow-2xl">
-                  <div class="space-y-0.5 min-w-0">
-                    <span class="text-[10px] text-saffron-300 uppercase font-black tracking-wider flex items-center gap-1.5 drop-shadow-sm">
-                      <i class="fa-solid fa-crown text-amber-400"></i> Flagship Heritage Blend
-                    </span>
-                    <h4 class="font-heading font-black text-sm sm:text-base text-[#FFFDF7] tracking-tight leading-snug drop-shadow-sm truncate">21-Spice Royal Shahi Garam Masala</h4>
-                    <p class="text-xs text-parchment-100 font-semibold leading-relaxed drop-shadow-sm truncate">With Dagad Phool, Green Cardamom &amp; Saffron</p>
+                <!-- Showcase Overlay Card with exactly the 5 specified text elements in order -->
+                <div class="absolute bottom-4 left-4 right-4 p-4 sm:p-5 rounded-2xl hero-showcase-overlay transition-all duration-300">
+                  
+                  <!-- 1. Flagship Heritage Blend -->
+                  <div class="hero-text-blend text-[11px] sm:text-xs font-black uppercase tracking-wider flex items-center gap-1.5 mb-1">
+                    <i class="fa-solid fa-crown text-amber-600 dark:text-amber-400 text-xs"></i>
+                    <span>Flagship Heritage Blend</span>
                   </div>
-                  <button onclick="quickAddToCart('ms-01')" class="ml-2 px-4 py-2.5 rounded-xl gold-gradient-bg hover:brightness-110 text-white font-bold text-xs shadow-lg transition-transform hover:scale-105 shrink-0 flex items-center gap-1 cursor-pointer" aria-label="Add 21-Spice Royal Shahi Garam Masala to Basket">
-                    <span>₹490</span>
-                    <i class="fa-solid fa-plus text-[10px]"></i>
-                  </button>
-                </div>
-              </div>
 
-              <!-- Floating 100% Pure Seal Badge -->
-              <div class="absolute -top-5 -left-5 bg-parchment-50 dark:bg-[#1E140C] text-clove-900 dark:text-parchment-50 p-3.5 rounded-full shadow-2xl border-2 border-saffron-500 w-22 h-22 flex flex-col items-center justify-center text-center aroma-glow">
-                <i class="fa-solid fa-award text-saffron-600 dark:text-saffron-400 text-base"></i>
-                <span class="text-[9px] font-black uppercase tracking-tighter leading-tight mt-0.5">100% Pure</span>
+                  <!-- 2. 21-Spice Royal Shahi Garam Masala (Main Heading) -->
+                  <h3 class="hero-text-title font-heading font-black text-base sm:text-lg tracking-tight leading-tight mb-2">
+                    21-Spice Royal Shahi Garam Masala
+                  </h3>
+
+                  <!-- 3. 100% Unadulterated Botanical Integrity -->
+                  <div class="hero-text-botanical font-heading font-extrabold text-xs sm:text-sm tracking-wide leading-tight flex items-center gap-1.5 mb-1">
+                    <i class="fa-solid fa-seedling text-emerald-700 dark:text-emerald-400 text-xs"></i>
+                    <span>100% Unadulterated Botanical Integrity</span>
+                  </div>
+
+                  <!-- 4. Cold-packed within 48 hours of stone grinding to ensure zero aroma decay. (Description) -->
+                  <p class="hero-text-desc text-[11px] sm:text-xs leading-relaxed font-medium mb-2.5">
+                    Cold-packed within 48 hours of stone grinding to ensure zero aroma decay.
+                  </p>
+
+                  <!-- 5. With Dagad Phool, Green Cardamom & Saffron (Supporting line) + Quick Add CTA -->
+                  <div class="pt-2 border-t border-saffron-300/50 dark:border-saffron-800/40 flex items-center justify-between gap-2">
+                    <p class="hero-text-supporting text-[11px] sm:text-xs font-bold leading-tight">
+                      With Dagad Phool, Green Cardamom &amp; Saffron
+                    </p>
+                    <button onclick="quickAddToCart('ms-01')" class="px-3.5 py-1.5 rounded-xl gold-gradient-bg hover:brightness-110 text-white font-bold text-xs shadow-md transition-transform hover:scale-105 shrink-0 flex items-center gap-1 cursor-pointer" aria-label="Add 21-Spice Royal Shahi Garam Masala to Basket">
+                      <span>₹490</span>
+                      <i class="fa-solid fa-plus text-[10px]"></i>
+                    </button>
+                  </div>
+
+                </div>
               </div>
             </div>
           </div>
