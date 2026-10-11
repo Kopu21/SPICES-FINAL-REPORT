@@ -116,7 +116,7 @@
           </a>
         </nav>
 
-        <!-- RIGHT CONTROLS: Primary CTA -> Patron Account -> Toggle Theme -> RTL/LTR -> Cart -> Hamburger (Responsive) -->
+        <!-- RIGHT CONTROLS: Primary CTA -> Toggle Theme -> RTL/LTR -> Cart -> Hamburger (Responsive) -->
         <div class="header-controls-group">
           
           <!-- 1. PRIMARY CALL TO ACTION BUTTON (SHOP NOW / ORDER SPICES) - Visible on sm: (640px+) -->
@@ -124,12 +124,6 @@
             <i class="fa-solid fa-bag-shopping"></i>
             <span>Shop Spices</span>
           </a>
-
-          <!-- PATRON ACCOUNT / LOGIN BUTTON -->
-          <button onclick="openAuthModal('login')" id="header-auth-btn" title="Patron Portal (Login / Register)" aria-label="Patron Portal Login or Register" class="header-btn header-btn-secondary hidden lg:inline-flex">
-            <i class="fa-regular fa-user text-saffron-700"></i>
-            <span class="font-bold">Account</span>
-          </button>
 
           <!-- 2. TOGGLE THEME BUTTON - Visible on md: (768px+) in top bar; accessible in mobile drawer -->
           <button onclick="toggleTheme()" id="theme-toggle-btn" title="Toggle Theme (Light / Dark Velvet)" aria-label="Toggle Theme Light or Dark" class="header-btn header-btn-secondary hidden md:inline-flex">
@@ -162,16 +156,12 @@
     <!-- MOBILE & TABLET NAVIGATION DRAWER -->
     <div id="mobile-nav" class="hidden xl:hidden bg-parchment-100 dark:bg-[#181009] border-b border-parchment-300 dark:border-saffron-900/40 px-4 sm:px-6 py-4 space-y-4 shadow-xl">
       
-      <!-- Top Action Controls in Mobile Drawer (Shop Spices, Account, Theme, RTL) -->
+      <!-- Top Action Controls in Mobile Drawer (Shop Spices, Theme, RTL) -->
       <div class="flex flex-wrap items-center gap-2 pb-3 border-b border-parchment-300 dark:border-saffron-900/30">
-        <a href="#products" onclick="navigateTo('products'); toggleMobileNav(true);" class="flex-grow py-2.5 px-3 rounded-xl gold-gradient-bg text-white text-xs font-bold text-center shadow flex items-center justify-center gap-2">
+        <a href="#products" onclick="navigateTo('products'); toggleMobileNav(true);" class="flex-grow py-2.5 px-4 rounded-xl gold-gradient-bg text-white text-xs font-bold text-center shadow flex items-center justify-center gap-2">
           <i class="fa-solid fa-bag-shopping"></i>
           <span>Shop Spices</span>
         </a>
-        <button onclick="openAuthModal('login'); toggleMobileNav(true);" class="header-btn header-btn-secondary shrink-0" title="Account / Sign In">
-          <i class="fa-regular fa-user text-saffron-700"></i>
-          <span class="font-bold">Sign In</span>
-        </button>
         <button onclick="toggleTheme()" class="header-btn header-btn-secondary shrink-0 theme-toggle-btn" title="Toggle Theme">
           <i class="fa-solid fa-moon text-saffron-700 theme-icon-btn"></i>
           <span class="theme-label-btn font-bold">Dark</span>
