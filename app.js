@@ -737,10 +737,13 @@ function renderHome2Reserves() {
 
   if (!SPICE_DATA.estateReserves) return;
 
-  const html = SPICE_DATA.estateReserves.map(r => `
+  const html = SPICE_DATA.estateReserves.map(r => {
+    const targetProductId = r.id === 'res-01' ? 'sp-01' : (r.id === 'res-02' ? 'sp-02' : 'sp-03');
+    const altText = r.id === 'res-02' ? 'Premium Kashmiri saffron threads from Pampore' : r.name;
+    return `
     <div class="bg-white dark:bg-[#1E140C] text-clove-900 dark:text-parchment-50 rounded-2xl border-2 border-amber-600/30 dark:border-amber-500/40 overflow-hidden shadow-lg flex flex-col justify-between group hover:border-amber-500 transition-all duration-300 h-full">
-      <div class="relative h-60 bg-parchment-200 dark:bg-parchment-900 overflow-hidden shrink-0">
-        <img src="${r.image}" alt="${r.name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+      <div class="relative h-60 bg-parchment-200 dark:bg-parchment-900 overflow-hidden shrink-0 cursor-pointer" onclick="openProductDetail('${targetProductId}')">
+        <img src="${r.image}" alt="${altText}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" loading="lazy">
         <span class="absolute top-3 left-3 px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider bg-cardamom-900 text-amber-300 border border-amber-400 shadow">
           ${r.badge}
         </span>
@@ -751,7 +754,7 @@ function renderHome2Reserves() {
           <div class="text-[11px] text-cardamom-800 dark:text-cardamom-400 font-bold flex items-center gap-1">
             <i class="fa-solid fa-location-dot"></i> ${r.origin}
           </div>
-          <h3 class="font-heading font-bold text-lg text-clove-900 dark:text-parchment-50 leading-snug min-h-[3.25rem] line-clamp-2">${r.name}</h3>
+          <h3 class="font-heading font-bold text-lg text-clove-900 dark:text-parchment-50 leading-snug min-h-[3.25rem] line-clamp-2 hover:text-saffron-800 dark:hover:text-saffron-400 cursor-pointer transition-colors" onclick="openProductDetail('${targetProductId}')">${r.name}</h3>
           <p class="text-xs text-clove-800/70 dark:text-parchment-300 font-light leading-relaxed min-h-[3.5rem] line-clamp-3">${r.curatorNote}</p>
         </div>
 
@@ -767,7 +770,7 @@ function renderHome2Reserves() {
               <span class="font-display font-bold text-xl text-saffron-800 dark:text-saffron-400">₹${r.price.toLocaleString('en-IN')}</span>
             </div>
 
-            <button onclick="quickAddToCart('${r.id === 'res-01' ? 'ws-01' : (r.id === 'res-02' ? 'ws-03' : 'pw-02')}'); showToast('Added Rare Reserve allocation to basket!', 'success');" class="px-5 py-2.5 rounded-xl gold-gradient-bg text-white font-bold text-xs shadow hover:scale-105 transition flex items-center gap-2 shrink-0">
+            <button onclick="quickAddToCart('${targetProductId}'); showToast('Added Rare Reserve allocation to basket!', 'success');" class="px-5 py-2.5 rounded-xl gold-gradient-bg text-white font-bold text-xs shadow hover:scale-105 transition flex items-center gap-2 shrink-0">
               <i class="fa-solid fa-crown text-amber-200"></i>
               <span>Reserve Batch</span>
             </button>
@@ -775,7 +778,8 @@ function renderHome2Reserves() {
         </div>
       </div>
     </div>
-  `).join('');
+  `;
+  }).join('');
 
   if (embeddedContainer) embeddedContainer.innerHTML = html;
   if (standaloneContainer) standaloneContainer.innerHTML = html;

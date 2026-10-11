@@ -635,7 +635,7 @@ const SPICE_DATA = {
       origin: "Karewa Terraces, Pampore, Kashmir",
       harvest: "Dawn November Bloom, Silk Sheet Cured",
       weight: "5g Sealed Velvet Box with Certified NABL Card",
-      image: "assets/products/kashmiri-saffron-ingot.jpg",
+      image: "assets/products/pampore-kashmiri-saffron.jpg",
       description: "The highest grade of Mongra saffron available on earth. Deep blood-red stigma heads releasing an electric sunrise gold within seconds of touching warm milk.",
       aromaNotes: ["Floral Honey", "Earthy Crocin", "Royal Hay"],
       heatLevel: "Delicate (1/10)",
@@ -687,7 +687,7 @@ const SPICE_DATA = {
       price: 3200,
       weight: "5g Sealed Velvet Box with Certified NABL Purity Card",
       rating: 5.0,
-      image: "https://images.unsplash.com/photo-1578749556568-bc2c40e68b61?auto=format&fit=crop&w=1200&q=90",
+      image: "assets/products/pampore-kashmiri-saffron.jpg",
       badge: "Master Reserve Gold Seal",
       curatorNote: "The highest grade of Mongra saffron available on earth. Deep blood-red stigma heads releasing an electric sunrise gold within seconds of touching warm cream or milk."
     },
