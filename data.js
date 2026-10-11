@@ -84,7 +84,7 @@ const SPICE_DATA = {
     { id: "pickles", name: "Pickles & Condiments", icon: "fa-solid fa-jar", count: 3, image: "assets/products/vintage-mango-pickle.jpg", desc: "Aged in clay barnis under desert sunshine with cold-pressed mustard & sesame oils.", ctaText: "Shop Pickles & Condiments" },
     { id: "chutneys", name: "Chutneys & Sauces", icon: "fa-solid fa-bowl-food", count: 2, image: "assets/products/kolhapuri-garlic-peanut-thecha.jpg", desc: "Mortar-pounded rustic relishes, mountain garlic thechas, and sweet tangy dips.", ctaText: "Shop Chutneys & Sauces" },
     { id: "dryfruits", name: "Seeds & Dry Fruits", icon: "fa-solid fa-seedling", count: 2, image: "assets/products/kashmiri-mamra-almonds-saffron.jpg", desc: "Royal Kashmiri Mamra almonds, toasted char magaz seeds, and royal cumin.", ctaText: "Shop Seeds & Dry Fruits" },
-    { id: "specialty", name: "Heritage Specials", icon: "fa-solid fa-award", count: 3, image: "https://images.unsplash.com/photo-1578749556568-bc2c40e68b61?auto=format&fit=crop&w=800&q=85", desc: "Limited-edition single barrel peppercorns, Grade A1+ saffron ingots, and smoked chilies.", ctaText: "Shop Heritage Specials" }
+    { id: "specialty", name: "Heritage Specials", icon: "fa-solid fa-award", count: 3, image: "assets/products/heritage-specials-category.jpg", desc: "Limited-edition single barrel peppercorns, Grade A1+ saffron ingots, and smoked chilies.", ctaText: "Shop Heritage Specials" }
   ],
 
   products: [
