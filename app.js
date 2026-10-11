@@ -117,7 +117,7 @@ function filterBySearchOrNav(searchTerm, category = 'all') {
 
 function navigateTo(viewId) {
   if (!viewId) viewId = 'home';
-  const validViews = ['home', 'home-2', 'products', 'recipes', 'story', 'bulk-orders', 'contact', 'error', 'gifting', 'purity'];
+  const validViews = ['home', 'home-2', 'products', 'product-detail', 'recipes', 'story', 'bulk-orders', 'contact', 'error', 'gifting', 'purity'];
   
   // If target is an in-page anchor ID, smoothly scroll to it without resetting SPA view
   if (!validViews.includes(viewId)) {
@@ -153,10 +153,15 @@ function navigateTo(viewId) {
   } else if (target === 'home' || target === 'home-2') {
     const homeNav = document.getElementById('nav-home');
     if (homeNav) homeNav.classList.add('active');
+  } else if (target === 'products' || target === 'product-detail') {
+    const prodNav = document.getElementById('nav-products');
+    if (prodNav) prodNav.classList.add('active');
   }
 
   // Update URL hash without page reload
-  window.history.replaceState(null, null, `#${target}`);
+  if (target !== 'product-detail') {
+    window.history.replaceState(null, null, `#${target}`);
+  }
   window.scrollTo(0, 0);
 
   // Close mobile drawer on navigation
@@ -164,10 +169,23 @@ function navigateTo(viewId) {
 }
 
 function initNavigation() {
-  window.addEventListener('hashchange', () => {
+  const handleHash = () => {
     const hash = window.location.hash.replace('#', '');
-    if (hash) navigateTo(hash);
-  });
+    if (hash.startsWith('product?id=')) {
+      const pid = hash.split('id=')[1];
+      openProductDetail(pid);
+    } else if (hash.startsWith('product-') || hash.startsWith('product/')) {
+      const pid = hash.replace(/^product[-/]/, '');
+      openProductDetail(pid);
+    } else if (hash) {
+      navigateTo(hash);
+    }
+  };
+
+  window.addEventListener('hashchange', handleHash);
+  if (window.location.hash) {
+    handleHash();
+  }
 }
 
 function toggleMobileNav(forceClose = false) {
@@ -298,13 +316,13 @@ function renderSpiceCardHTML(p) {
     <div class="spice-card bg-white dark:bg-[#1E140C] rounded-2xl border border-parchment-300 dark:border-saffron-900/40 overflow-hidden shadow-sm hover:shadow-xl hover:border-saffron-500 transition-all duration-300 flex flex-col justify-between group">
       
       <!-- Image Container -->
-      <div class="relative h-52 sm:h-56 overflow-hidden bg-parchment-200 dark:bg-parchment-900">
+      <div class="relative h-52 sm:h-56 overflow-hidden bg-parchment-200 dark:bg-parchment-900 cursor-pointer" onclick="openProductDetail('${p.id}')">
         <img src="${p.image}" alt="${p.name}" class="spice-card-img w-full h-full object-cover">
         ${tagBadge}
         <button onclick="toggleWishlist('${p.id}', event)" class="wishlist-btn absolute top-3 right-3 w-8 h-8 rounded-full bg-parchment-50/90 dark:bg-clove-900/80 hover:bg-white dark:hover:bg-clove-800 text-clove-800 dark:text-parchment-200 hover:text-red-500 text-xs shadow flex items-center justify-center transition-colors">
           <i class="fa-regular fa-heart"></i>
         </button>
-        <button onclick="openQuickView('${p.id}')" class="absolute bottom-3 right-3 px-3 py-1.5 rounded-lg bg-parchment-50/95 dark:bg-clove-900/90 hover:bg-white dark:hover:bg-clove-800 text-clove-900 dark:text-parchment-50 text-xs font-bold shadow backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-all duration-200 flex items-center gap-1.5 border border-parchment-300 dark:border-saffron-800/40">
+        <button onclick="event.stopPropagation(); openQuickView('${p.id}')" class="absolute bottom-3 right-3 px-3 py-1.5 rounded-lg bg-parchment-50/95 dark:bg-clove-900/90 hover:bg-white dark:hover:bg-clove-800 text-clove-900 dark:text-parchment-50 text-xs font-bold shadow backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-all duration-200 flex items-center gap-1.5 border border-parchment-300 dark:border-saffron-800/40">
           <i class="fa-regular fa-eye text-saffron-700 dark:text-saffron-400"></i>
           <span>Quick View</span>
         </button>
@@ -323,7 +341,7 @@ function renderSpiceCardHTML(p) {
             </span>
           </div>
 
-          <h3 class="font-heading font-bold text-sm sm:text-base text-clove-900 dark:text-parchment-50 leading-snug line-clamp-2 hover:text-saffron-800 dark:hover:text-saffron-400 cursor-pointer transition-colors" onclick="openQuickView('${p.id}')">
+          <h3 class="font-heading font-bold text-sm sm:text-base text-clove-900 dark:text-parchment-50 leading-snug line-clamp-2 hover:text-saffron-800 dark:hover:text-saffron-400 cursor-pointer transition-colors" onclick="openProductDetail('${p.id}')">
             ${p.name}
           </h3>
 
@@ -910,6 +928,11 @@ function openQuickView(productId) {
             <span>Request Bulk / Wholesale</span>
           </button>
         </div>
+
+        <button onclick="closeQuickView(); openProductDetail('${p.id}');" class="w-full py-2.5 px-3 rounded-xl border-2 border-saffron-600/60 hover:border-saffron-600 bg-white dark:bg-[#1E140C] hover:bg-saffron-50 dark:hover:bg-saffron-950/60 text-saffron-800 dark:text-saffron-300 font-bold text-xs transition flex items-center justify-center gap-2 shadow-sm">
+          <i class="fa-solid fa-up-right-from-square text-xs text-saffron-600 dark:text-saffron-400"></i>
+          <span>View Full Product Page & Botanical Specs</span>
+        </button>
       </div>
 
     </div>
@@ -1764,3 +1787,424 @@ function generateFallbackBatch(batchCode) {
 function downloadCertificate(batchNumber) {
   showToast(`Generating and downloading cryptographic NABL Certificate of Analysis for Lot ${batchNumber}...`, "success");
 }
+
+// =========================================================================
+// DEDICATED PRODUCT DETAIL VIEW SYSTEM (STICKY HEADER GUARANTEED)
+// =========================================================================
+
+let currentDetailQuantity = 1;
+
+function getBotanicalMetadata(p) {
+  const map = {
+    'ws-01': { latin: 'Piper nigrum', grade: 'Tellicherry Garbled Special Extra Bold (TGSEB > 4.75mm)', active: 'Piperine 5.8% (Benchmark > 4.0%)', moisture: '8.4% Volatiles Intact', shelfLife: '24 Months (Aroma-Lock Glass)' },
+    'ws-02': { latin: 'Elettaria cardamomum', grade: 'Alleppey Green Supreme Extra Bold (8.0mm+)', active: '1,8-Cineole & Terpinyl Acetate 8.4%', moisture: '7.9% Sun Dried', shelfLife: '24 Months (Aroma Tin)' },
+    'ws-03': { latin: 'Crocus sativus', grade: 'Kashmiri Mongra ISO 3632 Category I', active: 'Crocin 265 / Safranal 42 / Picrocrocin 98', moisture: '6.2% Shade Cured', shelfLife: '36 Months (Velvet Ingot)' },
+    'ws-04': { latin: 'Cinnamomum verum', grade: 'Alba Supreme Quills (Pencil Thin < 6mm)', active: 'Cinnamaldehyde 74% / Eugenol 11%', moisture: '9.1% Low Humidity', shelfLife: '36 Months (Aroma Tin)' },
+    'ws-05': { latin: 'Cuminum cyminum', grade: 'Nagaur Unpolished Sortex Bold', active: 'Cuminaldehyde 3.8% Essential Oils', moisture: '6.8% Desert Sun Matured', shelfLife: '18 Months' },
+    'ws-06': { latin: 'Illicium verum', grade: 'Arunachal Forest Whole 8-Point Star', active: 'Anethole 88% Pure Volatiles', moisture: '8.2% Mountain Cured', shelfLife: '24 Months' },
+    'pw-01': { latin: 'Curcuma longa (Lakadong)', grade: 'Cold Pounded Rhizome Micron (<150μm)', active: 'Curcumin 7.8% (Standard commercial 2%)', moisture: '7.1% Lab Verified', shelfLife: '24 Months' },
+    'pw-02': { latin: 'Capsicum annuum (Byadagi)', grade: 'Sun-Drenched Stemless Wrinkled Deep Pod', active: 'Capsanthin Colour Index 150+ ASTA / Low Heat', moisture: '8.0% Stone Ground', shelfLife: '18 Months' },
+    'pw-03': { latin: 'Coriandrum sativum', grade: 'Ramganj Mandi Eagle Bold Whole Ground', active: 'Linalool 68% Sweet Floral Essential Oil', moisture: '7.5% Cold Milled', shelfLife: '18 Months' },
+    'pw-04': { latin: 'Zingiber officinale', grade: 'Wayanad Riverbed Low-Fibre Sun Rhizome', active: 'Gingerols & Shogaols 4.2%', moisture: '7.8% Crisp Stone Powder', shelfLife: '24 Months' },
+    'pw-05': { latin: 'Trachyspermum ammi', grade: 'Desert Winter Harvest Sortex Pods', active: 'Thymol 48% Antiseptic Carminative Assay', moisture: '6.5% Crisp Seed', shelfLife: '24 Months' },
+    'ms-01': { latin: 'Heritage 21-Botanical Compounding', grade: 'Royal Awadhi Court Formulation (1924)', active: 'Cold-packed within 48h / Zero aroma decay', moisture: '6.9% Stone Pounded', shelfLife: '12 Months' },
+    'ms-02': { latin: 'Heritage Nizami 18-Spice Blend', grade: 'Hyderabad Deg Royal Formulation', active: 'Star Anise, Shahi Jeera, Mace, Ceylon Cinn.', moisture: '7.2% Cold Roasted', shelfLife: '12 Months' },
+    'ms-03': { latin: 'Heritage Chettinad 16-Spice Blend', grade: 'Karaikudi Stone Mortar Roasted', active: 'Kalpasi (Stone Flower), Marathi Moggu, Peppercorn', moisture: '7.0% Hand Roasted', shelfLife: '12 Months' },
+    'ms-04': { latin: 'Heritage Kashmiri 12-Spice Blend', grade: 'Srinagar Wazwan Royal Compounding', active: 'Fennel Flower, Kashmiri Chilli, Saffron Threads', moisture: '7.4% Sun Ground', shelfLife: '12 Months' },
+    'ms-05': { latin: 'Traditional Madras Golden Curry', grade: 'Tamil Nadu Heritage 14-Spice Blend', active: 'Lakadong Turmeric, Coriander, Tellicherry Pepper', moisture: '7.1% Stone Ground', shelfLife: '18 Months' },
+    'bl-01': { latin: 'Chai Masala 7-Botanical Blend', grade: 'Ginger-Cardamom Estate Cold Blend', active: 'Clove, Cinnamon, Black Pepper, Nutmeg', moisture: '6.8% Micro-Crushed', shelfLife: '18 Months' },
+    'bl-02': { latin: 'Royal Awadhi Tandoori Tikka Rub', grade: 'Lucknow Barbecue Herb & Seed Marinade', active: 'Smoked Chilli, Coriander, Brown Cardamom, Kasuri Methi', moisture: '7.0% Coarse Grind', shelfLife: '18 Months' },
+    'bl-03': { latin: 'Panch Phoran 5-Seed Whole Blend', grade: 'Bengal Traditional Whole Seasoning', active: 'Cumin, Brown Mustard, Fenugreek, Nigella, Fennel', moisture: '6.6% Sun Dried', shelfLife: '24 Months' },
+    'pk-01': { latin: 'Mangifera indica with Mustard Oil', grade: 'Avakaya Sun-Matured Cold Pressed', active: 'Guntur Chilli, Fenugreek, Wood-Pressed Mustard Oil', moisture: 'Traditional Salt & Oil Cured', shelfLife: '24 Months (Barni Jar)' },
+    'pk-02': { latin: 'Citrus aurantiifolia & Rock Salt', grade: 'Kala Namak & Ajwain Sun-Matured', active: 'Thin Skin Kagzi Lime, Zero Preservatives', moisture: 'Sun-Fermented in Glass', shelfLife: '36 Months' },
+    'pk-03': { latin: 'Allium sativum with Red Chilli', grade: 'Lahsun Lahori Mustard Relish', active: 'Whole Mountain Garlic, Kalonji, Methi Seed', moisture: 'Wood-Pressed Mustard Oil Cured', shelfLife: '24 Months' },
+    'ch-01': { latin: 'Tamarindus indica & Deglet Dates', grade: 'Slow-Simmered Jaggery Reduction', active: 'Coarse Roasted Cumin, Black Salt, Saunth Ginger', moisture: 'Thick Glossy Chutney', shelfLife: '12 Months (Refrigerate)' },
+    'ch-02': { latin: 'Cocos nucifera & Mint-Coriander', grade: 'Fresh Stone Mortar Podi Compound', active: 'Roasted Gram, Green Chilli, Curry Leaf, Asafoetida', moisture: 'Fresh Compounded Powder', shelfLife: '9 Months' },
+    'df-01': { latin: 'Prunus dulcis (Mamra)', grade: 'Kashmiri Heritage Wild Orchard Mamra', active: '100% Single-Tree Cold Oil Yield > 50%', moisture: '5.2% Sun Dried in Shell', shelfLife: '18 Months' },
+    'df-02': { latin: 'Carum carvi & Nigella sativa', grade: 'Connoisseur Whole Seed Duo', active: 'Thymoquinone & Carvone Potency Assay', moisture: '6.4% Triple Cleaned', shelfLife: '24 Months' },
+    'sp-01': { latin: 'Piper nigrum (Ancient Vine 100yr)', grade: 'Single Barrel Reserve Limited Harvest', active: 'Piperine 6.2% High Density Terroir', moisture: '8.1% Hand Sorted', shelfLife: '36 Months' },
+    'sp-02': { latin: 'Crocus sativus (Royal Ingot)', grade: 'Grade A1+ Imperial Presentation', active: 'Crocin 280+ Super Mongra Lab Certified', moisture: '5.8% Velvet Case Stored', shelfLife: '36 Months' }
+  };
+
+  return map[p.id] || {
+    latin: `${p.name} Botanica`,
+    grade: 'Single-Estate Hand-Selected Grade A+',
+    active: 'Standard Essential Oils & Bioactives Intact',
+    moisture: 'Optimal Crispness Lab Tested',
+    shelfLife: '24 Months'
+  };
+}
+
+function openProductDetail(productId) {
+  const p = SPICE_DATA.products.find(item => item.id === productId);
+  if (!p) {
+    showToast("Product not found.", "error");
+    return;
+  }
+
+  currentDetailQuantity = 1;
+
+  // Navigate to product detail SPA view
+  navigateTo('product-detail');
+  window.history.replaceState(null, null, `#product?id=${p.id}`);
+
+  const container = document.getElementById('product-detail-container');
+  if (!container) return;
+
+  const meta = getBotanicalMetadata(p);
+  const aromaPills = p.aromaNotes.map(n => `
+    <span class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-saffron-100/80 dark:bg-saffron-950/60 text-saffron-900 dark:text-saffron-300 border border-saffron-300/80 dark:border-saffron-800/60">
+      ${n}
+    </span>
+  `).join('');
+
+  // Complimentary recommendations (other products in same category or popular)
+  const related = SPICE_DATA.products
+    .filter(item => item.id !== p.id && (item.category === p.category || item.isSignature))
+    .slice(0, 4);
+
+  // Sample verified reviews
+  const reviews = [
+    { author: "Chef Vikramjit R.", role: "Heritage Restaurant Owner", stars: 5, date: "2 weeks ago", text: `Incredible aroma retention. The moment you open the seal, the essential oils fill the kitchen. ${p.name} is unmatched in quality compared to commercial brands.` },
+    { author: "Ananya Deshmukh", role: "Culinary Connoisseur", stars: 5, date: "1 month ago", text: `Ordered the harvest lot from ${p.origin}. Clean, vibrant, zero adulteration. The lab certificate QR gives complete peace of mind.` },
+    { author: "Dr. K. S. Nair", role: "Ayurvedic Practitioner", stars: 5, date: "Recent Harvest", text: `High bioactive potency verified. You can taste the single-origin terroir immediately. Fast dispatch and excellent packaging.` }
+  ];
+
+  container.innerHTML = `
+    <!-- BREADCRUMBS & NAVIGATION BAR -->
+    <nav class="flex items-center gap-2 text-xs text-clove-800/70 dark:text-parchment-400 mb-6 font-medium" aria-label="Breadcrumb">
+      <a href="#home" onclick="navigateTo('home'); return false;" class="hover:text-saffron-700 dark:hover:text-saffron-400 transition flex items-center gap-1">
+        <i class="fa-solid fa-house text-[10px]"></i> Home
+      </a>
+      <span>/</span>
+      <a href="#products" onclick="navigateTo('products'); return false;" class="hover:text-saffron-700 dark:hover:text-saffron-400 transition">
+        Spice Pantry
+      </a>
+      <span>/</span>
+      <button onclick="setCategoryAndNavigate('${p.category}')" class="hover:text-saffron-700 dark:hover:text-saffron-400 transition underline underline-offset-2">
+        ${p.categoryName}
+      </button>
+      <span>/</span>
+      <span class="text-clove-900 dark:text-parchment-100 font-bold truncate max-w-[200px] sm:max-w-none">${p.name}</span>
+    </nav>
+
+    <!-- MAIN PRODUCT SHOWCASE (STICKY HEADER VISIBLE ABOVE THIS) -->
+    <div class="bg-white dark:bg-[#1E140C] rounded-3xl border border-parchment-300 dark:border-saffron-900/40 p-6 sm:p-8 lg:p-10 shadow-lg mb-12">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
+
+        <!-- LEFT: HD PRODUCT IMAGE & SEALS (COL 5) -->
+        <div class="lg:col-span-5 space-y-4">
+          <div class="relative rounded-2xl overflow-hidden bg-parchment-100 dark:bg-parchment-900 border border-parchment-300 dark:border-saffron-900/50 shadow-md group">
+            <img id="detail-main-img" src="${p.image}" alt="${p.name}" class="w-full h-80 sm:h-96 lg:h-[420px] object-cover group-hover:scale-105 transition-transform duration-700">
+            
+            <div class="absolute top-4 left-4 flex flex-col gap-2">
+              <span class="px-3 py-1 rounded-full text-xs font-black uppercase tracking-wider bg-clove-900/90 text-saffron-300 backdrop-blur-md border border-saffron-500/40 shadow-sm">
+                ${p.categoryName}
+              </span>
+              ${p.isSignature ? `
+                <span class="px-3 py-1 rounded-full text-xs font-black uppercase tracking-wider bg-amber-500 text-clove-950 shadow-md flex items-center gap-1.5">
+                  <i class="fa-solid fa-crown text-[10px]"></i> Signature Reserve
+                </span>
+              ` : ''}
+            </div>
+
+            <button onclick="toggleWishlist('${p.id}', event)" class="absolute top-4 right-4 w-10 h-10 rounded-full bg-white/90 dark:bg-clove-900/90 hover:bg-white text-clove-800 dark:text-parchment-100 hover:text-red-500 shadow-md flex items-center justify-center transition">
+              <i class="fa-regular fa-heart text-base"></i>
+            </button>
+
+            <div class="absolute bottom-4 left-4 right-4 bg-clove-950/85 backdrop-blur-md rounded-xl p-3 border border-saffron-500/30 text-white text-xs flex items-center justify-between">
+              <span class="flex items-center gap-2 text-cardamom-300 font-bold">
+                <i class="fa-solid fa-certificate"></i> NABL Tested Lot
+              </span>
+              <span class="text-saffron-300 font-semibold text-[11px]">Zero Radiation / No Fillers</span>
+            </div>
+          </div>
+
+          <!-- TRUST BADGES BAR -->
+          <div class="grid grid-cols-3 gap-2 text-center">
+            <div class="p-2.5 rounded-xl bg-parchment-100 dark:bg-parchment-900/50 border border-parchment-200 dark:border-saffron-900/30">
+              <i class="fa-solid fa-seedling text-cardamom-600 dark:text-cardamom-400 text-sm block mb-1"></i>
+              <span class="text-[10px] font-bold text-clove-900 dark:text-parchment-100 block">Single-Origin</span>
+              <span class="text-[9px] text-clove-800/60 dark:text-parchment-400">100% Traceable</span>
+            </div>
+            <div class="p-2.5 rounded-xl bg-parchment-100 dark:bg-parchment-900/50 border border-parchment-200 dark:border-saffron-900/30">
+              <i class="fa-solid fa-shield-halved text-saffron-600 dark:text-saffron-400 text-sm block mb-1"></i>
+              <span class="text-[10px] font-bold text-clove-900 dark:text-parchment-100 block">NABL Certified</span>
+              <span class="text-[9px] text-clove-800/60 dark:text-parchment-400">Aroma-Locked</span>
+            </div>
+            <div class="p-2.5 rounded-xl bg-parchment-100 dark:bg-parchment-900/50 border border-parchment-200 dark:border-saffron-900/30">
+              <i class="fa-solid fa-truck-fast text-terracotta-600 dark:text-terracotta-400 text-sm block mb-1"></i>
+              <span class="text-[10px] font-bold text-clove-900 dark:text-parchment-100 block">Express Dispatch</span>
+              <span class="text-[9px] text-clove-800/60 dark:text-parchment-400">Within 24 Hours</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- RIGHT: PRODUCT DETAILS & PURCHASE CONTROLS (COL 7) -->
+        <div class="lg:col-span-7 space-y-6">
+          
+          <!-- Origin & Ratings Bar -->
+          <div class="flex flex-wrap items-center justify-between gap-3 text-xs border-b border-parchment-200 dark:border-saffron-900/30 pb-3">
+            <span class="flex items-center gap-1.5 font-bold text-saffron-800 dark:text-saffron-400 bg-saffron-50 dark:bg-saffron-950/60 px-3 py-1 rounded-full border border-saffron-200 dark:border-saffron-800">
+              <i class="fa-solid fa-location-dot text-terracotta-600 dark:text-terracotta-400"></i>
+              ${p.origin} • ${p.harvest}
+            </span>
+            <div class="flex items-center gap-2">
+              <div class="flex text-amber-500 text-xs">
+                ${'<i class="fa-solid fa-star"></i>'.repeat(Math.round(p.rating))}
+              </div>
+              <span class="font-bold text-clove-900 dark:text-parchment-100">${p.rating.toFixed(1)}</span>
+              <span class="text-clove-800/60 dark:text-parchment-400">(${p.reviewsCount} verified reviews)</span>
+            </div>
+          </div>
+
+          <!-- Product Title & Botanical Subtitle -->
+          <div class="space-y-1">
+            <h1 class="font-heading font-black text-2xl sm:text-3xl lg:text-4xl text-clove-900 dark:text-parchment-50 leading-tight">
+              ${p.name}
+            </h1>
+            <p class="text-xs sm:text-sm font-serif italic text-cardamom-800 dark:text-cardamom-300">
+              ${meta.latin} • Authentic Single-Estate Botanical Integrity
+            </p>
+          </div>
+
+          <!-- Price & Savings -->
+          <div class="flex items-baseline gap-4 p-4 rounded-2xl bg-parchment-50 dark:bg-parchment-900/40 border border-parchment-200 dark:border-saffron-900/30">
+            <div>
+              <span class="text-xs text-clove-800/60 dark:text-parchment-400 block font-medium">Estate Direct Price</span>
+              <div class="flex items-baseline gap-3">
+                <span class="font-display font-black text-3xl sm:text-4xl text-saffron-800 dark:text-saffron-400">₹${p.price}</span>
+                ${p.originalPrice ? `
+                  <span class="text-base text-clove-800/40 dark:text-parchment-500 line-through">₹${p.originalPrice}</span>
+                  <span class="text-xs font-bold text-cardamom-700 dark:text-cardamom-400 bg-cardamom-100 dark:bg-cardamom-950 px-2 py-0.5 rounded-full border border-cardamom-300">
+                    Save ₹${p.originalPrice - p.price}
+                  </span>
+                ` : ''}
+              </div>
+            </div>
+            <div class="ml-auto text-right text-xs">
+              <span class="text-clove-800/60 dark:text-parchment-400 block">Presentation</span>
+              <span class="font-bold text-clove-900 dark:text-parchment-100">${p.weight}</span>
+            </div>
+          </div>
+
+          <!-- Description -->
+          <p class="text-sm text-clove-800/80 dark:text-parchment-200 font-light leading-relaxed">
+            ${p.description}
+          </p>
+
+          <!-- Aroma Palette -->
+          <div class="space-y-2">
+            <span class="text-xs font-bold uppercase tracking-wider text-clove-900 dark:text-parchment-100 block">
+              <i class="fa-solid fa-wind text-saffron-600 mr-1.5"></i> Aroma Palette & Terroir Notes:
+            </span>
+            <div class="flex flex-wrap gap-2">
+              ${aromaPills}
+            </div>
+          </div>
+
+          <!-- Heat Index & Processing Info -->
+          <div class="grid grid-cols-2 gap-3 pt-1">
+            <div class="p-3 rounded-xl bg-parchment-100 dark:bg-parchment-900/60 border border-parchment-200 dark:border-saffron-900/40 text-xs">
+              <span class="font-bold text-clove-900 dark:text-parchment-100 block text-[11px]">Heat Profile:</span>
+              <span class="font-semibold text-terracotta-600 dark:text-terracotta-400">${p.heatLevel}</span>
+            </div>
+            <div class="p-3 rounded-xl bg-parchment-100 dark:bg-parchment-900/60 border border-parchment-200 dark:border-saffron-900/40 text-xs">
+              <span class="font-bold text-clove-900 dark:text-parchment-100 block text-[11px]">Milling & Craft:</span>
+              <span class="font-semibold text-saffron-800 dark:text-saffron-400">${p.category === 'whole' ? 'Sun-Drenched Pod' : (p.category === 'pickles' ? 'Clay Pot Matured' : 'Cold Stone Pounded')}</span>
+            </div>
+          </div>
+
+          <!-- QUANTITY SELECTOR & PRIMARY ACTION BUTTONS -->
+          <div class="pt-4 border-t border-parchment-200 dark:border-saffron-900/40 space-y-4">
+            
+            <div class="flex flex-wrap items-center gap-4">
+              <!-- Quantity selector -->
+              <div class="flex items-center rounded-xl border-2 border-parchment-300 dark:border-saffron-900/60 bg-parchment-50 dark:bg-parchment-900/80 p-1">
+                <button onclick="changeDetailQty(-1)" class="w-9 h-9 rounded-lg hover:bg-parchment-200 dark:hover:bg-parchment-800 text-clove-900 dark:text-parchment-100 font-black text-sm flex items-center justify-center transition" aria-label="Decrease quantity">
+                  <i class="fa-solid fa-minus text-xs"></i>
+                </button>
+                <span id="detail-qty-val" class="w-12 text-center font-display font-black text-base text-clove-900 dark:text-parchment-50">1</span>
+                <button onclick="changeDetailQty(1)" class="w-9 h-9 rounded-lg hover:bg-parchment-200 dark:hover:bg-parchment-800 text-clove-900 dark:text-parchment-100 font-black text-sm flex items-center justify-center transition" aria-label="Increase quantity">
+                  <i class="fa-solid fa-plus text-xs"></i>
+                </button>
+              </div>
+
+              <!-- Add to Basket Button -->
+              <button onclick="addDetailToBasket('${p.id}')" class="flex-grow py-3.5 px-6 rounded-xl bg-clove-900 hover:bg-clove-800 dark:bg-saffron-700 dark:hover:bg-saffron-600 text-white font-bold text-sm shadow-md hover:scale-[1.01] transition flex items-center justify-center gap-2.5">
+                <i class="fa-solid fa-basket-shopping"></i>
+                <span>Add to Basket</span>
+              </button>
+
+              <!-- Order Now (Direct Checkout) -->
+              <button onclick="orderNowDetailProduct('${p.id}')" class="flex-grow py-3.5 px-6 rounded-xl gold-gradient-bg text-white font-bold text-sm shadow-md hover:scale-[1.01] transition flex items-center justify-center gap-2.5">
+                <i class="fa-solid fa-bolt"></i>
+                <span>Order Now</span>
+              </button>
+            </div>
+
+            <!-- SECONDARY ACTION BUTTONS -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
+              <button onclick="enquireAboutProduct('${p.id}')" class="py-2.5 px-4 rounded-xl border border-saffron-600/40 bg-saffron-50/50 dark:bg-saffron-950/40 hover:bg-saffron-100 dark:hover:bg-saffron-900/60 text-saffron-900 dark:text-saffron-300 font-bold text-xs transition flex items-center justify-center gap-2">
+                <i class="fa-regular fa-comment-dots text-saffron-700 dark:text-saffron-400"></i>
+                <span>Enquire About This Spice</span>
+              </button>
+              <button onclick="bulkEnquireProduct('${p.id}')" class="py-2.5 px-4 rounded-xl border border-parchment-300 dark:border-saffron-900/50 bg-parchment-100 dark:bg-parchment-900/60 hover:bg-parchment-200 dark:hover:bg-parchment-800 text-clove-800 dark:text-parchment-300 font-bold text-xs transition flex items-center justify-center gap-2">
+                <i class="fa-solid fa-boxes-stacked text-terracotta-600 dark:text-terracotta-400"></i>
+                <span>Request Wholesale / Bulk</span>
+              </button>
+            </div>
+
+            <!-- PINCODE DELIVERY ESTIMATOR -->
+            <div class="p-3.5 rounded-xl bg-parchment-100 dark:bg-parchment-900/50 border border-parchment-300 dark:border-saffron-900/30 text-xs flex flex-wrap items-center justify-between gap-3">
+              <div class="flex items-center gap-2">
+                <i class="fa-solid fa-location-crosshairs text-saffron-700 dark:text-saffron-400"></i>
+                <span class="font-bold text-clove-900 dark:text-parchment-100">Delivery Availability:</span>
+              </div>
+              <div class="flex items-center gap-2 flex-grow sm:flex-grow-0">
+                <input id="detail-pincode-input" type="text" maxlength="6" placeholder="Enter 6-digit Pincode" class="w-36 px-2.5 py-1 rounded-lg border border-parchment-300 dark:border-saffron-800 bg-white dark:bg-[#120B07] text-clove-900 dark:text-parchment-100 text-xs text-center focus:ring-1 focus:ring-saffron-500 outline-none">
+                <button onclick="checkPincodeDelivery()" class="px-3 py-1 bg-clove-900 dark:bg-saffron-700 text-white font-bold rounded-lg text-xs hover:bg-saffron-700 transition">
+                  Check
+                </button>
+              </div>
+              <div id="detail-pincode-result" class="w-full text-[11px] text-cardamom-700 dark:text-cardamom-400 font-semibold hidden">
+                <i class="fa-solid fa-circle-check mr-1"></i> Express delivery available within 48-72 hours.
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+
+    <!-- TECHNICAL SPECIFICATIONS & QUALITY ASSURANCE -->
+    <div class="bg-white dark:bg-[#1E140C] rounded-3xl border border-parchment-300 dark:border-saffron-900/40 p-6 sm:p-8 lg:p-10 shadow-lg mb-12">
+      <div class="border-b border-parchment-200 dark:border-saffron-900/30 pb-4 mb-6 flex items-center justify-between">
+        <div>
+          <span class="text-xs uppercase font-extrabold tracking-wider text-saffron-700 dark:text-saffron-400 block">NABL Accredited Quality Dossier</span>
+          <h2 class="font-heading font-black text-xl sm:text-2xl text-clove-900 dark:text-parchment-50">Technical Botanical Specifications</h2>
+        </div>
+        <button onclick="navigateTo('purity'); verifyBatchLot('SV-2025-LK08');" class="text-xs font-bold text-saffron-800 dark:text-saffron-400 hover:underline flex items-center gap-1.5">
+          <span>View Public Lab Registry</span>
+          <i class="fa-solid fa-arrow-right text-[10px]"></i>
+        </button>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+        <div class="p-4 rounded-2xl bg-parchment-50 dark:bg-parchment-900/40 border border-parchment-200 dark:border-saffron-900/30 flex justify-between items-center">
+          <span class="text-clove-800/70 dark:text-parchment-400 font-medium">Botanical Classification</span>
+          <span class="font-serif italic font-bold text-clove-900 dark:text-parchment-100 text-sm">${meta.latin}</span>
+        </div>
+        <div class="p-4 rounded-2xl bg-parchment-50 dark:bg-parchment-900/40 border border-parchment-200 dark:border-saffron-900/30 flex justify-between items-center">
+          <span class="text-clove-800/70 dark:text-parchment-400 font-medium">Grading Standard</span>
+          <span class="font-bold text-clove-900 dark:text-parchment-100">${meta.grade}</span>
+        </div>
+        <div class="p-4 rounded-2xl bg-parchment-50 dark:bg-parchment-900/40 border border-parchment-200 dark:border-saffron-900/30 flex justify-between items-center">
+          <span class="text-clove-800/70 dark:text-parchment-400 font-medium">Active Bioactive Assay</span>
+          <span class="font-bold text-saffron-800 dark:text-saffron-400">${meta.active}</span>
+        </div>
+        <div class="p-4 rounded-2xl bg-parchment-50 dark:bg-parchment-900/40 border border-parchment-200 dark:border-saffron-900/30 flex justify-between items-center">
+          <span class="text-clove-800/70 dark:text-parchment-400 font-medium">Moisture & Volatiles</span>
+          <span class="font-bold text-cardamom-700 dark:text-cardamom-400">${meta.moisture}</span>
+        </div>
+        <div class="p-4 rounded-2xl bg-parchment-50 dark:bg-parchment-900/40 border border-parchment-200 dark:border-saffron-900/30 flex justify-between items-center">
+          <span class="text-clove-800/70 dark:text-parchment-400 font-medium">Terroir Origin</span>
+          <span class="font-bold text-clove-900 dark:text-parchment-100">${p.origin} (${p.harvest})</span>
+        </div>
+        <div class="p-4 rounded-2xl bg-parchment-50 dark:bg-parchment-900/40 border border-parchment-200 dark:border-saffron-900/30 flex justify-between items-center">
+          <span class="text-clove-800/70 dark:text-parchment-400 font-medium">Optimal Shelf Life</span>
+          <span class="font-bold text-clove-900 dark:text-parchment-100">${meta.shelfLife}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- VERIFIED CUSTOMER REVIEWS -->
+    <div class="bg-white dark:bg-[#1E140C] rounded-3xl border border-parchment-300 dark:border-saffron-900/40 p-6 sm:p-8 lg:p-10 shadow-lg mb-12">
+      <div class="border-b border-parchment-200 dark:border-saffron-900/30 pb-4 mb-6 flex flex-wrap items-center justify-between gap-3">
+        <div>
+          <span class="text-xs uppercase font-extrabold tracking-wider text-saffron-700 dark:text-saffron-400 block">Connoisseur Feedback</span>
+          <h2 class="font-heading font-black text-xl sm:text-2xl text-clove-900 dark:text-parchment-50">Verified Terroir Reviews (${p.reviewsCount})</h2>
+        </div>
+        <div class="flex items-center gap-2">
+          <span class="font-display font-black text-2xl text-saffron-800 dark:text-saffron-400">${p.rating.toFixed(1)}</span>
+          <div class="text-amber-500 text-sm">
+            ${'<i class="fa-solid fa-star"></i>'.repeat(Math.round(p.rating))}
+          </div>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        ${reviews.map(r => `
+          <div class="p-6 rounded-2xl bg-parchment-50 dark:bg-parchment-900/40 border border-parchment-200 dark:border-saffron-900/30 flex flex-col justify-between space-y-3">
+            <div class="space-y-2">
+              <div class="flex items-center justify-between">
+                <div class="flex text-amber-500 text-xs">
+                  ${'<i class="fa-solid fa-star"></i>'.repeat(r.stars)}
+                </div>
+                <span class="text-[10px] text-clove-800/60 dark:text-parchment-400">${r.date}</span>
+              </div>
+              <p class="text-xs text-clove-800/80 dark:text-parchment-200 italic leading-relaxed">"${r.text}"</p>
+            </div>
+            <div class="pt-2 border-t border-parchment-200 dark:border-saffron-900/30">
+              <span class="font-bold text-xs text-clove-900 dark:text-parchment-100 block">${r.author}</span>
+              <span class="text-[10px] text-cardamom-700 dark:text-cardamom-400 font-medium">${r.role}</span>
+            </div>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+
+    <!-- RECOMMENDED COMPLEMENTARY SPICES -->
+    <div class="space-y-6">
+      <div class="flex items-center justify-between">
+        <div>
+          <span class="text-xs uppercase font-extrabold tracking-wider text-saffron-700 dark:text-saffron-400 block">Harmonious Botanical Combinations</span>
+          <h2 class="font-heading font-black text-2xl text-clove-900 dark:text-parchment-50">Pairs Wonderfully With</h2>
+        </div>
+        <button onclick="navigateTo('products')" class="text-xs font-bold text-saffron-800 dark:text-saffron-400 hover:underline flex items-center gap-1.5">
+          <span>Explore All Spices</span>
+          <i class="fa-solid fa-arrow-right text-[10px]"></i>
+        </button>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        ${related.map(item => renderSpiceCardHTML(item)).join('')}
+      </div>
+    </div>
+  `;
+}
+
+function changeDetailQty(delta) {
+  currentDetailQuantity = Math.max(1, currentDetailQuantity + delta);
+  const qtyEl = document.getElementById('detail-qty-val');
+  if (qtyEl) qtyEl.innerText = currentDetailQuantity;
+}
+
+function addDetailToBasket(productId) {
+  for (let i = 0; i < currentDetailQuantity; i++) {
+    quickAddToCart(productId);
+  }
+  showToast(`Added ${currentDetailQuantity}x allocation to your basket!`, "success");
+}
+
+function orderNowDetailProduct(productId) {
+  addDetailToBasket(productId);
+  toggleCartDrawer(true);
+}
+
+function checkPincodeDelivery() {
+  const inp = document.getElementById('detail-pincode-input');
+  const res = document.getElementById('detail-pincode-result');
+  if (!inp || !res) return;
+
+  const val = inp.value.trim();
+  if (val.length === 6 && /^\d+$/.test(val)) {
+    res.classList.remove('hidden');
+    res.innerHTML = `<i class="fa-solid fa-circle-check mr-1 text-cardamom-600"></i> Delivery to pincode ${val} available in 48-72h via Cold-Chain Express.`;
+  } else {
+    showToast("Please enter a valid 6-digit postal pincode.", "error");
+  }
+}
+
