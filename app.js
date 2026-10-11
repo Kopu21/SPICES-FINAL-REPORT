@@ -115,69 +115,136 @@ function filterBySearchOrNav(searchTerm, category = 'all') {
   filterProducts();
 }
 
+function scrollToElementWithOffset(el) {
+  if (!el) return;
+  const headerEl = document.getElementById('main-site-header');
+  const headerHeight = headerEl ? headerEl.offsetHeight : 80;
+  const rect = el.getBoundingClientRect();
+  const targetTop = rect.top + window.pageYOffset - headerHeight - 16;
+  window.scrollTo({
+    top: Math.max(0, targetTop),
+    behavior: 'smooth'
+  });
+}
+
 function navigateTo(viewId) {
   if (!viewId) viewId = 'home';
-  const validViews = ['home', 'home-2', 'products', 'product-detail', 'recipes', 'story', 'bulk-orders', 'contact', 'error', 'gifting', 'purity'];
-  
-  // If target is an in-page anchor ID, smoothly scroll to it without resetting SPA view
-  if (!validViews.includes(viewId)) {
-    const anchorElem = document.getElementById(viewId);
-    if (anchorElem) {
-      anchorElem.scrollIntoView({ behavior: 'smooth' });
-      return;
-    }
-    viewId = 'home';
+  const cleanId = viewId.toString().toLowerCase().trim().replace(/^#/, '');
+
+  // 1. Modals & Portals
+  if (cleanId === 'login' || cleanId === 'register' || cleanId === 'auth' || cleanId === 'account') {
+    openAuthModal(cleanId === 'register' ? 'register' : 'login');
+    toggleMobileNav(true);
+    return;
+  }
+  if (cleanId === 'admin') {
+    openAdminModal();
+    toggleMobileNav(true);
+    return;
   }
 
-  const target = viewId;
+  // 2. Product Categories shortcut
+  const categoryAliases = ['whole', 'powders', 'masalas', 'pickles', 'specials', 'whole-spices', 'ground-spices'];
+  if (categoryAliases.includes(cleanId)) {
+    const mappedCat = cleanId.replace('-spices', '');
+    setCategoryAndNavigate(mappedCat === 'ground' ? 'powders' : mappedCat);
+    toggleMobileNav(true);
+    return;
+  }
 
-  // Hide all views
+  // 3. Section / Subtopic Aliases
+  let targetView = cleanId;
+  let targetAnchor = null;
+
+  if (cleanId === 'about' || cleanId === 'story' || cleanId === 'heritage') {
+    targetView = 'home';
+    targetAnchor = document.getElementById('brand-story-section');
+  } else if (cleanId === 'services' || cleanId === 'supplies') {
+    targetView = 'home';
+    targetAnchor = document.getElementById('supplies-section');
+  } else if (cleanId === 'pricing' || cleanId === 'quote' || cleanId === 'bulk-quote') {
+    targetView = 'bulk-orders';
+    targetAnchor = document.getElementById('pricing-section') || document.getElementById('bulk-spice-select');
+  } else if (cleanId === 'blog' || cleanId === 'articles' || cleanId === 'knowledge') {
+    targetView = 'home-2';
+    targetAnchor = document.getElementById('h2-spice-knowledge');
+  }
+
+  const validViews = ['home', 'home-2', 'products', 'product-detail', 'recipes', 'bulk-orders', 'contact', 'error', 'gifting', 'purity'];
+
+  // 4. In-page element check if not a standard view
+  if (!validViews.includes(targetView)) {
+    const el = document.getElementById(cleanId);
+    if (el) {
+      const parentView = el.closest('.spa-view');
+      if (parentView) {
+        targetView = parentView.id.replace('view-', '');
+        targetAnchor = el;
+      } else {
+        scrollToElementWithOffset(el);
+        toggleMobileNav(true);
+        return;
+      }
+    } else {
+      targetView = 'home';
+    }
+  }
+
+  // 5. Hide all views and show target view
   document.querySelectorAll('.spa-view').forEach(el => {
     el.classList.add('hidden');
   });
 
-  // Show target view
-  const targetView = document.getElementById(`view-${target}`);
-  if (targetView) {
-    targetView.classList.remove('hidden');
+  const targetViewEl = document.getElementById(`view-${targetView}`);
+  if (targetViewEl) {
+    targetViewEl.classList.remove('hidden');
   }
 
-  // Update Nav links
+  // 6. Update Nav links active state
   document.querySelectorAll('.nav-link').forEach(link => {
     link.classList.remove('active');
   });
 
-  const activeLink = document.getElementById(`nav-${target}`);
+  const activeLink = document.getElementById(`nav-${targetView}`);
   if (activeLink) {
     activeLink.classList.add('active');
-  } else if (target === 'home' || target === 'home-2') {
+  } else if (targetView === 'home' || targetView === 'home-2') {
     const homeNav = document.getElementById('nav-home');
     if (homeNav) homeNav.classList.add('active');
-  } else if (target === 'products' || target === 'product-detail') {
+  } else if (targetView === 'products' || targetView === 'product-detail') {
     const prodNav = document.getElementById('nav-products');
     if (prodNav) prodNav.classList.add('active');
   }
 
-  // Update URL hash without page reload
-  if (target !== 'product-detail') {
-    window.history.replaceState(null, null, `#${target}`);
+  // 7. Update URL hash without page reload
+  if (targetView !== 'product-detail') {
+    window.history.replaceState(null, null, `#${cleanId}`);
   }
-  window.scrollTo(0, 0);
 
-  // Close mobile drawer on navigation
+  // 8. Scroll to target anchor or top with offset
+  if (targetAnchor) {
+    setTimeout(() => {
+      scrollToElementWithOffset(targetAnchor);
+    }, 60);
+  } else {
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  }
+
+  // 9. Close mobile drawer on navigation
   toggleMobileNav(true);
 }
 
 function initNavigation() {
   const handleHash = () => {
     const hash = window.location.hash.replace('#', '');
+    if (!hash) return;
     if (hash.startsWith('product?id=')) {
       const pid = hash.split('id=')[1];
       openProductDetail(pid);
     } else if (hash.startsWith('product-') || hash.startsWith('product/')) {
       const pid = hash.replace(/^product[-/]/, '');
       openProductDetail(pid);
-    } else if (hash) {
+    } else {
       navigateTo(hash);
     }
   };
@@ -186,6 +253,118 @@ function initNavigation() {
   if (window.location.hash) {
     handleHash();
   }
+
+  // Setup backdrop clicks and escape key for auth and admin modals
+  const authModal = document.getElementById('auth-modal');
+  if (authModal) {
+    authModal.addEventListener('click', (e) => {
+      if (e.target === authModal) closeAuthModal();
+    });
+  }
+
+  const adminModal = document.getElementById('admin-modal');
+  if (adminModal) {
+    adminModal.addEventListener('click', (e) => {
+      if (e.target === adminModal) closeAdminModal();
+    });
+  }
+
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      closeAuthModal();
+      closeAdminModal();
+      closeQuickView();
+      closeRecipeModal();
+      toggleCartDrawer(false);
+    }
+  });
+}
+
+// Authentication Modal Handlers
+function openAuthModal(tab = 'login') {
+  const modal = document.getElementById('auth-modal');
+  if (!modal) return;
+  modal.classList.remove('hidden');
+  switchAuthTab(tab);
+  document.body.style.overflow = 'hidden';
+}
+
+function closeAuthModal() {
+  const modal = document.getElementById('auth-modal');
+  if (!modal) return;
+  modal.classList.add('hidden');
+  document.body.style.overflow = '';
+}
+
+function switchAuthTab(tab) {
+  const loginForm = document.getElementById('auth-login-form');
+  const registerForm = document.getElementById('auth-register-form');
+  const btnLogin = document.getElementById('auth-tab-btn-login');
+  const btnRegister = document.getElementById('auth-tab-btn-register');
+  if (!loginForm || !registerForm) return;
+
+  if (tab === 'register') {
+    loginForm.classList.add('hidden');
+    registerForm.classList.remove('hidden');
+    if (btnRegister) {
+      btnRegister.className = 'py-2 px-3 rounded-lg bg-white dark:bg-clove-900 shadow-sm text-saffron-800 dark:text-saffron-300 transition';
+    }
+    if (btnLogin) {
+      btnLogin.className = 'py-2 px-3 rounded-lg text-clove-700 dark:text-parchment-400 hover:text-clove-900 transition';
+    }
+  } else {
+    registerForm.classList.add('hidden');
+    loginForm.classList.remove('hidden');
+    if (btnLogin) {
+      btnLogin.className = 'py-2 px-3 rounded-lg bg-white dark:bg-clove-900 shadow-sm text-saffron-800 dark:text-saffron-300 transition';
+    }
+    if (btnRegister) {
+      btnRegister.className = 'py-2 px-3 rounded-lg text-clove-700 dark:text-parchment-400 hover:text-clove-900 transition';
+    }
+  }
+}
+
+function handleAuthSubmit(event, type) {
+  event.preventDefault();
+  if (type === 'register') {
+    showToast('Patron registration received! Welcome to SuryaVeda Heritage Cellar.');
+  } else {
+    showToast('Authenticated successfully as SuryaVeda Patron.');
+  }
+  closeAuthModal();
+}
+
+// Admin Console Modal Handlers
+function openAdminModal() {
+  const modal = document.getElementById('admin-modal');
+  if (!modal) return;
+  modal.classList.remove('hidden');
+  document.body.style.overflow = 'hidden';
+  populateAdminInventory();
+}
+
+function closeAdminModal() {
+  const modal = document.getElementById('admin-modal');
+  if (!modal) return;
+  modal.classList.add('hidden');
+  document.body.style.overflow = '';
+}
+
+function populateAdminInventory() {
+  const tbody = document.getElementById('admin-inventory-table-body');
+  if (!tbody) return;
+  const catalog = (typeof SPICE_DATA !== 'undefined' && SPICE_DATA.products) ? SPICE_DATA.products : (typeof products !== 'undefined' ? products : []);
+  if (!catalog || !catalog.length) return;
+  tbody.innerHTML = catalog.map((p, idx) => `
+    <tr class="hover:bg-parchment-100 dark:hover:bg-[#1A1108]/60 transition border-b border-parchment-200 dark:border-saffron-900/20">
+      <td class="p-3 font-mono font-bold text-saffron-800 dark:text-saffron-300">${p.id.toUpperCase()}</td>
+      <td class="p-3 font-medium text-clove-900 dark:text-parchment-100">${p.name}</td>
+      <td class="p-3 capitalize">${p.category}</td>
+      <td class="p-3 text-clove-700 dark:text-parchment-300">${p.origin || 'Kerala Terroir'}</td>
+      <td class="p-3 font-bold text-cardamom-700 dark:text-cardamom-400">${120 + (idx * 15)} units</td>
+      <td class="p-3"><span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-cardamom-100 dark:bg-cardamom-950 text-cardamom-800 dark:text-cardamom-300">Grade A1+ Verified</span></td>
+    </tr>
+  `).join('');
 }
 
 function toggleMobileNav(forceClose = false) {

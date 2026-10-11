@@ -52,7 +52,7 @@
 
   <!-- MAIN SITE HEADER (EXACT REQUESTED NAVBAR ORDER) -->
   <!-- Left Logo -> Nav Links: Home (dropdown Home 1, Home 2) -> Products -> Recipes -> Bulk Orders -> Contact with enquiry form -> Right: Primary CTA (Shop Spices) -> Toggle Theme -> RTL/LTR -> Cart -->
-  <header id="main-site-header" class="sticky top-0 z-50 bg-parchment-50/95 dark:bg-[#150E08]/95 backdrop-blur-md border-b border-parchment-300 dark:border-saffron-900/40 shadow-sm transition-all duration-300">
+  <header id="main-site-header" class="fixed top-0 left-0 right-0 w-full z-50 bg-parchment-50/95 dark:bg-[#150E08]/95 backdrop-blur-md border-b border-parchment-300 dark:border-saffron-900/40 shadow-sm transition-all duration-300">
     <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
       <div class="flex items-center justify-between h-16 sm:h-20 gap-2 sm:gap-4">
         
@@ -116,7 +116,7 @@
           </a>
         </nav>
 
-        <!-- RIGHT CONTROLS: Primary CTA -> Toggle Theme -> RTL/LTR -> Cart -> Hamburger (Responsive) -->
+        <!-- RIGHT CONTROLS: Primary CTA -> Patron Account -> Toggle Theme -> RTL/LTR -> Cart -> Hamburger (Responsive) -->
         <div class="header-controls-group">
           
           <!-- 1. PRIMARY CALL TO ACTION BUTTON (SHOP NOW / ORDER SPICES) - Visible on sm: (640px+) -->
@@ -124,6 +124,12 @@
             <i class="fa-solid fa-bag-shopping"></i>
             <span>Shop Spices</span>
           </a>
+
+          <!-- PATRON ACCOUNT / LOGIN BUTTON -->
+          <button onclick="openAuthModal('login')" id="header-auth-btn" title="Patron Portal (Login / Register)" aria-label="Patron Portal Login or Register" class="header-btn header-btn-secondary hidden lg:inline-flex">
+            <i class="fa-regular fa-user text-saffron-700"></i>
+            <span class="font-bold">Account</span>
+          </button>
 
           <!-- 2. TOGGLE THEME BUTTON - Visible on md: (768px+) in top bar; accessible in mobile drawer -->
           <button onclick="toggleTheme()" id="theme-toggle-btn" title="Toggle Theme (Light / Dark Velvet)" aria-label="Toggle Theme Light or Dark" class="header-btn header-btn-secondary hidden md:inline-flex">
@@ -156,12 +162,16 @@
     <!-- MOBILE & TABLET NAVIGATION DRAWER -->
     <div id="mobile-nav" class="hidden xl:hidden bg-parchment-100 dark:bg-[#181009] border-b border-parchment-300 dark:border-saffron-900/40 px-4 sm:px-6 py-4 space-y-4 shadow-xl">
       
-      <!-- Top Action Controls in Mobile Drawer (Shop Spices, Theme, RTL) -->
+      <!-- Top Action Controls in Mobile Drawer (Shop Spices, Account, Theme, RTL) -->
       <div class="flex flex-wrap items-center gap-2 pb-3 border-b border-parchment-300 dark:border-saffron-900/30">
-        <a href="#products" onclick="navigateTo('products'); toggleMobileNav(true);" class="flex-grow py-2.5 px-4 rounded-xl gold-gradient-bg text-white text-xs font-bold text-center shadow flex items-center justify-center gap-2">
+        <a href="#products" onclick="navigateTo('products'); toggleMobileNav(true);" class="flex-grow py-2.5 px-3 rounded-xl gold-gradient-bg text-white text-xs font-bold text-center shadow flex items-center justify-center gap-2">
           <i class="fa-solid fa-bag-shopping"></i>
           <span>Shop Spices</span>
         </a>
+        <button onclick="openAuthModal('login'); toggleMobileNav(true);" class="header-btn header-btn-secondary shrink-0" title="Account / Sign In">
+          <i class="fa-regular fa-user text-saffron-700"></i>
+          <span class="font-bold">Sign In</span>
+        </button>
         <button onclick="toggleTheme()" class="header-btn header-btn-secondary shrink-0 theme-toggle-btn" title="Toggle Theme">
           <i class="fa-solid fa-moon text-saffron-700 theme-icon-btn"></i>
           <span class="theme-label-btn font-bold">Dark</span>
@@ -198,6 +208,22 @@
           <i class="fa-solid fa-boxes-stacked text-saffron-600 text-xs w-4 text-center"></i>
           <span>Bulk & B2B Orders</span>
         </a>
+        <a href="#pricing" onclick="navigateTo('pricing'); toggleMobileNav(true);" class="flex items-center gap-2.5 p-2.5 rounded-xl hover:bg-parchment-200 dark:hover:bg-parchment-900/60 text-sm font-semibold text-clove-900 dark:text-parchment-100 transition">
+          <i class="fa-solid fa-calculator text-saffron-600 text-xs w-4 text-center"></i>
+          <span>Wholesale Volume Pricing</span>
+        </a>
+        <a href="#about" onclick="navigateTo('about'); toggleMobileNav(true);" class="flex items-center gap-2.5 p-2.5 rounded-xl hover:bg-parchment-200 dark:hover:bg-parchment-900/60 text-sm font-semibold text-clove-900 dark:text-parchment-100 transition">
+          <i class="fa-solid fa-scroll text-saffron-600 text-xs w-4 text-center"></i>
+          <span>About Heritage Story</span>
+        </a>
+        <a href="#services" onclick="navigateTo('services'); toggleMobileNav(true);" class="flex items-center gap-2.5 p-2.5 rounded-xl hover:bg-parchment-200 dark:hover:bg-parchment-900/60 text-sm font-semibold text-clove-900 dark:text-parchment-100 transition">
+          <i class="fa-solid fa-handshake-angle text-saffron-600 text-xs w-4 text-center"></i>
+          <span>Hospitality & Kitchen Supplies</span>
+        </a>
+        <a href="#blog" onclick="navigateTo('blog'); toggleMobileNav(true);" class="flex items-center gap-2.5 p-2.5 rounded-xl hover:bg-parchment-200 dark:hover:bg-parchment-900/60 text-sm font-semibold text-clove-900 dark:text-parchment-100 transition">
+          <i class="fa-solid fa-feather-pointed text-saffron-600 text-xs w-4 text-center"></i>
+          <span>Spice Knowledge & Articles</span>
+        </a>
         <a href="#gifting" onclick="navigateTo('gifting'); toggleMobileNav(true);" class="flex items-center gap-2.5 p-2.5 rounded-xl hover:bg-parchment-200 dark:hover:bg-parchment-900/60 text-sm font-semibold text-saffron-800 dark:text-saffron-300 transition">
           <i class="fa-solid fa-gift text-saffron-600 text-xs w-4 text-center"></i>
           <span>Bespoke Gift Crate Studio</span>
@@ -210,6 +236,10 @@
           <i class="fa-solid fa-envelope text-saffron-600 text-xs w-4 text-center"></i>
           <span>Contact & Enquiry Form</span>
         </a>
+        <a href="#admin" onclick="openAdminModal(); toggleMobileNav(true);" class="flex items-center gap-2.5 p-2.5 rounded-xl hover:bg-cardamom-100 dark:hover:bg-cardamom-950/60 text-sm font-semibold text-cardamom-800 dark:text-cardamom-300 transition">
+          <i class="fa-solid fa-sliders text-cardamom-600 text-xs w-4 text-center"></i>
+          <span>Admin & Cellar Console</span>
+        </a>
       </div>
     </div>
   </header>
@@ -217,7 +247,7 @@
   <!-- ========================================================================= -->
   <!-- MAIN CONTENT CONTAINER WITH SPA VIEW SWITCHING -->
   <!-- ========================================================================= -->
-  <main class="flex-grow">
+  <main class="flex-grow pt-16 sm:pt-20">
 
     <!-- ==================== 1. HOME 1 VIEW (WITH COMPLETE CUSTOMER JOURNEY) ==================== -->
     <section id="view-home" class="spa-view">
@@ -2467,7 +2497,7 @@
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
           
           <!-- LEFT: LIVE TIERED PRICING ESTIMATOR -->
-          <div class="lg:col-span-7 space-y-6">
+          <div class="lg:col-span-7 space-y-6" id="pricing-section">
             <div class="bg-parchment-50 dark:bg-[#1A1108] rounded-2xl p-6 sm:p-8 border border-parchment-300 dark:border-saffron-900/40 shadow-sm space-y-6">
               <div class="flex items-center justify-between border-b border-parchment-300 dark:border-saffron-900/40 pb-4">
                 <div>
@@ -3177,13 +3207,19 @@
           <h4 class="font-heading font-bold text-sm text-saffron-400 uppercase tracking-wider">Navigation</h4>
           <ul class="space-y-2 text-xs text-parchment-300 font-light">
             <li><a href="#home" onclick="navigateTo('home')" class="hover:text-saffron-300">Home 1: Terroir Harvest</a></li>
-            <li><a href="#home-2" onclick="navigateTo('home-2')" class="hover:text-saffron-300">Home 2: Estate Cellar</a></li>
+            <li><a href="#home-2" onclick="navigateTo('home-2')" class="hover:text-saffron-300">Home 2: Discovery & Cellar</a></li>
             <li><a href="#products" onclick="navigateTo('products')" class="hover:text-saffron-300">Products Catalog</a></li>
             <li><a href="#recipes" onclick="navigateTo('recipes')" class="hover:text-saffron-300">Culinary Recipes</a></li>
+            <li><a href="#about" onclick="navigateTo('about')" class="hover:text-saffron-300">About Our Heritage</a></li>
+            <li><a href="#services" onclick="navigateTo('services')" class="hover:text-saffron-300">Hospitality & Kitchen Supplies</a></li>
+            <li><a href="#pricing" onclick="navigateTo('pricing')" class="hover:text-saffron-300">Wholesale Volume Pricing</a></li>
+            <li><a href="#blog" onclick="navigateTo('blog')" class="hover:text-saffron-300">Spice Knowledge & Articles</a></li>
             <li><a href="#gifting" onclick="navigateTo('gifting')" class="hover:text-saffron-300 text-saffron-400 font-medium">Bespoke Gift Studio</a></li>
-            <li><a href="#purity" onclick="navigateTo('purity')" class="hover:text-saffron-300 text-saffron-400 font-medium">NABL Purity Verification</a></li>
+            <li><a href="#purity" onclick="navigateTo('purity')" class="hover:text-saffron-300 text-cardamom-400 font-medium">NABL Purity Verification</a></li>
             <li><a href="#bulk-orders" onclick="navigateTo('bulk-orders')" class="hover:text-saffron-300">Bulk & B2B Orders</a></li>
             <li><a href="#contact" onclick="navigateTo('contact')" class="hover:text-saffron-300">Contact & Enquiry Form</a></li>
+            <li><a href="#login" onclick="openAuthModal('login')" class="hover:text-saffron-300">Patron Portal (Login / Register)</a></li>
+            <li><a href="#admin" onclick="openAdminModal()" class="hover:text-saffron-300 text-saffron-400">Admin & Cellar Console</a></li>
           </ul>
         </div>
 
@@ -3214,6 +3250,7 @@
           <a href="#contact" onclick="navigateTo('contact')" class="hover:text-saffron-300">Privacy Policy</a>
           <a href="#contact" onclick="navigateTo('contact')" class="hover:text-saffron-300">Terms of Terroir</a>
           <a href="#bulk-orders" onclick="navigateTo('bulk-orders')" class="hover:text-saffron-300">B2B Portal</a>
+          <a href="#admin" onclick="openAdminModal()" class="hover:text-saffron-300">Admin</a>
         </div>
       </div>
 
@@ -3238,6 +3275,134 @@
         <i class="fa-solid fa-xmark"></i>
       </button>
       <div class="p-6 sm:p-10" id="recipe-modal-content"></div>
+    </div>
+  </div>
+
+  <!-- AUTHENTICATION MODAL (LOGIN & REGISTRATION) -->
+  <div id="auth-modal" class="fixed inset-0 z-50 hidden modal-backdrop flex items-center justify-center p-4">
+    <div class="bg-parchment-50 dark:bg-[#1A1108] rounded-2xl max-w-md w-full overflow-hidden shadow-2xl border border-parchment-300 dark:border-saffron-900/40 relative animate-scaleUp text-clove-900 dark:text-parchment-100">
+      <button onclick="closeAuthModal()" class="absolute top-4 right-4 z-10 w-8 h-8 rounded-full bg-parchment-200 dark:bg-clove-800 hover:bg-parchment-300 dark:hover:bg-clove-700 text-clove-900 dark:text-parchment-100 flex items-center justify-center text-sm transition" aria-label="Close modal">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+
+      <div class="p-6 sm:p-8 space-y-6">
+        <div class="text-center space-y-2">
+          <div class="w-12 h-12 rounded-full bg-gradient-to-tr from-saffron-700 to-terracotta-600 text-white flex items-center justify-center mx-auto shadow-md">
+            <i class="fa-solid fa-mortar-pestle text-lg"></i>
+          </div>
+          <h3 class="font-heading font-bold text-2xl text-clove-900 dark:text-parchment-50">Patron Portal</h3>
+          <p class="text-xs text-clove-800/70 dark:text-parchment-300">Access your royal harvest reservations, orders, and estate privileges.</p>
+        </div>
+
+        <!-- Auth Tabs -->
+        <div class="grid grid-cols-2 p-1 bg-parchment-200 dark:bg-[#120B07] rounded-xl text-xs font-bold">
+          <button id="auth-tab-btn-login" onclick="switchAuthTab('login')" class="py-2 px-3 rounded-lg bg-white dark:bg-clove-900 shadow-sm text-saffron-800 dark:text-saffron-300 transition">Sign In</button>
+          <button id="auth-tab-btn-register" onclick="switchAuthTab('register')" class="py-2 px-3 rounded-lg text-clove-700 dark:text-parchment-400 hover:text-clove-900 transition">Register</button>
+        </div>
+
+        <!-- Login Form -->
+        <form id="auth-login-form" onsubmit="handleAuthSubmit(event, 'login')" class="space-y-4">
+          <div>
+            <label class="block text-xs font-bold uppercase tracking-wider mb-1.5">Email or Mobile Number</label>
+            <input type="text" required placeholder="patron@suryaveda.in" class="w-full px-3.5 py-2.5 rounded-xl border border-parchment-300 dark:border-saffron-900/40 bg-white dark:bg-[#20150B] text-sm focus:outline-none focus:border-saffron-600">
+          </div>
+          <div>
+            <div class="flex items-center justify-between mb-1.5">
+              <label class="block text-xs font-bold uppercase tracking-wider">Master Key / Password</label>
+              <a href="javascript:void(0)" onclick="showToast('Password recovery instructions sent to registered contact.')" class="text-[11px] text-saffron-700 hover:underline">Forgot?</a>
+            </div>
+            <input type="password" required placeholder="••••••••" class="w-full px-3.5 py-2.5 rounded-xl border border-parchment-300 dark:border-saffron-900/40 bg-white dark:bg-[#20150B] text-sm focus:outline-none focus:border-saffron-600">
+          </div>
+          <button type="submit" class="w-full py-3 rounded-xl gold-gradient-bg text-white font-bold text-sm shadow hover:brightness-105 transition flex items-center justify-center gap-2">
+            <i class="fa-solid fa-lock text-xs"></i>
+            <span>Authenticate Patron Session</span>
+          </button>
+        </form>
+
+        <!-- Register Form -->
+        <form id="auth-register-form" onsubmit="handleAuthSubmit(event, 'register')" class="space-y-4 hidden">
+          <div>
+            <label class="block text-xs font-bold uppercase tracking-wider mb-1.5">Full Name / Estate Title</label>
+            <input type="text" required placeholder="Lord Somnath / Connoisseur" class="w-full px-3.5 py-2.5 rounded-xl border border-parchment-300 dark:border-saffron-900/40 bg-white dark:bg-[#20150B] text-sm focus:outline-none focus:border-saffron-600">
+          </div>
+          <div>
+            <label class="block text-xs font-bold uppercase tracking-wider mb-1.5">Email Address</label>
+            <input type="email" required placeholder="connoisseur@estate.in" class="w-full px-3.5 py-2.5 rounded-xl border border-parchment-300 dark:border-saffron-900/40 bg-white dark:bg-[#20150B] text-sm focus:outline-none focus:border-saffron-600">
+          </div>
+          <div>
+            <label class="block text-xs font-bold uppercase tracking-wider mb-1.5">Create Secure Password</label>
+            <input type="password" required placeholder="Minimum 8 characters" class="w-full px-3.5 py-2.5 rounded-xl border border-parchment-300 dark:border-saffron-900/40 bg-white dark:bg-[#20150B] text-sm focus:outline-none focus:border-saffron-600">
+          </div>
+          <button type="submit" class="w-full py-3 rounded-xl gold-gradient-bg text-white font-bold text-sm shadow hover:brightness-105 transition flex items-center justify-center gap-2">
+            <i class="fa-solid fa-user-plus text-xs"></i>
+            <span>Create Heritage Account</span>
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- ADMIN CONSOLE MODAL -->
+  <div id="admin-modal" class="fixed inset-0 z-50 hidden modal-backdrop flex items-center justify-center p-4">
+    <div class="bg-parchment-50 dark:bg-[#1A1108] rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto shadow-2xl border border-parchment-300 dark:border-saffron-900/40 relative animate-scaleUp text-clove-900 dark:text-parchment-100">
+      <button onclick="closeAdminModal()" class="absolute top-4 right-4 z-10 w-8 h-8 rounded-full bg-parchment-200 dark:bg-clove-800 hover:bg-parchment-300 dark:hover:bg-clove-700 text-clove-900 dark:text-parchment-100 flex items-center justify-center text-sm transition" aria-label="Close modal">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+
+      <div class="p-6 sm:p-8 space-y-6">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between border-b border-parchment-300 dark:border-saffron-900/40 pb-4 gap-3">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-cardamom-700 text-white flex items-center justify-center shadow">
+              <i class="fa-solid fa-shield-halved text-base"></i>
+            </div>
+            <div>
+              <h3 class="font-heading font-bold text-xl text-clove-900 dark:text-parchment-50">SuryaVeda Admin & Cellar Console</h3>
+              <p class="text-xs text-clove-800/70 dark:text-parchment-300">Live Inventory Telemetry, Harvest Allocations & Dispatch Logs</p>
+            </div>
+          </div>
+          <span class="text-xs font-bold px-3 py-1 rounded-full bg-cardamom-100 dark:bg-cardamom-950 text-cardamom-800 dark:text-cardamom-300 border border-cardamom-500/30 w-fit">System Nominal • All SKUs In Stock</span>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div class="p-4 rounded-xl bg-white dark:bg-[#20150B] border border-parchment-300 dark:border-saffron-900/30">
+            <p class="text-xs text-clove-700 dark:text-parchment-400 font-semibold uppercase">Total Catalog SKUs</p>
+            <p class="text-2xl font-bold font-heading text-saffron-800 dark:text-saffron-300 mt-1">20 Products</p>
+            <p class="text-[11px] text-cardamom-700 mt-1">100% Verified Fresh</p>
+          </div>
+          <div class="p-4 rounded-xl bg-white dark:bg-[#20150B] border border-parchment-300 dark:border-saffron-900/30">
+            <p class="text-xs text-clove-700 dark:text-parchment-400 font-semibold uppercase">Stone Grinding Cellar</p>
+            <p class="text-2xl font-bold font-heading text-saffron-800 dark:text-saffron-300 mt-1">Cold Stone Active</p>
+            <p class="text-[11px] text-clove-600 dark:text-parchment-400 mt-1">Zero aroma decay</p>
+          </div>
+          <div class="p-4 rounded-xl bg-white dark:bg-[#20150B] border border-parchment-300 dark:border-saffron-900/30">
+            <p class="text-xs text-clove-700 dark:text-parchment-400 font-semibold uppercase">Purity Reports</p>
+            <p class="text-2xl font-bold font-heading text-saffron-800 dark:text-saffron-300 mt-1">NABL Grade A1+</p>
+            <p class="text-[11px] text-cardamom-700 mt-1">Zero adulteration detected</p>
+          </div>
+        </div>
+
+        <!-- Inventory List -->
+        <div class="space-y-3">
+          <h4 class="font-heading font-bold text-sm text-clove-900 dark:text-parchment-100 uppercase tracking-wider">Live Inventory Status</h4>
+          <div class="overflow-x-auto border border-parchment-300 dark:border-saffron-900/40 rounded-xl">
+            <table class="w-full text-left text-xs">
+              <thead class="bg-parchment-100 dark:bg-[#120B07] text-clove-900 dark:text-parchment-200 border-b border-parchment-300 dark:border-saffron-900/40">
+                <tr>
+                  <th class="p-3">SKU</th>
+                  <th class="p-3">Product Name</th>
+                  <th class="p-3">Category</th>
+                  <th class="p-3">Terroir Origin</th>
+                  <th class="p-3">Stock Units</th>
+                  <th class="p-3">Lab Status</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-parchment-200 dark:divide-saffron-900/20" id="admin-inventory-table-body">
+                <!-- Populated by JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 

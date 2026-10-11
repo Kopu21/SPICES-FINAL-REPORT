@@ -1052,26 +1052,73 @@ body.dark-mode .header-hamburger-btn:hover {
 }
 
 /* ========================================================================= */
-/* STICKY HEADER & NAVIGATION LINK SYSTEM (HIGH CONTRAST) */
+/* FIXED HEADER & NAVIGATION SYSTEM (PERMANENTLY VISIBLE GLOBALLY ON ALL BREAKPOINTS) */
 /* ========================================================================= */
 
+:root {
+  --site-header-height: 64px;
+}
+
+@media (min-width: 640px) {
+  :root {
+    --site-header-height: 80px;
+  }
+}
+
 #main-site-header {
-  position: -webkit-sticky !important;
-  position: sticky !important;
+  position: fixed !important;
   top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  width: 100% !important;
   z-index: 1000 !important;
   background-color: rgba(253, 251, 247, 0.98);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
   border-bottom: 1px solid #E5D2B8;
   box-shadow: 0 4px 14px rgba(42, 27, 14, 0.08);
-  width: 100%;
 }
 
 body.dark-mode #main-site-header {
   background-color: rgba(20, 13, 7, 0.98) !important;
   border-bottom: 1px solid rgba(245, 158, 11, 0.3) !important;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.55) !important;
+}
+
+/* Compensate main container height so first section/hero is never obscured beneath fixed header */
+main {
+  padding-top: var(--site-header-height) !important;
+  box-sizing: border-box;
+}
+
+/* Scroll padding and scroll margin so in-page anchors smoothly align below fixed header */
+html {
+  scroll-padding-top: calc(var(--site-header-height) + 16px) !important;
+  scroll-behavior: smooth;
+}
+
+section, [id], .spa-view {
+  scroll-margin-top: calc(var(--site-header-height) + 16px) !important;
+}
+
+/* Mobile drawer scroll container */
+#mobile-nav {
+  max-height: calc(100vh - var(--site-header-height));
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Modals and Cart Drawer layer above fixed header (header is z-index 1000) */
+#cart-drawer-backdrop {
+  z-index: 1999 !important;
+}
+
+#cart-drawer,
+#quick-view-modal,
+#recipe-modal,
+#auth-modal,
+#admin-modal {
+  z-index: 2000 !important;
 }
 
 /* Base Navigation Links (Light Mode) */
