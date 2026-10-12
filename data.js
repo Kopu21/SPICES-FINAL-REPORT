@@ -201,7 +201,7 @@ const SPICE_DATA = {
       origin: "Tuticorin, Tamil Nadu",
       harvest: "Hand-culled Buds",
       weight: "100g Glass Jar",
-      image: "https://images.unsplash.com/photo-1607672632458-9eb56696346b?auto=format&fit=crop&w=1200&q=90",
+      image: "assets/products/tuticorin-whole-cloves.jpg",
       description: "Plump, oil-rich flower buds with intact heads that leave an oily sheen when pressed. Powerful eugenol note that warms from the inside.",
       aromaNotes: ["Intense Eugenol", "Sweet Spice", "Balsamic"],
       heatLevel: "Pungent Warm (5/10)",
