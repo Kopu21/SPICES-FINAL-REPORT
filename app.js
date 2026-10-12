@@ -230,8 +230,50 @@ function navigateTo(viewId) {
     window.scrollTo({ top: 0, behavior: 'instant' });
   }
 
-  // 9. Close mobile drawer on navigation
+  // 9. Close mobile drawer and dropdown on navigation
   toggleMobileNav(true);
+  closeHomeDropdown();
+}
+
+// --- NAVBAR HOME DROPDOWN CONTROLLER ---
+function toggleHomeDropdown(event) {
+  if (event) {
+    event.preventDefault();
+    event.stopPropagation();
+  }
+  const menu = document.getElementById('home-dropdown-menu');
+  const chevron = document.getElementById('home-chevron-icon');
+  const btn = document.getElementById('nav-home');
+  if (!menu) return;
+
+  const isOpen = !menu.classList.contains('hidden');
+  if (isOpen) {
+    menu.classList.add('hidden');
+    if (chevron) chevron.classList.remove('rotate-180');
+    if (btn) btn.setAttribute('aria-expanded', 'false');
+  } else {
+    menu.classList.remove('hidden');
+    if (chevron) chevron.classList.add('rotate-180');
+    if (btn) btn.setAttribute('aria-expanded', 'true');
+  }
+}
+
+function closeHomeDropdown() {
+  const menu = document.getElementById('home-dropdown-menu');
+  const chevron = document.getElementById('home-chevron-icon');
+  const btn = document.getElementById('nav-home');
+  if (menu) menu.classList.add('hidden');
+  if (chevron) chevron.classList.remove('rotate-180');
+  if (btn) btn.setAttribute('aria-expanded', 'false');
+}
+
+function selectHomeView(viewId, event) {
+  if (event) {
+    event.preventDefault();
+    event.stopPropagation();
+  }
+  closeHomeDropdown();
+  navigateTo(viewId);
 }
 
 function initNavigation() {
@@ -253,6 +295,14 @@ function initNavigation() {
   if (window.location.hash) {
     handleHash();
   }
+
+  // Dismiss dropdown on clicks outside
+  document.addEventListener('click', (e) => {
+    const wrapper = document.getElementById('home-dropdown-wrapper');
+    if (wrapper && !wrapper.contains(e.target)) {
+      closeHomeDropdown();
+    }
+  });
 
   // Setup backdrop clicks and escape key for auth and admin modals
   const authModal = document.getElementById('auth-modal');
@@ -492,10 +542,10 @@ function renderSpiceCardHTML(p) {
   const tagBadge = p.tags && p.tags[0] ? `<span class="absolute top-3 left-3 px-2.5 py-1 rounded-full text-[10px] font-extrabold uppercase tracking-wider bg-clove-900/90 backdrop-blur-md text-saffron-300 border border-saffron-500/40 shadow-sm">${p.tags[0]}</span>` : '';
 
   return `
-    <div class="spice-card bg-white dark:bg-[#1E140C] rounded-2xl border border-parchment-300 dark:border-saffron-900/40 overflow-hidden shadow-sm hover:shadow-xl hover:border-saffron-500 transition-all duration-300 flex flex-col justify-between group">
+    <div class="spice-card h-full bg-white dark:bg-[#1E140C] rounded-2xl border border-parchment-300 dark:border-saffron-900/40 overflow-hidden shadow-sm hover:shadow-xl hover:border-saffron-500 transition-all duration-300 flex flex-col justify-between group">
       
       <!-- Image Container -->
-      <div class="relative h-52 sm:h-56 overflow-hidden bg-parchment-200 dark:bg-parchment-900 cursor-pointer" onclick="openProductDetail('${p.id}')">
+      <div class="relative h-52 sm:h-56 overflow-hidden bg-parchment-200 dark:bg-parchment-900 cursor-pointer shrink-0" onclick="openProductDetail('${p.id}')">
         <img src="${p.image}" alt="${p.name}" class="spice-card-img w-full h-full object-cover">
         ${tagBadge}
         <button onclick="toggleWishlist('${p.id}', event)" class="wishlist-btn absolute top-3 right-3 w-8 h-8 rounded-full bg-parchment-50/90 dark:bg-clove-900/80 hover:bg-white dark:hover:bg-clove-800 text-clove-800 dark:text-parchment-200 hover:text-red-500 text-xs shadow flex items-center justify-center transition-colors">
@@ -508,10 +558,10 @@ function renderSpiceCardHTML(p) {
       </div>
 
       <!-- Content Details -->
-      <div class="p-4 sm:p-5 flex flex-col flex-grow justify-between space-y-3">
+      <div class="p-4 sm:p-5 flex flex-col flex-grow justify-between">
         
-        <div>
-          <div class="flex items-center justify-between text-[11px] text-clove-800/70 dark:text-parchment-400 mb-1">
+        <div class="flex-grow space-y-2.5">
+          <div class="flex items-center justify-between text-[11px] text-clove-800/70 dark:text-parchment-400">
             <span class="flex items-center gap-1 font-semibold text-saffron-800 dark:text-saffron-400">
               <i class="fa-solid fa-location-dot text-terracotta-600"></i> ${p.origin}
             </span>
@@ -520,34 +570,34 @@ function renderSpiceCardHTML(p) {
             </span>
           </div>
 
-          <h3 class="font-heading font-bold text-sm sm:text-base text-clove-900 dark:text-parchment-50 leading-snug line-clamp-2 hover:text-saffron-800 dark:hover:text-saffron-400 cursor-pointer transition-colors" onclick="openProductDetail('${p.id}')">
+          <h3 class="font-heading font-bold text-sm sm:text-base text-clove-900 dark:text-parchment-50 leading-snug line-clamp-2 min-h-[2.5rem] hover:text-saffron-800 dark:hover:text-saffron-400 cursor-pointer transition-colors" onclick="openProductDetail('${p.id}')">
             ${p.name}
           </h3>
 
-          <p class="text-[11px] sm:text-xs text-clove-800/70 dark:text-parchment-300 mt-1 line-clamp-2 font-light leading-relaxed">
+          <p class="text-[11px] sm:text-xs text-clove-800/70 dark:text-parchment-300 line-clamp-2 min-h-[2rem] font-light leading-relaxed">
             ${p.description}
           </p>
-        </div>
 
-        <!-- Aroma Notes -->
-        <div>
-          <div class="text-[9px] uppercase font-bold text-clove-800/50 dark:text-parchment-400 mb-1 tracking-wider">Aroma Palette:</div>
-          <div class="flex flex-wrap gap-1">
-            ${aromaPills}
+          <!-- Aroma Notes -->
+          <div class="pt-1">
+            <div class="text-[9px] uppercase font-bold text-clove-800/50 dark:text-parchment-400 mb-1 tracking-wider">Aroma Palette:</div>
+            <div class="flex flex-wrap gap-1 min-h-[1.75rem] items-center">
+              ${aromaPills}
+            </div>
           </div>
         </div>
 
-        <!-- Weight and Price Section -->
-        <div class="border-t border-parchment-200 dark:border-saffron-900/40 pt-3 flex items-center justify-between">
-          <div>
-            <span class="text-[10px] text-clove-800/60 dark:text-parchment-400 block font-medium">${p.weight}</span>
-            <div class="flex items-baseline gap-1.5">
-              <span class="font-display font-bold text-base sm:text-lg text-saffron-800 dark:text-saffron-400">₹${p.price}</span>
-              ${p.originalPrice ? `<span class="text-[11px] text-clove-800/40 dark:text-parchment-500 line-through">₹${p.originalPrice}</span>` : ''}
+        <!-- Weight and Price + Add Action Section (Strictly Bottom Aligned across all cards) -->
+        <div class="mt-4 pt-3 border-t border-parchment-200 dark:border-saffron-900/40 flex items-center justify-between gap-3">
+          <div class="min-w-0 flex flex-col justify-center">
+            <span class="text-[10px] text-clove-800/60 dark:text-parchment-400 font-medium block truncate">${p.weight}</span>
+            <div class="flex items-baseline gap-1.5 mt-0.5">
+              <span class="font-display font-bold text-base sm:text-lg text-saffron-800 dark:text-saffron-400 leading-none">₹${p.price}</span>
+              ${p.originalPrice ? `<span class="text-[11px] text-clove-800/40 dark:text-parchment-500 line-through leading-none">₹${p.originalPrice}</span>` : ''}
             </div>
           </div>
 
-          <button onclick="quickAddToCart('${p.id}')" class="px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-xl bg-clove-900 hover:bg-saffron-700 dark:bg-saffron-700 dark:hover:bg-saffron-600 text-white font-bold text-xs shadow transition-all duration-200 flex items-center gap-1.5 active:scale-95">
+          <button onclick="quickAddToCart('${p.id}'); showToast('Added ${p.name.replace(/'/g, "\\'")} to basket!', 'success');" class="px-4 py-2 rounded-xl gold-gradient-bg hover:brightness-110 text-white font-bold text-xs shadow-md hover:scale-105 active:scale-95 transition-all duration-200 flex items-center justify-center gap-1.5 shrink-0 cursor-pointer" aria-label="Add ${p.name} to basket">
             <i class="fa-solid fa-plus text-xs"></i>
             <span>Add</span>
           </button>

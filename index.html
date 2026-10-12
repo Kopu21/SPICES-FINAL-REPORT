@@ -69,27 +69,33 @@
 
         <!-- CENTER NAVIGATION LINKS (Visible on xl: 1200px+) -->
         <nav class="hidden xl:flex items-center gap-6 xl:gap-8" aria-label="Main Navigation">
-          <!-- Home Section Dropdown -->
-          <div class="relative group">
-            <button onclick="navigateTo('home')" class="nav-link active text-xs font-bold py-1 focus:outline-none cursor-pointer" id="nav-home" aria-label="SuryaVeda Home">
+          <!-- Home Section Dropdown with Click & Hover Support -->
+          <div class="relative" id="home-dropdown-wrapper">
+            <button type="button" onclick="toggleHomeDropdown(event)" class="nav-link active text-xs font-bold py-1 focus:outline-none cursor-pointer flex items-center gap-1.5" id="nav-home" aria-label="SuryaVeda Home Menu" aria-haspopup="true" aria-expanded="false">
               <span>Home</span>
-              <i class="fa-solid fa-chevron-down text-[9px] group-hover:rotate-180 transition-transform duration-200 pointer-events-none"></i>
+              <i class="fa-solid fa-chevron-down text-[9px] transition-transform duration-200 pointer-events-none" id="home-chevron-icon"></i>
             </button>
-            <div class="absolute left-0 top-full mt-2 w-72 bg-parchment-50 rounded-2xl shadow-xl border border-parchment-300 p-2 hidden group-hover:block transition-all z-50">
-              <a href="#home" onclick="navigateTo('home')" class="block p-3 rounded-xl hover:bg-saffron-50 transition">
-                <div class="flex items-center gap-2 font-bold text-xs text-clove-900">
-                  <i class="fa-solid fa-store text-saffron-700"></i>
-                  <span>Home 1: Imperial Terroir</span>
-                </div>
-                <p class="text-[11px] text-clove-800/60 mt-0.5">Classic single-origin pantry, signature blends & harvest origins</p>
-              </a>
-              <a href="#home-2" onclick="navigateTo('home-2')" class="block p-3 rounded-xl hover:bg-cardamom-50 transition border-t border-parchment-200">
-                <div class="flex items-center gap-2 font-bold text-xs text-cardamom-900">
-                  <i class="fa-solid fa-compass text-amber-600"></i>
-                  <span>Home 2: Discovery & Spice Heritage</span>
-                </div>
-                <p class="text-[11px] text-clove-800/60 mt-0.5">Editorial split hero, spice families, ingredient spotlights, masalas & condiments</p>
-              </a>
+            <div id="home-dropdown-menu" class="absolute left-0 top-full pt-1.5 w-72 hidden transition-all z-50">
+              <div class="bg-parchment-50 dark:bg-[#1A1108] rounded-2xl shadow-2xl border border-parchment-300 dark:border-saffron-900/60 p-2 backdrop-blur-md">
+                <a href="#home" onclick="selectHomeView('home', event)" class="block p-3 rounded-xl hover:bg-saffron-100/70 dark:hover:bg-saffron-950/60 transition group/item cursor-pointer">
+                  <div class="flex items-center gap-2.5 font-bold text-xs text-clove-900 dark:text-parchment-50">
+                    <div class="w-7 h-7 rounded-lg bg-saffron-100 dark:bg-saffron-900/50 flex items-center justify-center text-saffron-700 dark:text-saffron-400 shrink-0 group-hover/item:scale-110 transition-transform">
+                      <i class="fa-solid fa-store text-xs"></i>
+                    </div>
+                    <span>Home 1: Imperial Terroir</span>
+                  </div>
+                  <p class="text-[11px] text-clove-800/70 dark:text-parchment-300 mt-1 pl-9 leading-relaxed font-light">Classic single-origin pantry, signature blends & harvest origins</p>
+                </a>
+                <a href="#home-2" onclick="selectHomeView('home-2', event)" class="block p-3 rounded-xl hover:bg-cardamom-100/70 dark:hover:bg-cardamom-950/60 transition group/item border-t border-parchment-200 dark:border-saffron-900/40 mt-1 cursor-pointer">
+                  <div class="flex items-center gap-2.5 font-bold text-xs text-cardamom-900 dark:text-cardamom-200">
+                    <div class="w-7 h-7 rounded-lg bg-cardamom-100 dark:bg-cardamom-900/50 flex items-center justify-center text-cardamom-700 dark:text-cardamom-300 shrink-0 group-hover/item:scale-110 transition-transform">
+                      <i class="fa-solid fa-compass text-xs"></i>
+                    </div>
+                    <span>Home 2: Discovery & Spice Heritage</span>
+                  </div>
+                  <p class="text-[11px] text-clove-800/70 dark:text-parchment-300 mt-1 pl-9 leading-relaxed font-light">Editorial split hero, spice families, ingredient spotlights, masalas & condiments</p>
+                </a>
+              </div>
             </div>
           </div>
 
@@ -1233,13 +1239,14 @@
           <!-- Right Column: Editorial Visual Composition -->
           <div class="lg:col-span-5 relative">
             <div class="relative mx-auto max-w-md lg:max-w-none">
-              <div class="relative rounded-3xl overflow-hidden shadow-2xl border-2 border-saffron-600/50 group">
-                <img src="assets/products/indian-spices-heritage-gallery.jpg" alt="Authentic heritage Indian spice pantry with whole turmeric rhizomes, Tellicherry black peppercorns, Kashmiri red chilies, green cardamom, cinnamon quills, and saffron in traditional brass and earthen vessels" class="w-full h-96 sm:h-[460px] object-cover group-hover:scale-105 transition-transform duration-700">
-                <div class="absolute inset-x-0 bottom-0 h-48 h2-image-scrim pointer-events-none"></div>
+              <div class="relative rounded-3xl overflow-hidden shadow-2xl border-2 border-saffron-600/50 group bg-clove-950">
+                <img src="assets/products/indian-spices-heritage-gallery.jpg" alt="Authentic heritage Indian spice pantry with whole turmeric rhizomes, Tellicherry black peppercorns, Kashmiri red chilies, green cardamom, cinnamon quills, and saffron in traditional brass and earthen vessels" class="w-full h-[400px] sm:h-[480px] object-cover object-center group-hover:scale-105 transition-transform duration-700">
+                <div class="absolute inset-x-0 bottom-0 h-36 h2-image-scrim pointer-events-none"></div>
                 
-                <div class="absolute top-4 right-4 px-3.5 py-1.5 rounded-full bg-saffron-900/90 backdrop-blur-md border border-saffron-400 text-saffron-200 text-xs font-bold flex items-center gap-1.5 shadow-lg">
-                  <i class="fa-solid fa-award text-amber-400"></i>
-                  <span>Direct Farm Terroirs</span>
+                <div id="h2-direct-farm-badge" class="absolute top-4 right-4 px-4 py-2 rounded-full backdrop-blur-md flex items-center gap-2 shadow-2xl">
+                  <span class="w-2 h-2 rounded-full bg-amber-400 shadow-sm animate-pulse"></span>
+                  <i class="fa-solid fa-award text-amber-400 text-sm"></i>
+                  <span class="badge-text tracking-wide uppercase text-[11px] font-extrabold drop-shadow">Direct Farm Terroirs</span>
                 </div>
 
                 <div class="absolute bottom-4 left-4 right-4 p-4 rounded-2xl h2-overlay-card flex items-center justify-between shadow-2xl transition-all duration-300">
@@ -1763,7 +1770,7 @@
             <div class="bg-white dark:bg-[#1E140C] rounded-2xl border border-parchment-300 dark:border-saffron-900/40 p-5 space-y-4 shadow-sm hover:shadow-xl hover:border-saffron-500 transition-all flex flex-col justify-between group">
               <div class="space-y-3">
                 <div class="relative h-44 rounded-xl overflow-hidden bg-parchment-200 dark:bg-parchment-900">
-                  <img src="https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?auto=format&fit=crop&w=800&q=85" alt="Hyderabadi Dum Biryani Potli Masala" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                  <img src="assets/products/hyderabadi-dum-biryani-potli-masala.jpg" alt="Hyderabadi Dum Biryani Potli Masala Whole Spices & Muslin Potli Sachet" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                   <span class="absolute top-2.5 left-2.5 bg-clove-900/90 text-saffron-300 text-[10px] font-bold px-2.5 py-0.5 rounded-full border border-saffron-500/30">Nizami Potli</span>
                 </div>
                 <h3 class="font-heading font-bold text-base text-clove-900 dark:text-parchment-50">Hyderabadi Dum Biryani Potli Masala</h3>
@@ -1785,7 +1792,7 @@
             <div class="bg-white dark:bg-[#1E140C] rounded-2xl border border-parchment-300 dark:border-saffron-900/40 p-5 space-y-4 shadow-sm hover:shadow-xl hover:border-saffron-500 transition-all flex flex-col justify-between group">
               <div class="space-y-3">
                 <div class="relative h-44 rounded-xl overflow-hidden bg-parchment-200 dark:bg-parchment-900">
-                  <img src="assets/recipes/chettinad-black-pepper-roast-recipe-hd.jpg" alt="Chettinad Pepper Roast Masala" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                  <img src="assets/products/chettinad-black-pepper-roast-masala-hd-v2.jpg" alt="Chettinad Pepper Roast Masala" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                   <span class="absolute top-2.5 left-2.5 bg-clove-900/90 text-saffron-300 text-[10px] font-bold px-2.5 py-0.5 rounded-full border border-saffron-500/30">Karaikudi Recipe</span>
                 </div>
                 <h3 class="font-heading font-bold text-base text-clove-900 dark:text-parchment-50">Chettinad Black Pepper Roast Masala</h3>
@@ -2150,7 +2157,7 @@
             <div class="bg-white dark:bg-[#1E140C] rounded-2xl border border-parchment-300 dark:border-saffron-900/40 shadow-sm overflow-hidden flex flex-col justify-between group hover:shadow-xl hover:border-saffron-500 transition-all">
               <div class="space-y-3">
                 <div class="relative h-48 overflow-hidden bg-parchment-200 dark:bg-parchment-900">
-                  <img src="assets/recipes/chettinad-black-pepper-roast-recipe-hd.jpg" alt="Chettinad Pepper Roast" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                  <img src="assets/products/chettinad-black-pepper-roast-dish.jpg" alt="Chettinad Black Pepper Roast" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                   <span class="absolute top-3 left-3 bg-clove-900/90 text-saffron-300 text-[10px] font-bold px-2.5 py-0.5 rounded-full border border-saffron-500/30">Intermediate • 30 mins</span>
                 </div>
                 <div class="p-5 pb-0 space-y-2">
@@ -2176,7 +2183,7 @@
             <div class="bg-white dark:bg-[#1E140C] rounded-2xl border border-parchment-300 dark:border-saffron-900/40 shadow-sm overflow-hidden flex flex-col justify-between group hover:shadow-xl hover:border-saffron-500 transition-all">
               <div class="space-y-3">
                 <div class="relative h-48 overflow-hidden bg-parchment-200 dark:bg-parchment-900">
-                  <img src="assets/recipes/royal-awadhi-paneer-tikka-recipe-hd.jpg" alt="Awadhi Paneer Tikka" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                  <img src="assets/products/royal-awadhi-paneer-tikka-dish.jpg" alt="Royal Awadhi Paneer Tikka with Bharwa Mirch Crust" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                   <span class="absolute top-3 left-3 bg-clove-900/90 text-saffron-300 text-[10px] font-bold px-2.5 py-0.5 rounded-full border border-saffron-500/30">Intermediate • 15 mins</span>
                 </div>
                 <div class="p-5 pb-0 space-y-2">
@@ -2388,16 +2395,27 @@
     <section id="view-products" class="spa-view hidden py-10">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        <div class="bg-clove-900 text-parchment-50 rounded-2xl p-8 mb-8 border border-saffron-800/40 relative overflow-hidden">
-          <div class="relative z-10 max-w-2xl">
-            <span class="text-xs font-bold uppercase tracking-widest text-saffron-400">Our Complete Pantry</span>
-            <h1 class="text-3xl sm:text-4xl font-bold font-heading mt-1">Artisanal Spices by Category</h1>
-            <p class="text-parchment-200 text-sm mt-2 font-light">
-              Explore whole unadulterated spices, cold stone-ground pure powders, aged sun-matured pickles, and handcrafted royal masalas.
+        <div class="relative rounded-3xl p-8 sm:p-12 mb-8 border border-saffron-800/40 dark:border-saffron-700/50 overflow-hidden shadow-2xl bg-clove-950">
+          <!-- Full Background Image covering entire hero section -->
+          <img src="assets/products/products-hero-spices.jpg" alt="SuryaVeda Artisanal Spices & Condiments Complete Pantry" class="absolute inset-0 w-full h-full object-cover object-center transform scale-100 hover:scale-105 transition-transform duration-700" loading="eager">
+          
+          <!-- Adaptive Gradient Overlay for high contrast & visible spice artistry in both dark and light theme -->
+          <div class="absolute inset-0 bg-gradient-to-r from-clove-950/95 via-clove-950/80 to-clove-950/40 dark:from-[#0E0704]/95 dark:via-[#150B06]/85 dark:to-[#1A0E08]/50 pointer-events-none"></div>
+          <div class="absolute inset-0 bg-gradient-to-t from-clove-950/70 via-transparent to-transparent pointer-events-none"></div>
+
+          <div class="relative z-10 max-w-2xl text-parchment-50 space-y-3">
+            <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-saffron-950/85 border border-saffron-500/60 text-saffron-300 text-xs font-bold uppercase tracking-widest backdrop-blur-md shadow-sm">
+              <i class="fa-solid fa-sparkles text-amber-400"></i> Our Complete Heritage Pantry
+            </span>
+            <h1 class="text-3xl sm:text-5xl font-bold font-heading text-white drop-shadow-md leading-tight">Artisanal Spices by Category</h1>
+            <p class="text-parchment-200 text-sm sm:text-base font-light leading-relaxed drop-shadow">
+              Explore whole unadulterated spices, cold stone-ground pure powders, aged sun-matured pickles, and handcrafted royal masalas sourced from single-estate terroirs.
             </p>
-          </div>
-          <div class="absolute right-0 top-0 bottom-0 w-1/3 opacity-20 hidden md:block">
-            <img src="https://images.unsplash.com/photo-1532336414038-cf19250c5757?auto=format&fit=crop&w=800&q=85" class="h-full w-full object-cover">
+            <div class="flex flex-wrap items-center gap-3 pt-1 text-xs text-saffron-300/90 font-medium">
+              <span class="flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-black/40 border border-saffron-800/50 backdrop-blur-sm"><i class="fa-solid fa-seedling text-cardamom-400"></i> 100% Single Origin</span>
+              <span class="flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-black/40 border border-saffron-800/50 backdrop-blur-sm"><i class="fa-solid fa-mortar-pestle text-amber-400"></i> Stone Cold-Milled</span>
+              <span class="flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-black/40 border border-saffron-800/50 backdrop-blur-sm"><i class="fa-solid fa-shield-halved text-emerald-400"></i> Certified Purity</span>
+            </div>
           </div>
         </div>
 
@@ -2479,15 +2497,37 @@
     <section id="view-bulk-orders" class="spa-view hidden py-10">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        <div class="bg-gradient-to-br from-clove-900 via-clove-800 to-terracotta-900 text-parchment-50 rounded-2xl p-8 sm:p-12 mb-10 border border-saffron-800/40 relative overflow-hidden">
-          <div class="max-w-3xl relative z-10 space-y-4">
-            <span class="inline-block px-3 py-1 bg-saffron-500/20 border border-saffron-400 text-saffron-300 text-xs font-bold rounded-full uppercase tracking-wider">
-              B2B • Fine Dining • Corporate Gifting • Exports
+        <div class="relative rounded-3xl p-8 sm:p-14 mb-10 border border-saffron-800/40 dark:border-saffron-700/50 overflow-hidden shadow-2xl bg-clove-950">
+          <!-- Background Image of Heritage Spice Warehouse -->
+          <img src="assets/products/bulk-spices-warehouse.jpg" alt="SuryaVeda Heritage Wholesale Spice Warehouse & B2B Supply" class="absolute inset-0 w-full h-full object-cover object-center transform scale-100 hover:scale-105 transition-transform duration-700" loading="eager">
+          
+          <!-- Gradient Overlay ensuring readable text and authentic merchant warehouse atmosphere -->
+          <div class="absolute inset-0 bg-gradient-to-r from-clove-950/95 via-clove-950/85 to-clove-900/50 dark:from-[#0A0503]/95 dark:via-[#100704]/85 dark:to-[#180A05]/45 pointer-events-none"></div>
+          <div class="absolute inset-0 bg-gradient-to-t from-clove-950/80 via-transparent to-transparent pointer-events-none"></div>
+
+          <!-- Content -->
+          <div class="max-w-3xl relative z-10 space-y-4 text-parchment-50">
+            <span class="inline-flex items-center gap-2 px-3.5 py-1.5 bg-saffron-950/85 border border-saffron-500/60 text-saffron-300 text-xs font-bold rounded-full uppercase tracking-wider backdrop-blur-md shadow">
+              <i class="fa-solid fa-boxes-stacked text-amber-400"></i> B2B • Fine Dining • Corporate Gifting • Global Exports
             </span>
-            <h1 class="text-3xl sm:text-5xl font-bold font-heading">Wholesale Terroir Spices & Bespoke Compounding</h1>
-            <p class="text-parchment-200 text-sm sm:text-base font-light leading-relaxed">
-              We supply Michelin-starred restaurants, boutique heritage hotels, artisanal food manufacturers, and luxury wedding hampers with bulk single-estate spices, custom grinding granulometry, and certified lab analysis.
+            <h1 class="text-3xl sm:text-5xl font-bold font-heading text-white drop-shadow-md leading-tight">Wholesale Terroir Spices & Bespoke Compounding</h1>
+            <p class="text-parchment-200 text-sm sm:text-base font-light leading-relaxed drop-shadow max-w-2xl">
+              We supply Michelin-starred restaurants, boutique heritage hotels, artisanal food purveyors, and luxury wedding hampers with bulk single-estate spices, custom grinding granulometry, and certified lab analysis.
             </p>
+            <div class="flex flex-wrap items-center gap-3 pt-2 text-xs text-saffron-200 font-semibold">
+              <div class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-black/40 border border-saffron-800/50 backdrop-blur-sm">
+                <i class="fa-solid fa-weight-hanging text-amber-400"></i>
+                <span>MOQ starting at 5 KG</span>
+              </div>
+              <div class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-black/40 border border-saffron-800/50 backdrop-blur-sm">
+                <i class="fa-solid fa-certificate text-emerald-400"></i>
+                <span>NABL Batch Certified</span>
+              </div>
+              <div class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-black/40 border border-saffron-800/50 backdrop-blur-sm">
+                <i class="fa-solid fa-plane text-saffron-400"></i>
+                <span>Worldwide Insured Dispatch</span>
+              </div>
+            </div>
           </div>
         </div>
 
