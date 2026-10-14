@@ -821,7 +821,7 @@ const SPICE_DATA = {
       image: "assets/products/golden-immunity-moon-milk-elixir.jpg",
       imageExplanation: "Ayurvedic Restorative Moon Milk: Frothy golden brew of high-curcumin Meghalaya turmeric, crushed green cardamom, and fragrant dried rose petals.",
       overview: "An ancient restorative bedtime Ayurvedic drink formulated to soothe the nervous system, reduce inflammation, and induce deep restful sleep.",
-      keySpices: ["pw-01", "ms-04", "ws-04"],
+      keySpices: ["pw-01", "ws-02", "ws-04"],
       ingredients: [
         "2 cups A2 Whole Milk or Creamy Oat/Almond Milk",
         "1 tsp SuryaVeda Lakadong Turmeric (8.2% Curcumin)",

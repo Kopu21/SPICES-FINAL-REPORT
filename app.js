@@ -919,27 +919,29 @@ function renderRecipesCatalog() {
 
       <div class="p-6 flex flex-col justify-between flex-grow space-y-4">
         
-        <div class="p-3.5 rounded-xl bg-parchment-100 dark:bg-parchment-800/50 border border-parchment-300 dark:border-parchment-700 text-xs text-clove-800 dark:text-parchment-200 space-y-1">
-          <div class="flex items-center gap-1.5 font-bold text-saffron-900 dark:text-saffron-300">
-            <i class="fa-solid fa-camera text-saffron-700 dark:text-saffron-400"></i>
-            <span>Visual Culinary Snapshot:</span>
+        <div class="space-y-4">
+          <div class="p-3.5 rounded-xl bg-parchment-100 dark:bg-parchment-800/50 border border-parchment-300 dark:border-parchment-700 text-xs text-clove-800 dark:text-parchment-200 space-y-1 min-h-[5.5rem] flex flex-col justify-center">
+            <div class="flex items-center gap-1.5 font-bold text-saffron-900 dark:text-saffron-300">
+              <i class="fa-solid fa-camera text-saffron-700 dark:text-saffron-400"></i>
+              <span>Visual Culinary Snapshot:</span>
+            </div>
+            <p class="text-[11px] text-clove-800/80 dark:text-parchment-300 leading-relaxed font-light">${r.imageExplanation}</p>
           </div>
-          <p class="text-[11px] text-clove-800/80 dark:text-parchment-300 leading-relaxed font-light">${r.imageExplanation}</p>
+
+          <p class="text-xs text-clove-800/70 dark:text-parchment-300 font-light leading-relaxed min-h-[3.25rem] flex items-start">${r.overview}</p>
+
+          <div class="space-y-1.5 min-h-[4.75rem]">
+            <span class="text-[10px] font-bold uppercase tracking-wider text-clove-800/50 dark:text-parchment-400 block">Required SuryaVeda Spices:</span>
+            <div class="flex flex-wrap gap-1.5 items-center">
+              ${r.keySpices.map(id => {
+                const spice = SPICE_DATA.products.find(p => p.id === id);
+                return spice ? `<span class="px-2.5 py-1 rounded-md bg-saffron-50 dark:bg-saffron-950/60 border border-saffron-200 dark:border-saffron-800 text-saffron-900 dark:text-saffron-300 text-[11px] font-semibold">${spice.name.split('(')[0].trim()}</span>` : '';
+              }).join('')}
+            </div>
+          </div>
         </div>
 
-        <p class="text-xs text-clove-800/70 dark:text-parchment-300 font-light leading-relaxed flex-grow">${r.overview}</p>
-
-        <div>
-          <span class="text-[10px] font-bold uppercase tracking-wider text-clove-800/50 dark:text-parchment-400 block mb-1.5">Required SuryaVeda Spices:</span>
-          <div class="flex flex-wrap gap-1.5">
-            ${r.keySpices.map(id => {
-              const spice = SPICE_DATA.products.find(p => p.id === id);
-              return spice ? `<span class="px-2 py-1 rounded bg-saffron-50 dark:bg-saffron-950/60 border border-saffron-200 dark:border-saffron-800 text-saffron-900 dark:text-saffron-300 text-[11px] font-semibold">${spice.name.split('(')[0]}</span>` : '';
-            }).join('')}
-          </div>
-        </div>
-
-        <div class="pt-3 border-t border-parchment-200 dark:border-parchment-700 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mt-auto">
+        <div class="pt-4 border-t border-parchment-200 dark:border-parchment-700 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mt-auto min-h-[3.5rem]">
           <span class="text-xs text-terracotta-700 dark:text-terracotta-400 font-semibold italic"><i class="fa-solid fa-lightbulb text-xs mr-1"></i>${r.pairingTip}</span>
           <button onclick="openRecipeModal('${r.id}')" class="px-4 py-2 bg-clove-900 hover:bg-saffron-700 text-white font-bold text-xs rounded-xl transition flex items-center gap-2 shrink-0 self-end sm:self-auto shadow-sm">
             <span>View Step Images & Method</span>
