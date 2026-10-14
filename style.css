@@ -1708,3 +1708,35 @@ h1, h2, h3, h4, h5, h6 {
   word-break: break-word;
   hyphens: auto;
 }
+
+/* =========================================================================
+   HOME 2: EDITORIAL SPICE HERITAGE STYLES & INTERACTION POLISH
+   ========================================================================= */
+#view-home-2 .editorial-hero-frame {
+  position: relative;
+  border-radius: 1.5rem;
+  overflow: hidden;
+  box-shadow: 0 25px 50px -12px rgba(42, 27, 14, 0.25);
+}
+
+#view-home-2 .editorial-card {
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease;
+}
+
+#view-home-2 .editorial-card:hover {
+  transform: translateY(-4px);
+}
+
+/* RTL layout adjustments for Home 2 */
+[dir="rtl"] #view-home-2 .space-x-reverse > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-x-reverse: 1;
+}
+
+[dir="rtl"] #view-home-2 .text-left {
+  text-align: right;
+}
+
+[dir="rtl"] #view-home-2 .text-right {
+  text-align: left;
+}
+
